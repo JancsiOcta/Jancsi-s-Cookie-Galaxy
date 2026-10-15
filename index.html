@@ -145,6 +145,45 @@
     .offline-multiplier-pill[aria-pressed="true"] { transform:scale(1.055); border-color:rgba(255,224,160,.85); color:#25190d; background:linear-gradient(110deg,#ffe3a1,#df9d3b); box-shadow:0 4px 15px rgba(198,132,43,.24),0 0 22px rgba(255,202,112,.28); animation:offline-multiplier-pick .34s cubic-bezier(.16,1,.3,1) both; }
     @keyframes offline-multiplier-pick { 0% { transform:scale(.94); } 68% { transform:scale(1.09); } 100% { transform:scale(1.055); } }
     .offline-cookie-claim { display:flex; min-height:48px; width:100%; align-items:center; justify-content:center; border:1px solid rgba(255,224,160,.65); border-radius:999px; color:#2a1b0d; background:linear-gradient(110deg,#ffe3a1,#df9d3b); box-shadow:0 8px 24px rgba(198,132,43,.28); font-size:13px; font-weight:900; cursor:pointer; }
+    .bakery-ai-open { display:flex; flex:0 0 auto; min-height:42px; padding:9px 14px; align-items:center; gap:8px; border:1px solid rgba(255,202,112,.55); border-radius:999px; color:#2a1b0d; background:linear-gradient(120deg,#ffe5ab,#e6a849); box-shadow:0 7px 22px rgba(198,132,43,.22); font-size:11px; font-weight:900; white-space:nowrap; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s ease; }
+    .bakery-ai-open:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(198,132,43,.36); }
+    .bakery-ai-open svg { width:17px; height:17px; }
+    .bakery-ai-dialog { position:fixed; z-index:160; inset:0; display:grid; overflow:auto; padding:18px; place-items:center; background:rgba(9,6,5,.84); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); animation:auth-fade .24s ease both; }
+    .bakery-ai-dialog[hidden] { display:none; }
+    .bakery-ai-dialog.is-closing { animation:overlay-exit .24s ease-in both; pointer-events:none; }
+    .bakery-ai-dialog.is-closing .bakery-ai-panel { animation:dialog-exit .24s cubic-bezier(.4,0,.8,.3) both; }
+    .bakery-ai-panel { display:flex; flex-direction:column; width:min(680px,100%); height:min(760px,calc(100vh - 36px)); height:min(760px,calc(100dvh - 36px)); overflow:hidden; border:1px solid rgba(255,202,112,.42); border-radius:28px; background:radial-gradient(ellipse at 50% 0,rgba(255,202,112,.13),transparent 55%),#211a16; box-shadow:0 28px 100px rgba(0,0,0,.7),0 0 55px rgba(223,163,73,.14); animation:auth-rise .3s ease both; }
+    .bakery-ai-head { display:flex; flex:0 0 auto; align-items:center; gap:12px; padding:18px 20px; border-bottom:1px solid rgba(255,238,207,.1); }
+    .bakery-ai-mark { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border:1px solid rgba(255,202,112,.35); border-radius:50%; color:#2a1b0d; background:linear-gradient(135deg,#ffe3a1,#df9d3b); box-shadow:0 4px 16px rgba(198,132,43,.24); font-size:19px; }
+    .bakery-ai-title { min-width:0; margin:0; color:#ffe6ad; font-size:17px; font-weight:900; }
+    .bakery-ai-subtitle { margin:3px 0 0; color:#c7b38f; font-size:10px; line-height:1.5; }
+    .bakery-ai-close { display:grid; width:40px; height:40px; flex:0 0 40px; margin-left:auto; place-items:center; border:1px solid rgba(255,255,255,.13); border-radius:50%; color:#ffe6ad; background:rgba(255,255,255,.06); font-size:22px; cursor:pointer; }
+    .bakery-ai-thread { display:flex; flex:1 1 auto; min-height:0; flex-direction:column; gap:12px; padding:18px 20px; overflow:auto; overscroll-behavior:contain; }
+    .bakery-ai-message { max-width:min(88%,520px); padding:12px 15px; border:1px solid rgba(255,202,112,.16); border-radius:22px; color:#f3e5cc; background:rgba(255,202,112,.06); font-size:12px; line-height:1.7; overflow-wrap:anywhere; white-space:pre-line; }
+    .bakery-ai-message.user { align-self:flex-end; border-color:rgba(255,202,112,.35); border-bottom-right-radius:8px; color:#2a1b0d; background:linear-gradient(120deg,#ffe3a1,#df9d3b); font-weight:750; }
+    .bakery-ai-message.assistant { align-self:flex-start; border-bottom-left-radius:8px; }
+    .bakery-ai-message strong { color:#ffe6ad; }
+    .bakery-ai-message.user strong { color:inherit; }
+    .bakery-ai-quick { display:flex; flex:0 0 auto; flex-wrap:wrap; gap:8px; padding:0 20px 13px; }
+    .bakery-ai-quick button { min-height:34px; padding:7px 12px; border:1px solid rgba(255,202,112,.3); border-radius:999px; color:#ffe6ad; background:rgba(255,202,112,.07); font-size:10px; font-weight:800; cursor:pointer; transition:transform .18s ease,background .18s ease; }
+    .bakery-ai-quick button:hover { transform:translateY(-1px); background:rgba(255,202,112,.14); }
+    .bakery-ai-compose { display:flex; flex:0 0 auto; gap:9px; padding:14px 20px 18px; border-top:1px solid rgba(255,238,207,.1); }
+    .bakery-ai-input { min-width:0; min-height:46px; flex:1 1 auto; padding:10px 16px; border:1px solid rgba(255,202,112,.25); border-radius:999px; outline:none; color:#f9f0dc; background:rgba(0,0,0,.2); font:inherit; font-size:12px; }
+    .bakery-ai-input:focus { border-color:rgba(255,202,112,.75); box-shadow:0 0 0 3px rgba(255,202,112,.1); }
+    .bakery-ai-send { min-height:46px; flex:0 0 auto; padding:10px 19px; border:1px solid rgba(255,224,160,.65); border-radius:999px; color:#2a1b0d; background:linear-gradient(110deg,#ffe3a1,#df9d3b); font-size:11px; font-weight:900; cursor:pointer; }
+    .bakery-ai-note { margin:0; padding:0 20px 14px; color:#aa9a83; font-size:9px; line-height:1.55; text-align:center; }
+    @media(max-width:680px) { .bakery-ai-open { min-height:38px; padding:8px 11px; gap:6px; font-size:10px; } }
+    @media(max-width:430px) {
+      .bakery-ai-open { width:38px; justify-content:center; padding:8px; }
+      .bakery-ai-open span { display:none; }
+      .bakery-ai-dialog { padding:9px; }
+      .bakery-ai-panel { height:calc(100vh - 18px); height:calc(100dvh - 18px); border-radius:24px; }
+      .bakery-ai-head { padding:14px; }
+      .bakery-ai-thread { padding:14px; }
+      .bakery-ai-quick { padding-right:14px; padding-left:14px; }
+      .bakery-ai-compose { padding:12px 14px 14px; }
+      .bakery-ai-note { padding-right:14px; padding-left:14px; }
+    }
     @media(max-width:430px) { .offline-cookie-panel { padding:20px 16px; } }
     @media(max-width:680px) {
       .top-actions { gap:6px; }
@@ -1110,6 +1149,12 @@
     body.admin-mode button.modal-close, body.owner-mode button.modal-close { border-radius: 50%; }
     body.owner-mode .account-name button.owner-badge, body.admin-mode .account-name button.admin-badge { min-height:24px; padding:4px 8px; border-radius:999px; line-height:1.2; }
     .role-info-panel button { min-height:42px; border-radius:13px; }
+    body input.bakery-ai-input, body button.bakery-ai-open, body button.bakery-ai-send { border-radius:999px; }
+    body button.bakery-ai-close { border-radius:50%; }
+    body.admin-mode input.bakery-ai-input, body.admin-mode button.bakery-ai-open, body.admin-mode button.bakery-ai-send { border-radius:999px; }
+    body.admin-mode button.bakery-ai-close { border-radius:50%; }
+    body.owner-mode input.bakery-ai-input, body.owner-mode button.bakery-ai-open, body.owner-mode button.bakery-ai-send { border-radius:999px; }
+    body.owner-mode button.bakery-ai-close { border-radius:50%; }
   </style>
 </head>
 <body>
@@ -1120,6 +1165,7 @@
         <div><div class="brand-name">Jancsi's Crumb Galaxy</div><div class="brand-sub">a little baking universe</div></div>
       </div>
       <div class="top-actions">
+        <button id="bakery-ai-open" class="bakery-ai-open" type="button" aria-label="Open bakery AI helper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42m-9.88 9.88-1.42 1.42"/><circle cx="12" cy="12" r="5"/></svg><span>Bakery AI</span></button>
         <button id="vip-open" class="vip-open-button" type="button" aria-label="Open VIP bakery plans" hidden>✦ VIP plans</button>
         <button id="facebook-open" class="facebook-open-button" type="button" aria-label="Open Facebook follow information" title="Visit Jancsi on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Facebook</span></button>
         <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Crumb Galaxy Facebook page information" title="Visit Jancsi's Crumb Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
@@ -1159,6 +1205,7 @@
   <section id="facebook-dialog" class="facebook-dialog" aria-label="Facebook visit information" hidden></section>
   <section id="signout-confirm" class="signout-confirm" aria-label="Confirm sign out" hidden></section>
   <section id="offline-cookie-dialog" class="offline-cookie-dialog" aria-label="Offline cookie collection" hidden></section>
+  <section id="bakery-ai-dialog" class="bakery-ai-dialog" aria-label="Bakery AI chat" hidden></section>
   <script>
     (() => {
       const SAVE_PREFIX = "crumb-cosmos-save-v1:";
@@ -1528,6 +1575,8 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       let toastTimer;
       let hiddenSince = 0;
       let offlineMultiplier = 1;
+      let bakeryAiMessages = [];
+      let bakeryAiProcessing = false;
       const main = document.getElementById("main");
       const toast = document.getElementById("toast");
       const dock = document.querySelector(".dock");
@@ -1542,10 +1591,12 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const vipDialog = document.getElementById("vip-dialog");
       const facebookDialog = document.getElementById("facebook-dialog");
       const offlineCookieDialog = document.getElementById("offline-cookie-dialog");
+      const bakeryAiDialog = document.getElementById("bakery-ai-dialog");
       const signoutConfirmDialog = document.getElementById("signout-confirm");
       const facebookOpenButton = document.getElementById("facebook-open");
       const facebookGalaxyOpenButton = document.getElementById("facebook-galaxy-open");
       const vipOpenButton = document.getElementById("vip-open");
+      const bakeryAiOpenButton = document.getElementById("bakery-ai-open");
       let roleInfoTrigger = null;
       let facebookTrigger = null;
       let vipTrigger = null;
@@ -3609,6 +3660,180 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove("show"), 2100);
       }
+      function bakeryAiName() {
+        if (isOwner()) return "Jancsi Chief AI";
+        if (isAdmin()) return "Japhia AI";
+        return isDemo ? "Demo AI" : "Bakery AI";
+      }
+      function bakeryAiQuickPrompts() {
+        const prompts = [
+          "Teach me how to bake",
+          "How do I grow my cookie jar?",
+          "Which helpers should I buy?",
+          "Explain boosts",
+          "How do achievements work?"
+        ];
+        if (isOwner() || isAdmin()) prompts.push("Give me 1,000,000 cookies");
+        return prompts;
+      }
+      function renderBakeryAiMessages() {
+        const thread = bakeryAiDialog.querySelector("[data-ai-thread]");
+        if (!thread) return;
+        thread.replaceChildren(...bakeryAiMessages.map(message => {
+          const bubble = document.createElement("div");
+          bubble.className = `bakery-ai-message ${message.role}`;
+          bubble.textContent = message.text;
+          return bubble;
+        }));
+        thread.scrollTop = thread.scrollHeight;
+      }
+      function openBakeryAi() {
+        if (!currentUser || authScreen.hidden === false) return;
+        const accountKey = isDemo ? "demo" : currentUser.email;
+        if (bakeryAiDialog.dataset.account !== accountKey) {
+          bakeryAiMessages = [];
+          bakeryAiDialog.dataset.account = accountKey;
+        }
+        const quickPrompts = bakeryAiQuickPrompts();
+        bakeryAiDialog.classList.remove("is-closing");
+        bakeryAiDialog.hidden = false;
+        bakeryAiDialog.innerHTML = `<section class="bakery-ai-panel" role="dialog" aria-modal="true" aria-labelledby="bakery-ai-title">
+          <header class="bakery-ai-head"><div class="bakery-ai-mark" aria-hidden="true">✦</div><div><h2 id="bakery-ai-title" class="bakery-ai-title"></h2><p class="bakery-ai-subtitle">Step-by-step bakery help, quick ideas, and role-limited local tools</p></div><button class="bakery-ai-close" type="button" aria-label="Close Bakery AI">×</button></header>
+          <div class="bakery-ai-thread" data-ai-thread role="log" aria-live="polite" aria-relevant="additions"></div>
+          <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}</div>
+          <form class="bakery-ai-compose"><input class="bakery-ai-input" type="text" maxlength="500" autocomplete="off" aria-label="Message Bakery AI" placeholder="Ask a bakery question or request a supported game action"><button class="bakery-ai-send" type="submit">Send</button></form>
+          <p class="bakery-ai-note">This helper runs locally with built-in guidance; it is not a remote AI service. Account saves and any game actions stay in this browser.</p>
+        </section>`;
+        bakeryAiDialog.querySelector(".bakery-ai-title").textContent = bakeryAiName();
+        if (!bakeryAiMessages.length) {
+          bakeryAiMessages.push({
+            role: "assistant",
+            text: `${bakeryAiName()} here! Ask me how to bake, grow your cookie jar, choose helpers, use boosts, or reach achievements. ${isOwner() || isAdmin() ? "I can also carry out explicit cookie or helper grants for this bakery." : "I can give you practical, step-by-step tips for this bakery."}`
+          });
+        }
+        renderBakeryAiMessages();
+        const input = bakeryAiDialog.querySelector(".bakery-ai-input");
+        bakeryAiDialog.querySelector(".bakery-ai-close").addEventListener("click", () => closeAnimatedOverlay(bakeryAiDialog));
+        bakeryAiDialog.onclick = event => {
+          if (event.target === bakeryAiDialog) closeAnimatedOverlay(bakeryAiDialog);
+        };
+        bakeryAiDialog.onkeydown = event => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            closeAnimatedOverlay(bakeryAiDialog);
+          }
+        };
+        bakeryAiDialog.querySelectorAll("[data-ai-prompt]").forEach(button => {
+          button.addEventListener("click", () => {
+            if (bakeryAiProcessing) return;
+            submitBakeryAiMessage(button.dataset.aiPrompt);
+          });
+        });
+        bakeryAiDialog.querySelector(".bakery-ai-compose").addEventListener("submit", event => {
+          event.preventDefault();
+          if (bakeryAiProcessing) return;
+          const message = input.value.trim();
+          if (!message) return;
+          input.value = "";
+          submitBakeryAiMessage(message);
+        });
+        input.focus({ preventScroll: true });
+      }
+      function bakeryAiQuantity(text, fallback) {
+        const normalized = text.replace(/,/g, "");
+        const match = normalized.match(/\b(\d+(?:\.\d+)?)\s*(trillion|billion|million|thousand|[tbmk])?\b/i);
+        if (!match) return fallback;
+        const unit = (match[2] || "").toLowerCase();
+        const factor = unit === "t" || unit === "trillion" ? 1e12
+          : unit === "b" || unit === "billion" ? 1e9
+            : unit === "m" || unit === "million" ? 1e6
+              : unit === "k" || unit === "thousand" ? 1e3 : 1;
+        return safeCounter(Number(match[1]) * factor);
+      }
+      function bakeryAiGrantCookies(message) {
+        if (!(isOwner() || isAdmin()) || !currentUser) return null;
+        const asksForHelp = /\b(how|teach|explain|why|what|help me learn)\b/i.test(message);
+        const asksForCookies = /\b(cookies?|cookie jar)\b/i.test(message);
+        const grantIntent = /\b(add|give|grant|drop|put|spawn|send)\b/i.test(message) ||
+          /\b(make my bakery have|can you|could you|please|i want|i need|give me)\b/i.test(message);
+        if (asksForHelp || !asksForCookies || !grantIntent) return null;
+        const defaultAmount = isOwner() ? 1000000000 : 1000000;
+        const maxGrant = isOwner() ? 1000000000000 : 1000000000;
+        const amount = Math.min(maxGrant, bakeryAiQuantity(message, defaultAmount));
+        if (!amount) return "Tell me a positive cookie amount to add.";
+        addCookies(amount);
+        const earned = awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        return `Done — I added ${fmt(amount)} cookies to this ${isOwner() ? "Owner" : "Admin"} bakery and saved the change on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+      }
+      function bakeryAiGrantHelper(message) {
+        if (!(isOwner() || isAdmin()) || !currentUser) return null;
+        const asksForHelp = /\b(how|teach|explain|why|what|help me learn)\b/i.test(message);
+        const grantIntent = /\b(add|give|grant|spawn|hire)\b/i.test(message) ||
+          /\b(can you|could you|please|i want|i need|give me)\b/i.test(message);
+        if (asksForHelp || !grantIntent) return null;
+        const normalizedMessage = message.toLowerCase();
+        const helper = upgrades.find(item => normalizedMessage.includes(item.name.toLowerCase()) ||
+          new RegExp(`\\b${item.id.replace(/-/g, "\\s*")}s?\\b`, "i").test(message));
+        if (!helper) return null;
+        const amount = Math.min(isOwner() ? 10000 : 1000, bakeryAiQuantity(message, isOwner() ? 100 : 10));
+        if (!amount) return "Tell me a positive helper amount to add.";
+        state.bought[helper.id] = addSafeCounter(owned(helper.id), amount);
+        const earned = awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        return `Done — I added ${fmt(amount)} ${helper.name}${amount === 1 ? "" : "s"} to this ${isOwner() ? "Owner" : "Admin"} bakery and saved the change on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+      }
+      function bakeryAiTutorial(message) {
+        const text = message.toLowerCase();
+        if (/\b(bake|baking|cookie button|tap)\b/.test(text)) {
+          return "Here’s a simple baking path:\n1. Open Bake and tap the big cookie to make your first cookies.\n2. Visit Market and buy Pocket Whisks to make each tap stronger.\n3. Buy Sunny Ovens for steady cookies every second.\n4. Add Clockwork Bakers when you can afford them; they produce more automatically.\n5. Check your jar and the Bake page milestone as you go. You can keep tapping while helpers bake.";
+        }
+        if (/\b(grow|more cookies|cookie jar|earn|faster|production)\b/.test(text)) {
+          return "To grow your cookie jar steadily:\n1. Buy Sunny Ovens for passive cookies each second.\n2. Add Clockwork Bakers for stronger automatic production.\n3. Use Pocket Whisks if you like tapping; they improve each tap.\n4. Compare item prices with your current balance in Market before buying.\n5. Check Boosts for temporary production boosts, then return to Bake and let your helpers work.";
+        }
+        if (/\b(helper|helpers|oven|whisk|clockwork|mixer|market|buy)\b/.test(text)) {
+          return "A handy helper plan:\n1. Sunny Ovens are a good early choice because they add cookies every second.\n2. Clockwork Bakers provide a larger passive rate as your jar grows.\n3. Pocket Whisks improve active tapping.\n4. Open Market to compare prices and current ownership.\n5. Buy one or two upgrades, then check your per-second rate on Bake before choosing the next one.";
+        }
+        if (/\b(boost|boosts|power-up|power up)\b/.test(text)) {
+          return "Here’s how to use boosts:\n1. Open Boosts from the bottom dock.\n2. Read each boost’s effect and duration before activating it.\n3. Choose a boost that matches how you play: tap boosts help active baking, while production boosts help helpers.\n4. Return to Bake or Market while the timer runs.\n5. Check the remaining time on the Boosts page; temporary boosts expire normally.";
+        }
+        if (/\b(achievement|achievements|milestone|reward)\b/.test(text)) {
+          return "Achievements and milestones are earned by playing:\n1. Bake cookies, tap, hire helpers, and try boosts.\n2. Open Awards in the bottom dock to review achievements and progress.\n3. On Bake, the milestone card shows your next lifetime-baked target.\n4. Reach the target to earn its cookie reward; lifetime baked totals include cookies earned over time.\n5. Your saved account keeps its progress on this browser.";
+        }
+        if (/\b(offline|away)\b/.test(text)) {
+          return "Offline cookies are calculated when you return:\n1. Leave your saved account with some production from ovens or automatic baking.\n2. Return to the same browser and account.\n3. Review the offline reward popup and select a multiplier if your role has one.\n4. The Collect button shows the final amount; select it to add the reward to your jar.\n5. Demo progress is temporary and does not persist after leaving demo mode.";
+        }
+        return "I can help with baking, cookie production, helpers, upgrades, boosts, achievements, and offline rewards. Try one of the quick prompts, or tell me what part of the bakery you’re working on and I’ll give you a step-by-step answer. I’m a built-in local helper, so I don’t connect to the internet or perform actions outside this game.";
+      }
+      function submitBakeryAiMessage(message) {
+        if (!currentUser || bakeryAiProcessing) return;
+        bakeryAiProcessing = true;
+        bakeryAiMessages.push({ role: "user", text: message });
+        const form = bakeryAiDialog.querySelector(".bakery-ai-compose");
+        const sendButton = bakeryAiDialog.querySelector(".bakery-ai-send");
+        const input = bakeryAiDialog.querySelector(".bakery-ai-input");
+        sendButton.disabled = true;
+        input.disabled = true;
+        renderBakeryAiMessages();
+        const delay = isOwner() ? 0 : isAdmin() ? 70 : 150;
+        window.setTimeout(() => {
+          let reply = bakeryAiGrantCookies(message);
+          if (!reply) reply = bakeryAiGrantHelper(message);
+          if (!reply) reply = bakeryAiTutorial(message);
+          bakeryAiMessages.push({ role: "assistant", text: reply });
+          renderBakeryAiMessages();
+          if (form.isConnected) {
+            sendButton.disabled = false;
+            input.disabled = false;
+            input.focus({ preventScroll: true });
+          }
+          bakeryAiProcessing = false;
+        }, delay);
+      }
       function queueOfflineCookies(elapsedMilliseconds) {
         const elapsedSeconds = Math.min(86400, Math.max(0, Math.floor(elapsedMilliseconds / 1000)));
         if (!elapsedSeconds) return 0;
@@ -5670,6 +5895,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       facebookOpenButton.addEventListener("click", event => openFacebookNotice("profile", event.currentTarget));
       facebookGalaxyOpenButton.addEventListener("click", event => openFacebookNotice("galaxy", event.currentTarget));
       vipOpenButton.addEventListener("click", () => openVipShop());
+      bakeryAiOpenButton.addEventListener("click", openBakeryAi);
       spinWheelOpenButton.addEventListener("click", openPrizeWheel);
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
