@@ -147,14 +147,14 @@
     .offline-cookie-claim { display:flex; min-height:48px; width:100%; align-items:center; justify-content:center; border:1px solid rgba(255,224,160,.65); border-radius:999px; color:#2a1b0d; background:linear-gradient(110deg,#ffe3a1,#df9d3b); box-shadow:0 8px 24px rgba(198,132,43,.28); font-size:13px; font-weight:900; cursor:pointer; }
     .bakery-ai-open { display:flex; flex:0 0 auto; min-height:42px; padding:9px 14px; align-items:center; gap:8px; border:1px solid rgba(255,202,112,.55); border-radius:999px; color:#2a1b0d; background:linear-gradient(120deg,#ffe5ab,#e6a849); box-shadow:0 7px 22px rgba(198,132,43,.22); font-size:11px; font-weight:900; white-space:nowrap; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s ease; }
     .bakery-ai-open:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(198,132,43,.36); }
-    .bakery-ai-open svg { width:17px; height:17px; }
+    .bakery-ai-wordmark { display:inline-grid; min-width:23px; height:23px; place-items:center; font-family:"Cinzel Decorative","Oxanium",serif; font-size:14px; font-weight:900; letter-spacing:-.11em; line-height:1; text-indent:-.08em; text-shadow:0 1px 0 rgba(255,255,255,.42); }
     .bakery-ai-dialog { position:fixed; z-index:160; inset:0; display:grid; overflow:auto; padding:18px; place-items:center; background:rgba(9,6,5,.84); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); animation:auth-fade .24s ease both; }
     .bakery-ai-dialog[hidden] { display:none; }
     .bakery-ai-dialog.is-closing { animation:overlay-exit .24s ease-in both; pointer-events:none; }
     .bakery-ai-dialog.is-closing .bakery-ai-panel { animation:dialog-exit .24s cubic-bezier(.4,0,.8,.3) both; }
     .bakery-ai-panel { display:flex; flex-direction:column; width:min(680px,100%); height:min(760px,calc(100vh - 36px)); height:min(760px,calc(100dvh - 36px)); overflow:hidden; border:1px solid rgba(255,202,112,.42); border-radius:28px; background:radial-gradient(ellipse at 50% 0,rgba(255,202,112,.13),transparent 55%),#211a16; box-shadow:0 28px 100px rgba(0,0,0,.7),0 0 55px rgba(223,163,73,.14); animation:auth-rise .3s ease both; }
     .bakery-ai-head { display:flex; flex:0 0 auto; align-items:center; gap:12px; padding:18px 20px; border-bottom:1px solid rgba(255,238,207,.1); }
-    .bakery-ai-mark { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border:1px solid rgba(255,202,112,.35); border-radius:50%; color:#2a1b0d; background:linear-gradient(135deg,#ffe3a1,#df9d3b); box-shadow:0 4px 16px rgba(198,132,43,.24); font-size:19px; }
+    .bakery-ai-mark { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border:1px solid rgba(255,202,112,.35); border-radius:50%; color:#2a1b0d; background:linear-gradient(135deg,#ffe3a1,#df9d3b); box-shadow:0 4px 16px rgba(198,132,43,.24); font-family:"Cinzel Decorative","Oxanium",serif; font-size:15px; font-weight:900; letter-spacing:-.12em; text-indent:-.08em; }
     .bakery-ai-title { min-width:0; margin:0; color:#ffe6ad; font-size:17px; font-weight:900; }
     .bakery-ai-subtitle { margin:3px 0 0; color:#c7b38f; font-size:10px; line-height:1.5; }
     .bakery-ai-close { display:grid; width:40px; height:40px; flex:0 0 40px; margin-left:auto; place-items:center; border:1px solid rgba(255,255,255,.13); border-radius:50%; color:#ffe6ad; background:rgba(255,255,255,.06); font-size:22px; cursor:pointer; }
@@ -170,10 +170,24 @@
     .admin-mode .bakery-ai-message.is-entering.assistant { animation:bakery-ai-admin-reply .5s cubic-bezier(.16,1,.3,1) both; }
     @keyframes bakery-ai-admin-user { from { opacity:0; filter:blur(8px); transform:translate(38px,24px) scale(.76) rotate(1deg); box-shadow:0 0 0 rgba(255,155,211,0); } 72% { opacity:1; filter:blur(0); transform:translate(-3px,-2px) scale(1.045); box-shadow:0 0 28px rgba(255,155,211,.4); } to { opacity:1; transform:translate(0) scale(1); } }
     @keyframes bakery-ai-admin-reply { from { opacity:0; filter:blur(7px); transform:translate(-32px,22px) scale(.8); box-shadow:0 0 0 rgba(255,155,211,0); } 72% { opacity:1; filter:blur(0); transform:translate(3px,-2px) scale(1.035); box-shadow:0 0 24px rgba(255,155,211,.3); } to { opacity:1; transform:translate(0) scale(1); } }
-    .owner-mode .bakery-ai-message.is-entering.user { animation:bakery-ai-owner-imessage-send .72s cubic-bezier(.16,1,.3,1) both; }
-    .owner-mode .bakery-ai-message.is-entering.assistant { animation:bakery-ai-owner-imessage-reply .68s cubic-bezier(.16,1,.3,1) both; }
-    @keyframes bakery-ai-owner-imessage-send { 0% { opacity:0; filter:blur(12px); transform:translate(62px,42px) scale(.62) rotate(2deg); box-shadow:0 0 0 rgba(255,202,112,0); } 48% { opacity:1; filter:blur(0); transform:translate(-5px,-4px) scale(1.08) rotate(-.5deg); box-shadow:0 0 34px rgba(255,202,112,.58); } 72% { transform:translate(2px,1px) scale(.975); } 100% { opacity:1; transform:translate(0) scale(1); box-shadow:0 0 16px rgba(255,202,112,.18); } }
-    @keyframes bakery-ai-owner-imessage-reply { 0% { opacity:0; filter:blur(10px); transform:translate(-54px,34px) scale(.68) rotate(-1.5deg); box-shadow:0 0 0 rgba(255,202,112,0); } 52% { opacity:1; filter:blur(0); transform:translate(5px,-4px) scale(1.07); box-shadow:0 0 32px rgba(255,202,112,.48); } 76% { transform:translate(-2px,1px) scale(.985); } 100% { opacity:1; transform:translate(0) scale(1); box-shadow:0 0 14px rgba(255,202,112,.14); } }
+    .owner-mode .bakery-ai-message.is-entering.user { animation:bakery-ai-owner-imessage-send .82s cubic-bezier(.22,1,.36,1) both; transform-origin:100% 100%; will-change:transform,opacity; }
+    .owner-mode .bakery-ai-message.is-entering.assistant { animation:bakery-ai-owner-imessage-reply .76s cubic-bezier(.22,1,.36,1) both; transform-origin:0 100%; will-change:transform,opacity; }
+    @keyframes bakery-ai-owner-imessage-send {
+      0% { opacity:0; filter:blur(7px); transform:translate3d(88px,68px,0) scale(.38) rotate(3deg); box-shadow:0 0 0 rgba(255,202,112,0); }
+      38% { opacity:1; filter:blur(0); transform:translate3d(30px,20px,0) scale(.68) rotate(1.3deg); box-shadow:0 12px 30px rgba(255,202,112,.2); }
+      66% { transform:translate3d(-6px,-5px,0) scale(1.055) rotate(-.25deg); box-shadow:0 0 36px rgba(255,202,112,.58); }
+      82% { transform:translate3d(2px,1px,0) scale(.985); box-shadow:0 0 23px rgba(255,202,112,.3); }
+      100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1) rotate(0); box-shadow:0 0 16px rgba(255,202,112,.18); }
+    }
+    @keyframes bakery-ai-owner-imessage-reply {
+      0% { opacity:0; filter:blur(6px); transform:translate3d(-76px,42px,0) scale(.56) rotate(-1.2deg); box-shadow:0 0 0 rgba(255,202,112,0); }
+      42% { opacity:1; filter:blur(0); transform:translate3d(-22px,12px,0) scale(.82) rotate(-.35deg); box-shadow:0 10px 28px rgba(255,202,112,.16); }
+      68% { transform:translate3d(5px,-3px,0) scale(1.035); box-shadow:0 0 30px rgba(255,202,112,.42); }
+      84% { transform:translate3d(-1px,1px,0) scale(.995); }
+      100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1); box-shadow:0 0 14px rgba(255,202,112,.14); }
+    }
+    @keyframes bakery-ai-owner-reduced-send { from { opacity:0; transform:translate3d(7px,4px,0) scale(.97); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
+    @keyframes bakery-ai-owner-reduced-reply { from { opacity:0; transform:translate3d(-7px,4px,0) scale(.97); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
     .bakery-ai-message strong { color:#ffe6ad; }
     .bakery-ai-message.user strong { color:inherit; }
     .bakery-ai-quick { display:grid; flex:0 0 auto; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-rows:40px; gap:8px; max-height:149px; padding:0 20px 13px; overflow-y:auto; overscroll-behavior:contain; scrollbar-color:rgba(255,202,112,.5) rgba(255,255,255,.05); scrollbar-width:thin; scroll-snap-type:y proximity; }
@@ -184,10 +198,29 @@
     .bakery-ai-input:focus { border-color:rgba(255,202,112,.75); box-shadow:0 0 0 3px rgba(255,202,112,.1); }
     .bakery-ai-send { min-height:46px; flex:0 0 auto; padding:10px 19px; border:1px solid rgba(255,224,160,.65); border-radius:999px; color:#2a1b0d; background:linear-gradient(110deg,#ffe3a1,#df9d3b); font-size:11px; font-weight:900; cursor:pointer; }
     .bakery-ai-note { margin:0; padding:0 20px 14px; color:#aa9a83; font-size:9px; line-height:1.55; text-align:center; }
+    body.admin-mode .bakery-ai-open { border-color:rgba(255,155,211,.62); color:#351629; background:linear-gradient(120deg,#ffc1e4,#ec78b9); box-shadow:0 7px 22px rgba(238,93,176,.24); }
+    body.admin-mode .bakery-ai-open:hover { box-shadow:0 10px 28px rgba(238,93,176,.4); }
+    body.admin-mode .bakery-ai-panel { border-color:rgba(255,155,211,.48); background:radial-gradient(ellipse at 50% 0,rgba(255,114,189,.16),transparent 55%),#211720; box-shadow:0 28px 100px rgba(0,0,0,.7),0 0 55px rgba(238,93,176,.18); }
+    body.admin-mode .bakery-ai-head, body.admin-mode .bakery-ai-compose { border-color:rgba(255,155,211,.2); }
+    body.admin-mode .bakery-ai-mark { border-color:rgba(255,155,211,.5); color:#351629; background:linear-gradient(135deg,#ffc1e4,#e96cad); box-shadow:0 4px 16px rgba(238,93,176,.28); }
+    body.admin-mode .bakery-ai-title, body.admin-mode .bakery-ai-close { color:#ffc1e4; }
+    body.admin-mode .bakery-ai-subtitle, body.admin-mode .bakery-ai-note { color:#c7a9be; }
+    body.admin-mode .bakery-ai-message { border-color:rgba(255,155,211,.24); background:rgba(255,114,189,.08); }
+    body.admin-mode .bakery-ai-message.user { border-color:rgba(255,155,211,.48); color:#351629; background:linear-gradient(120deg,#ffc1e4,#e96cad); }
+    body.admin-mode .bakery-ai-message strong { color:#ffc1e4; }
+    body.admin-mode .bakery-ai-message.user strong { color:inherit; }
+    body.admin-mode .bakery-ai-quick { scrollbar-color:rgba(255,155,211,.55) rgba(255,255,255,.05); }
+    body.admin-mode .bakery-ai-quick button { border-color:rgba(255,155,211,.38); color:#ffc1e4; background:rgba(255,114,189,.09); }
+    body.admin-mode .bakery-ai-quick button:hover { background:rgba(255,114,189,.18); }
+    body.admin-mode .bakery-ai-input { border-color:rgba(255,155,211,.3); }
+    body.admin-mode .bakery-ai-input:focus { border-color:rgba(255,155,211,.78); box-shadow:0 0 0 3px rgba(255,114,189,.13); }
+    body.admin-mode .bakery-ai-send { border-color:rgba(255,155,211,.7); color:#351629; background:linear-gradient(110deg,#ffc1e4,#e96cad); }
     @keyframes bakery-ai-reduced-message { from { opacity:0; } to { opacity:1; } }
     @media(prefers-reduced-motion:reduce) {
       .bakery-ai-thread { scroll-behavior:auto; }
-      .bakery-ai-message.is-entering { animation:bakery-ai-reduced-message .16s ease both !important; }
+      body:not(.owner-mode) .bakery-ai-message.is-entering { animation:bakery-ai-reduced-message .16s ease both !important; }
+      .owner-mode .bakery-ai-message.is-entering.user { animation:bakery-ai-owner-reduced-send .2s ease-out both !important; }
+      .owner-mode .bakery-ai-message.is-entering.assistant { animation:bakery-ai-owner-reduced-reply .2s ease-out both !important; }
     }
     @media(max-width:680px) { .bakery-ai-open { min-height:38px; padding:8px 11px; gap:6px; font-size:10px; } }
     @media(max-width:430px) {
@@ -533,7 +566,9 @@
     .daily-copy { margin: 9px 0 16px; color: var(--muted); font-size: 12px; line-height: 1.5; }
     .progress-track { height: 7px; overflow: hidden; border-radius: 20px; background: rgba(255,255,255,.07); }
     .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--orange), var(--gold)); transition: width .45s ease; }
-    .progress-label { display: flex; justify-content: space-between; margin-top: 8px; color: #8f806d; font-size: 10px; }
+    .progress-label { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; min-width: 0; margin-top: 8px; color: #8f806d; font-size: 10px; }
+    .progress-label > span { min-width: 0; overflow-wrap: anywhere; }
+    .progress-label > span:last-child { text-align: right; }
     .section-row { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 32px 0 13px; }
     .section-title { margin: 0; font-size: 17px; letter-spacing: -.02em; }
     .featured-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -680,6 +715,43 @@
     .owner-mode .dock-button { transition: color .336s,transform .544s cubic-bezier(.16,1,.3,1); }
     .owner-mode .dock-button.active { color: #25190d; }
     .owner-mode .dock-button.active .dock-icon svg { animation: owner-glyph-arrive .72s cubic-bezier(.16,1,.3,1) both; }
+    .owner-mode .topbar { animation:owner-topbar-aura 8s ease-in-out infinite; }
+    .owner-mode .brand-mark { transition:transform .48s cubic-bezier(.16,1,.3,1),box-shadow .48s ease; }
+    .owner-mode .brand:hover .brand-mark { transform:translateY(-2px) rotate(-4deg) scale(1.04); box-shadow:0 0 25px rgba(255,202,112,.24); }
+    .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card) {
+      transition:transform .42s cubic-bezier(.16,1,.3,1),border-color .32s ease,box-shadow .42s ease,background-color .32s ease;
+    }
+    .owner-mode button:not(:disabled):not(.cookie-button):not(.dock-button):active { transform:scale(.975); transition-duration:.12s; }
+    .owner-mode .dock-button:not(.active):hover { transform:translateY(-2px) scale(1.04); }
+    .owner-mode .facebook-dialog:not(.is-closing) .facebook-panel,
+    .owner-mode .bakery-ai-dialog:not(.is-closing) .bakery-ai-panel,
+    .owner-mode .offline-cookie-dialog:not(.is-closing) .offline-cookie-panel,
+    .owner-mode .role-info-dialog:not(.is-closing) .role-info-panel,
+    .owner-mode .vip-dialog:not(.is-closing) .vip-panel,
+    .owner-mode .signout-confirm:not(.is-closing) .signout-confirm-panel,
+    .owner-mode .demo-dialog:not(.is-closing) .demo-card,
+    .owner-mode .screen-flow:not(.is-closing) .flow-panel,
+    .owner-mode .tutorial-screen:not(.is-closing) .tutorial-card {
+      animation:owner-interface-panel-arrive .62s cubic-bezier(.16,1,.3,1) both;
+      transform-origin:50% 65%;
+    }
+    @media (hover:hover) {
+      .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card):hover {
+        z-index:1;
+        transform:translateY(-3px) scale(1.006);
+        border-color:rgba(255,224,138,.42);
+        box-shadow:0 16px 40px rgba(0,0,0,.2),0 0 24px rgba(255,202,112,.1);
+      }
+    }
+    @keyframes owner-topbar-aura {
+      0%,100% { box-shadow:0 10px 35px rgba(0,0,0,.24),0 0 0 rgba(255,202,112,0); }
+      50% { box-shadow:0 12px 42px rgba(0,0,0,.3),0 0 30px rgba(255,202,112,.1); }
+    }
+    @keyframes owner-interface-panel-arrive {
+      0% { opacity:0; transform:translate3d(0,20px,0) scale(.96) rotateX(3deg); filter:blur(7px); }
+      68% { opacity:1; transform:translate3d(0,-3px,0) scale(1.012) rotateX(-.5deg); filter:blur(0); }
+      100% { opacity:1; transform:translate3d(0,0,0) scale(1) rotateX(0); filter:blur(0); }
+    }
     @keyframes owner-glyph-arrive {
       0% { opacity:.5; transform:translateY(5px) rotate(-18deg) scale(.72); }
       62% { opacity:1; transform:translateY(-3px) rotate(7deg) scale(1.24); }
@@ -689,6 +761,14 @@
       0% { opacity:0; transform:translate3d(55%,0,0); }
       18% { opacity:.8; }
       100% { opacity:0; transform:translate3d(-55%,0,0); }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .owner-mode .topbar { animation:none; }
+      .owner-mode .brand:hover .brand-mark,
+      .owner-mode .dock-button:not(.active):hover,
+      .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card):hover {
+        transform:none;
+      }
     }
     .owner-mode .shop-item, .owner-mode .shop-buy, .owner-mode .owner-tool-button, .owner-mode .flow-button {
       transition-duration:.336s;
@@ -992,9 +1072,11 @@
     .achievement-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
     .achievement-card { min-width:0; padding:17px; border:1px solid var(--line); border-radius:18px; background:rgba(41,32,25,.78); }
     .achievement-card.is-unlocked { border-color:rgba(255,202,112,.38); background:linear-gradient(135deg,rgba(255,202,112,.1),rgba(41,32,25,.82)); }
-    .achievement-card h2 { margin:0; font-size:13px; }
-    .achievement-card p { margin:7px 0; color:var(--muted); font-size:11px; line-height:1.6; }
-    .achievement-meta { display:flex; justify-content:space-between; gap:8px; color:var(--gold); font-size:10px; font-weight:750; }
+    .achievement-card h2 { margin:0; overflow-wrap:anywhere; font-size:13px; line-height:1.45; }
+    .achievement-card p { margin:7px 0; overflow-wrap:anywhere; color:var(--muted); font-size:11px; line-height:1.6; }
+    .achievement-meta { display:grid; grid-template-columns:minmax(0,1fr); gap:4px; min-width:0; color:var(--gold); font-size:10px; font-weight:750; }
+    .achievement-meta > span { min-width:0; overflow-wrap:anywhere; }
+    .achievement-meta > span:last-child { color:var(--muted); font-weight:650; }
     .achievement-progress { height:5px; margin-top:10px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.08); }
     .achievement-progress-fill { height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--orange),var(--gold)); }
     .achievement-summary { margin:0 0 16px; color:var(--muted); font-size:12px; }
@@ -1143,7 +1225,7 @@
       .bakery-whisper { margin: 20px auto -20px; }
       .bake-layout { grid-template-columns: 1fr; }
       .oven-card { min-height: 360px; }
-      .side-stack { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .side-stack { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: auto; }
       .balance-card { min-height: 188px; padding: 21px; }
       .daily-card { display: flex; flex-direction: column; justify-content: center; padding: 19px; }
       .featured-row { gap: 8px; }
@@ -1168,7 +1250,7 @@
       .bakery-whisper { min-height: 48px; padding: 11px 13px; }
       .bakery-whisper-text { font-size: 11px; }
       .page-heading { margin-bottom: 20px; }
-      .side-stack { grid-template-columns: 1fr; }
+      .side-stack { grid-template-columns: minmax(0,1fr); }
       .balance-card { min-height: 166px; }
       .daily-card { padding: 19px; }
       .featured-row { grid-template-columns: 1fr; }
@@ -1221,7 +1303,7 @@
         <div><div class="brand-name">Jancsi's Crumb Galaxy</div><div class="brand-sub">a little baking universe</div></div>
       </div>
       <div class="top-actions">
-        <button id="bakery-ai-open" class="bakery-ai-open" type="button" aria-label="Open bakery AI helper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42m-9.88 9.88-1.42 1.42"/><circle cx="12" cy="12" r="5"/></svg><span>Bakery AI</span></button>
+        <button id="bakery-ai-open" class="bakery-ai-open" type="button" aria-label="Open bakery AI helper"><span class="bakery-ai-wordmark" aria-hidden="true">AI</span><span>Bakery AI</span></button>
         <button id="vip-open" class="vip-open-button" type="button" aria-label="Open VIP bakery plans" hidden>✦ VIP plans</button>
         <button id="facebook-open" class="facebook-open-button" type="button" aria-label="Open Facebook follow information" title="Visit Jancsi on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Facebook</span></button>
         <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Crumb Galaxy Facebook page information" title="Visit Jancsi's Crumb Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
@@ -1534,10 +1616,54 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         ownerOnly
       })));
       const achievements = [...makeAchievements(achievementTracks), ...makeAchievements(ownerAchievementTracks, true)];
-      const visibleAchievements = () => achievements.filter(achievement => !achievement.ownerOnly || isOwner());
-      const nextBakingMilestone = () => visibleAchievements()
-        .filter(achievement => achievement.metric === "baked" && !state.achievements.includes(achievement.id))
-        .sort((left, right) => left.goal < right.goal ? -1 : left.goal > right.goal ? 1 : 0)[0] || null;
+      const dynamicBakedMultiplier = 1000000n;
+      const dynamicBakedTracks = [
+        { idPrefix: "baked", goal: extendedBakedGoal, reward: extendedBakedReward, title: "Beyond the Safe Batch", metricName: "Lifetime baking · beyond the safe batch", ownerOnly: false },
+        { idPrefix: "owner-baked", goal: finalSafeBakedGoal, reward: 10000000000n, title: "Chief's Crumb Cosmos", metricName: "Owner's legendary baking · extended", ownerOnly: true }
+      ];
+      const dynamicBakedAchievements = (unlockedIds = new Set(state.achievements)) => dynamicBakedTracks.flatMap(track => {
+        const milestones = [];
+        let previousGoal = track.goal;
+        let previousReward = track.reward;
+        let index = 1;
+        while (true) {
+          const goal = previousGoal * dynamicBakedMultiplier;
+          const reward = previousReward * dynamicBakedMultiplier;
+          const id = `${track.idPrefix}-${goal}`;
+          const achievement = {
+            id,
+            metric: "baked",
+            metricName: track.metricName,
+            goal,
+            title: `${track.title} · ${index}`,
+            reward,
+            ownerOnly: track.ownerOnly,
+            dynamic: true
+          };
+          milestones.push(achievement);
+          if (!unlockedIds.has(id)) break;
+          previousGoal = goal;
+          previousReward = reward;
+          index++;
+        }
+        return milestones;
+      });
+      const visibleAchievements = (unlockedIds = new Set(state.achievements), includeDynamic = true) => [
+        ...achievements,
+        ...(includeDynamic ? dynamicBakedAchievements(unlockedIds) : [])
+      ].filter(achievement => !achievement.ownerOnly || isOwner());
+      const nextBakingMilestone = () => {
+        const bakedMilestones = visibleAchievements()
+          .filter(achievement => achievement.metric === "baked")
+          .sort((left, right) => left.goal < right.goal ? -1 : left.goal > right.goal ? 1 : 0);
+        if (isOwner()) {
+          const finalOwnerMilestone = bakedMilestones.find(achievement =>
+            achievement.ownerOnly && bakedBigInt(achievement.goal) === finalSafeBakedGoal
+          );
+          if (finalOwnerMilestone && state.achievements.includes(finalOwnerMilestone.id)) return finalOwnerMilestone;
+        }
+        return bakedMilestones.find(achievement => !state.achievements.includes(achievement.id)) || null;
+      };
       const DAILY_WHEEL_COOLDOWN = 24 * 60 * 60 * 1000;
       const wheelPrizes = [
         { id: "crumb-pouch", label: "+250", description: "250 cookies", type: "cookies", amount: 250, tier: "common", color: "#b96c42" },
@@ -1689,7 +1815,13 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const baked = bakedBigInt(state.baked);
         return baked <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(baked) : baked;
       };
-      const bakedRatioPercent = (baked, goal) => Number(bakedBigInt(baked)) / Number(bakedBigInt(goal)) * 100;
+      const bakedRatioPercent = (baked, goal) => {
+        const exactGoal = bakedBigInt(goal);
+        if (exactGoal === 0n) return 100;
+        const exactBaked = bakedBigInt(baked);
+        if (exactBaked >= exactGoal) return 100;
+        return Number(exactBaked * 1000000n / exactGoal) / 10000;
+      };
       const animatedValues = new Map();
       const counterFrames = new Map();
       const cookieAnimations = new WeakMap();
@@ -1793,7 +1925,11 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       }
       function syncPageCounters() {
         main.querySelectorAll("[data-counter]").forEach(element => {
-          setCounter(element, element.dataset.counter, element.dataset.counterValue);
+          const counter = element.dataset.counter;
+          const value = ["progress-baked", "stat-baked", "profile-baked"].includes(counter)
+            ? bakedBigInt(element.dataset.counterValue)
+            : element.dataset.counterValue;
+          setCounter(element, counter, value);
         });
       }
       const iconArt = name => {
@@ -3607,9 +3743,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             throw new TypeError("The saved bakery data is not an object.");
           }
           const savedAchievements = Array.isArray(saved.achievements) ? saved.achievements : [];
+          const knownAchievements = [...achievements, ...dynamicBakedAchievements(new Set(savedAchievements))];
           const earnedAchievementCookies = saved.achievementCookiesCounted === true || !Array.isArray(saved.achievements)
             ? 0n
-            : achievements
+            : knownAchievements
               .filter(achievement => savedAchievements.includes(achievement.id))
               .reduce((total, achievement) => total + BigInt(achievement.reward), 0n);
           const numericSettings = {
@@ -3658,7 +3795,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             pendingOfflineSeconds: safeCounter(saved.pendingOfflineSeconds),
             lastSave: Number.isFinite(Number(saved.lastSave)) && Number(saved.lastSave) > 0 ? safeCounter(saved.lastSave) : Date.now(),
             achievements: Array.isArray(savedAchievements)
-              ? [...new Set(savedAchievements.filter(id => typeof id === "string" && achievements.some(achievement => achievement.id === id)))]
+              ? [...new Set(savedAchievements.filter(id => typeof id === "string" && knownAchievements.some(achievement => achievement.id === id)))]
               : [],
             welcomedPages: Array.isArray(saved.welcomedPages)
               ? [...new Set(saved.welcomedPages.filter(page => typeof page === "string" && pageOrder.includes(page)))]
@@ -3786,6 +3923,54 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           "Add 1,000 Clockwork Bakers",
           "Hire 100 Cosmic Mixers",
           "Give me 1,000,000 cookies",
+          "Expand my bakery now",
+          "Optimize my entire bakery",
+          "Max out my cookie production",
+          "Build a huge helper crew",
+          "Automate baking at maximum speed",
+          "Max out my tap power",
+          "Upgrade every helper station",
+          "Create a cookie empire",
+          "Give my bakery a production overdrive",
+          "Fill my cookie jar with 1 trillion cookies",
+          "Make my bakery stronger",
+          "Grow my bakery and hire more helpers",
+          "Boost my passive income",
+          "Set up a complete bakery expansion",
+          "Give my whole bakery a power-up",
+          "Build my bakery up automatically",
+          "Run my bakery for me",
+          "Run my bakery on autopilot",
+          "Operate my bakery at full power",
+          "Manage my bakery operations",
+          "Can you clear my bakery",
+          "Turn off all autonomous commands",
+          "Turn on all autonomous commands",
+          "Turn on all Owner tools",
+          "Turn off all OP Owner Tools",
+          "Keep my bakery baking automatically",
+          "Take over bakery operations",
+          "Start all Owner production systems",
+          "Run my bakery and grow my cookie jar",
+          "Handle all my bakery operations",
+          "Keep production running while I play",
+          "Do a complete bakery operation",
+          "Run my bakery while I choose upgrades",
+          "Make my bakery run automatically",
+          "Activate full bakery operations now",
+          "Expand my bakery with 10 billion cookies",
+          "Add 500 billion cookies to my jar",
+          "Add 1,000 helpers to my whole crew",
+          "Enable maximum auto-baking",
+          "Activate maximum production overdrive",
+          "Set my tap power to maximum",
+          "Grow my helper crew by 1,000 per station",
+          "Build my bakery empire with a billion cookies",
+          "Optimize my passive income",
+          "Make my entire bakery stronger",
+          "Fill my cookie treasury with 1 trillion cookies",
+          "Start all production systems at full power",
+          "Automate my ovens and upgrade every station",
           "How do I keep my progress safe?"
         ];
         return isOwner() ? [...commonPrompts, ...adminPrompts, ...ownerPrompts]
@@ -3818,7 +4003,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         bakeryAiDialog.classList.remove("is-closing");
         bakeryAiDialog.hidden = false;
         bakeryAiDialog.innerHTML = `<section class="bakery-ai-panel" role="dialog" aria-modal="true" aria-labelledby="bakery-ai-title">
-          <header class="bakery-ai-head"><div class="bakery-ai-mark" aria-hidden="true">✦</div><div><h2 id="bakery-ai-title" class="bakery-ai-title"></h2><p class="bakery-ai-subtitle">Step-by-step bakery help, quick ideas, and role-limited local tools</p></div><button class="bakery-ai-close" type="button" aria-label="Close Bakery AI">×</button></header>
+          <header class="bakery-ai-head"><div class="bakery-ai-mark" aria-hidden="true">AI</div><div><h2 id="bakery-ai-title" class="bakery-ai-title"></h2><p class="bakery-ai-subtitle">Step-by-step bakery help, quick ideas, and role-limited local tools</p></div><button class="bakery-ai-close" type="button" aria-label="Close Bakery AI">×</button></header>
           <div class="bakery-ai-thread" data-ai-thread role="log" aria-live="polite" aria-relevant="additions"></div>
           <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}</div>
           <form class="bakery-ai-compose"><input class="bakery-ai-input" type="text" maxlength="500" autocomplete="off" aria-label="Message Bakery AI" placeholder="Ask a bakery question or request a supported game action"><button class="bakery-ai-send" type="submit">Send</button></form>
@@ -3828,7 +4013,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (!bakeryAiMessages.length) {
           bakeryAiMessages.push({
             role: "assistant",
-            text: `${bakeryAiName()} here! Ask me how to bake, grow your cookie jar, choose helpers, use boosts, or reach achievements. ${isOwner() || isAdmin() ? "I can also carry out explicit cookie or helper grants for this bakery." : "I can give you practical, step-by-step tips for this bakery."}`
+            text: `Hey, ${currentUser?.name || (isDemo ? "Demo Baker" : "Baker")}! ${bakeryAiName()} is here and ready to bake up some fun with you. ✨ Ask me about baking, growing your cookie jar, choosing helpers, boosts, achievements, or anything you are figuring out. ${isOwner() ? "I can also carry out bakery expansions, helper upgrades, and production actions directly in your local Owner save." : isAdmin() ? "I can also carry out the existing explicit cookie or helper grants for this Admin bakery." : "We can take every question one step at a time, and I'll help you choose a practical next move."}`
           });
         }
         renderBakeryAiMessages();
@@ -3872,6 +4057,155 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
               : unit === "k" || unit === "thousand" ? 1e3 : 1;
         return safeCounter(Number(match[1]) * factor);
       }
+      function setOwnerAutonomousMode(enabled) {
+        if (enabled) {
+          Object.assign(state.ownerTools, {
+            tapMultiplier: 1000000000,
+            passiveBonus: 1000000000000000,
+            productionMultiplier: 1000000000,
+            passiveMultiplier: 10000,
+            autoBakeRate: 1000000,
+            boostDurationMultiplier: 1000000,
+            boostPowerMultiplier: 10000
+          });
+          let stationsStarted = 0;
+          upgrades.forEach(item => {
+            if (!owned(item.id)) {
+              state.bought[item.id] = 1;
+              stationsStarted++;
+            }
+          });
+          return `Autonomous bakery mode is on: maximum Owner auto-baking and production are enabled, and I started ${stationsStarted} empty helper station${stationsStarted === 1 ? "" : "s"}. Production continues while this game is open in this browser.`;
+        }
+        Object.assign(state.ownerTools, {
+          tapMultiplier: 1,
+          passiveBonus: 0,
+          productionMultiplier: 1,
+          passiveMultiplier: 1,
+          autoBakeRate: 0,
+          boostDurationMultiplier: 1,
+          boostPowerMultiplier: 1
+        });
+        return "Autonomous bakery mode is off: automatic taps and Owner production overrides are disabled. Your cookies, helpers, and active timed boosts were left untouched.";
+      }
+      function setAllOwnerTools(enabled) {
+        if (enabled) {
+          Object.assign(state.ownerTools, {
+            infiniteCookies: true,
+            freeMarket: true,
+            tapMultiplier: 1000000000,
+            passiveBonus: 1000000000000000,
+            productionMultiplier: 1000000000,
+            passiveMultiplier: 10000,
+            autoBakeRate: 1000000,
+            boostDurationMultiplier: 1000000,
+            boostPowerMultiplier: 10000
+          });
+          Object.assign(state.wheelTools, { infiniteSpins: true, infiniteLuck: true });
+          state.cookies = Number.MAX_SAFE_INTEGER;
+          return "All Owner Studio tools are on: the infinite cookie jar, free market, maximum production and boost controls, and infinite wheel powers are enabled.";
+        }
+        const hadInfiniteJar = state.ownerTools.infiniteCookies;
+        Object.assign(state.ownerTools, {
+          infiniteCookies: false,
+          freeMarket: false,
+          tapMultiplier: 1,
+          passiveBonus: 0,
+          productionMultiplier: 1,
+          passiveMultiplier: 1,
+          autoBakeRate: 0,
+          boostDurationMultiplier: 1,
+          boostPowerMultiplier: 1
+        });
+        Object.assign(state.wheelTools, { infiniteSpins: false, infiniteLuck: false });
+        if (hadInfiniteJar) state.cookies = Math.min(state.cookies, 1000000);
+        return `All active Owner Studio tools are off. Your helpers and active timed boosts were left untouched.${hadInfiniteJar ? " The infinite jar was turned off, so its balance is capped at 1,000,000 cookies, as in Owner Studio." : ""}`;
+      }
+      function bakeryAiOwnerAction(message) {
+        if (!isOwner() || !currentUser || isDemo) return null;
+        const text = message.toLowerCase();
+        if (/\b(how|teach|explain|why|what|help me learn|show me)\b/i.test(text)) return null;
+        const enableAutonomousMode = /\b(turn on|enable|activate|start)\b.*\bautonomous\b/i.test(text);
+        const disableAutonomousMode = /\b(turn off|disable|stop)\b.*\bautonomous\b/i.test(text);
+        const enableAllOwnerTools = /\b(turn on|enable|activate)\b.*\ball (?:op )?owner tools\b/i.test(text);
+        const disableAllOwnerTools = /\b(turn off|disable|stop)\b.*\ball (?:op )?owner tools\b/i.test(text);
+        if (/\b(don't|do not|never)\b/i.test(text) || (/\b(stop|disable|turn off)\b/i.test(text) && !disableAutonomousMode && !disableAllOwnerTools)) return null;
+        const clearBakery = /\b(clear|reset|wipe|start over)\b.*\b(my bakery|bakery|bakery progress|bakery save)\b/i.test(text);
+        if (clearBakery) {
+          if (!window.confirm("Clear this Owner bakery and reset its cookies, lifetime baking, helpers, achievements, boosts, and Owner settings to zero? This cannot be undone.")) {
+            return "I left your bakery unchanged. Nothing was cleared.";
+          }
+          state = freshState();
+          save();
+          render();
+          updateLiveNumbers();
+          return "Your Owner bakery has been cleared and reset to zero. The empty bakery was saved on this device.";
+        }
+        if (enableAllOwnerTools || disableAllOwnerTools) {
+          const result = setAllOwnerTools(enableAllOwnerTools);
+          const earned = awardAchievements();
+          save();
+          render();
+          updateLiveNumbers();
+          return `${result} I saved the change to your Owner bakery on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+        }
+        if (enableAutonomousMode || disableAutonomousMode) {
+          const result = setOwnerAutonomousMode(enableAutonomousMode);
+          const earned = awardAchievements();
+          save();
+          render();
+          updateLiveNumbers();
+          return `${result} I saved the change to your Owner bakery on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+        }
+        const actionRequested = /\b(can you|could you|please|do it|do|run|operate|manage|oversee|take over|handle|give|make|build|expand|upgrade|grow|optimi[sz]e|maximi[sz]e|max(?: out)?|automate|boost|increase|improve|strengthen|set up|turn on|activate|start|launch|execute|help me|create|fill|hire|buy|purchase|add|grant|claim|collect|harvest|bake|produce|tune|adjust|set|enable|unlock|keep)\b/i.test(text) || /\b(i need you to|i want you to)\b/i.test(text);
+        if (!actionRequested) return null;
+
+        let result;
+        if (/\b(run|operate|manage|oversee|autopilot|take over|handle|do|start|launch|execute|keep|enable|activate|automatically)\b/i.test(text) && /\b(bakery|business|production|operations|operation)\b/i.test(text)) {
+          result = setOwnerAutonomousMode(true);
+        } else if (/\b(expand|expansion|cookie empire|build my bakery|grow my bakery)\b/i.test(text)) {
+          const cookieAmount = Math.min(1000000000000, bakeryAiQuantity(message, 1000000000));
+          const helpersPerStation = 100;
+          addCookies(cookieAmount);
+          upgrades.forEach(item => { state.bought[item.id] = addSafeCounter(owned(item.id), helpersPerStation); });
+          state.ownerTools.autoBakeRate = Math.max(state.ownerTools.autoBakeRate, 100);
+          result = `Bakery expansion complete: +${fmt(cookieAmount)} cookies, +${fmt(helpersPerStation)} of every helper, and auto-baking set to at least 100 taps per second.`;
+        } else if (/\b(overdrive|optimi[sz]e|maximum production|max(?: out)? .*production|stronger|power-up|power up|boost .*production|boost my bakery|passive income|increase .*production|improve .*production|entire bakery|whole bakery)\b/i.test(text)) {
+          Object.assign(state.ownerTools, {
+            tapMultiplier: 1000000000,
+            passiveBonus: 1000000000000000,
+            productionMultiplier: 1000000000,
+            passiveMultiplier: 10000,
+            autoBakeRate: 1000000,
+            boostDurationMultiplier: 1000000,
+            boostPowerMultiplier: 10000
+          });
+          result = "Owner production overdrive engaged: tap power, passive income, production, auto-baking, and boost settings are now at their highest Owner Studio levels.";
+        } else if (/\b(automate|auto-bak|automatic baking)\b/i.test(text)) {
+          state.ownerTools.autoBakeRate = 1000000;
+          result = "Maximum auto-baking enabled: your Owner bakery will automatically bake at 1,000,000 taps per second while this local game is running.";
+        } else if (/\b(tap power|hand-bak|tap strength)\b/i.test(text)) {
+          state.ownerTools.tapMultiplier = 1000000000;
+          result = "Maximum Owner tap power enabled. Your hand-baking multiplier is now at its highest Owner Studio level.";
+        } else if (/\b(helper crew|whole crew|all helpers|every helper|helper station|helper stations|crew)\b/i.test(text)) {
+          const helpersPerStation = 1000;
+          upgrades.forEach(item => { state.bought[item.id] = addSafeCounter(owned(item.id), helpersPerStation); });
+          result = `Helper crew expanded: +${fmt(helpersPerStation)} of every helper station.`;
+        } else if (/\b(cookie jar|cookies|cookie treasury)\b/i.test(text)) {
+          const cookieAmount = Math.min(1000000000000, bakeryAiQuantity(message, 1000000000000));
+          if (!cookieAmount) return "Tell me a positive cookie amount to add.";
+          addCookies(cookieAmount);
+          result = `Cookie treasury funded with +${fmt(cookieAmount)} cookies.`;
+        } else {
+          return null;
+        }
+
+        const earned = awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        return `${result} I saved the changes to your Owner bakery on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+      }
       function bakeryAiGrantCookies(message) {
         if (!(isOwner() || isAdmin()) || !currentUser) return null;
         const asksForHelp = /\b(how|teach|explain|why|what|help me learn)\b/i.test(message);
@@ -3911,6 +4245,58 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         updateLiveNumbers();
         return `Done — I added ${fmt(amount)} ${helper.name}${amount === 1 ? "" : "s"} to this ${isOwner() ? "Owner" : "Admin"} bakery and saved the change on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
       }
+      function bakeryAiConversation(message) {
+        const text = message.toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9\s']/g, ' ').replace(/\s+/g, ' ').trim();
+        const baker = currentUser?.name || (isDemo ? "Demo Baker" : "Baker");
+        const cookies = fmt(state.cookies);
+        const saysHello = /^(?:hi|hey|hello|hiya|howdy|yo)(?: there| friend| bro| bakery ai| ai)?$/.test(text) || /^(?:(?:hi|hey|hello|hiya|howdy|yo) )?(?:what'?s up|how are you)$/.test(text);
+        const celebrates = /\b(i did it|i done it|we did it|i got|we got|i have|we have|ive got|i've got|i earned|i made it|look at|check out)\b/.test(text) && /\b(cookie|cookies|baked|bakery|jar|rich|million|billion|trillion|lots|loads|tons)\b/.test(text) || /\b(wohoo|woohoo|i did that|that worked|it worked|so many cookies|lots of cookies|a lot of cookies)\b/.test(text);
+        const feelsStuck = /\b(dont know|don't know|do not know|confused|stuck|lost|overwhelmed|hard|difficult|cant|can't|cannot|sad|worried|frustrated|new to|beginner|teach me)\b/.test(text);
+        const asksToBake = /\b(bake|baking|start|begin|first cookie|how do i play)\b/.test(text);
+
+        if (celebrates) {
+          return `WOHOOO!!! Let's go, Baker ${baker}! 🎉🍪 That is a galaxy-sized win. Your jar currently shows ${cookies} cookies, so take a second to enjoy the progress you just made. Here is a great next move:
+1. Open Market and compare your helper prices with your current cookie jar.
+2. If you want steady growth, invest in a Sunny Oven or another passive helper you can afford.
+3. If you love tapping, a Pocket Whisk can make each tap count for more.
+4. Check Bake for your next lifetime-cookie milestone, then choose one goal to chase.
+What sounds more fun next: growing your automatic cookie flow, powering up your taps, or reaching an achievement?`;
+        }
+        if (saysHello) {
+          return `Heyyy, ${baker}! 👋✨ I'm doing great now that we're baking together. Your bakery is sitting at ${cookies} cookies, and I'm ready to help you make the next batch count. We can plan your first bake, pick a smart helper, boost production, or just celebrate your progress. What are you in the mood to work on today?`;
+        }
+        if (feelsStuck && asksToBake) {
+          return `Aww, no worries at all, ${baker} — every galaxy bakery starts with one tiny batch, and I'll walk you through it one step at a time. You've got this! 🍪
+
+1. Start on Bake: tap the big cookie. Each tap adds cookies to your jar; you can tap again whenever you like.
+2. Check your jar: look at the cookie total near the top so you can see your first batch arrive. Yours currently shows ${cookies}.
+3. Open Market: compare the helpers you can afford. Sunny Ovens make cookies automatically over time; Pocket Whisks make your taps stronger.
+4. Choose one small upgrade: buy an affordable helper, then return to Bake and notice how your cookies-per-second or per-tap amount changes.
+5. Build a little routine: tap to get started, let helpers bake in the background, then reinvest some cookies in another helper.
+6. Pick a goal: open Awards to see achievements, and check the Bake milestone card for your next lifetime-baking target.
+
+No need to rush or buy everything at once. A lovely first plan is one oven for steady baking, then a whisk if you enjoy tapping. Want to tell me what you see in your Market, and I'll help you choose the best first helper?`;
+        }
+        if (feelsStuck) {
+          return `It's completely okay to feel unsure, ${baker} — baking is a bunch of tiny choices, not a test, and we can figure it out together. 🌟 Tell me which part feels confusing (helpers, upgrades, boosts, achievements, or your cookie total) and I'll guide you through it. If you want a simple first step right now, tap the cookie on Bake once, then open Market and we'll pick one affordable upgrade together. What part should we tackle first?`;
+        }
+        return null;
+      }
+      function bakeryAiPersonalize(message, reply) {
+        const baker = currentUser?.name || (isDemo ? "Demo Baker" : "Baker");
+        const text = message.toLowerCase();
+        if (/^(?:hi|hey|hello|hiya|howdy|yo)(?: there| friend| bro| bakery ai| ai)?$/.test(text) || /^(?:(?:hi|hey|hello|hiya|howdy|yo) )?(?:what'?s up|how are you)$/.test(text) || /\b(i did it|we did it|that worked|it worked|wohoo|woohoo)\b/.test(text) || /\b(dont know|don't know|confused|stuck|lost|overwhelmed|sad|worried|frustrated|teach me)\b/.test(text)) return reply;
+        if (/\b(complete|enabled|funded|added|hired|expanded|engaged|saved the change)\b/i.test(reply)) {
+          return `Brilliant move, ${baker}! 🎉 ${reply}
+
+What would you like to tackle next: more helpers, faster production, or a new bakery goal?`;
+        }
+        return `Absolutely, ${baker} — we've got this together! ✨
+
+${reply}
+
+Want to keep going? Tell me your next goal or what you see on the screen, and I'll help you choose the next step.`;
+      }
       function bakeryAiTutorial(message) {
         const text = message.toLowerCase();
         if (isOwner() && /\b(free market|market tools)\b/.test(text)) {
@@ -3925,7 +4311,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (/\b(backup|export|\bsave\b|progress safe)\b/.test(text)) {
           return "Your account progress is saved locally in this browser:\n1. Sign in to the same account on this browser to load its saved bakery.\n2. Demo progress is temporary and disappears when demo mode ends.\n3. Admin and Owner Studios include a download-save-backup tool for their local bakery.\n4. Keep downloaded backup files private and store them somewhere you trust.\n5. This single-file game has no online server, so it cannot sync saves across devices.";
         }
-        if (/\b(stats|production report|baking progress|cookie jar|progress)\b/.test(text)) {
+        if (/\b(stats|production report|baking progress|progress)\b/.test(text) || (/\bcookie jar\b/.test(text) && !/\b(grow|increase|expand|fill|more|bigger|earn|build)\b/.test(text))) {
           return "You can check your bakery progress in a few places:\n1. Bake shows your current cookie jar, cookies per tap, and production per second.\n2. The Bake milestone card shows the next lifetime-cookie goal.\n3. Open Ledger or Awards in the bottom dock for activity and achievement progress.\n4. Visit Profile for your bakery summary.\n5. Admin and Owner roles also have live reports in their tool studios.";
         }
         if (/\b(first|start|quick bakery tip|what should i do)\b/.test(text)) {
@@ -3935,7 +4321,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           return "Here’s a simple baking path:\n1. Open Bake and tap the big cookie to make your first cookies.\n2. Visit Market and buy Pocket Whisks to make each tap stronger.\n3. Buy Sunny Ovens for steady cookies every second.\n4. Add Clockwork Bakers when you can afford them; they produce more automatically.\n5. Check your jar and the Bake page milestone as you go. You can keep tapping while helpers bake.";
         }
         if (/\b(grow|more cookies|cookie jar|earn|faster|production)\b/.test(text)) {
-          return "To grow your cookie jar steadily:\n1. Buy Sunny Ovens for passive cookies each second.\n2. Add Clockwork Bakers for stronger automatic production.\n3. Use Pocket Whisks if you like tapping; they improve each tap.\n4. Compare item prices with your current balance in Market before buying.\n5. Check Boosts for temporary production boosts, then return to Bake and let your helpers work.";
+          return "Let us grow that cookie jar with a smart little plan:\n1. Check your current cookie total and cookies-per-second rate on Bake so you know your starting point.\n2. Open Market and compare each affordable helper's price with its production; Sunny Ovens and Clockwork Bakers add cookies over time.\n3. Pick one passive helper you can afford without spending blindly, buy it, then return to Bake and watch your per-second rate.\n4. If you enjoy active tapping, add Pocket Whisks too; they improve what each tap earns, while ovens keep working between taps.\n5. Visit Boosts when you are ready to play actively, read the effect and timer, and activate a boost that matches your goal.\n6. Reinvest a portion of new cookies, check Awards for nearby achievements, and use the Bake milestone card to choose your next target.\nThat keeps your growth balanced without spending your whole cookie jar at once.";
         }
         if (/\b(helper|helpers|oven|whisk|clockwork|mixer|market|buy)\b/.test(text)) {
           return "A handy helper plan:\n1. Sunny Ovens are a good early choice because they add cookies every second.\n2. Clockwork Bakers provide a larger passive rate as your jar grows.\n3. Pocket Whisks improve active tapping.\n4. Open Market to compare prices and current ownership.\n5. Buy one or two upgrades, then check your per-second rate on Bake before choosing the next one.";
@@ -3966,9 +4352,12 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         renderBakeryAiMessages(true);
         const delay = isOwner() ? 0 : isAdmin() ? 70 : 150;
         window.setTimeout(() => {
-          let reply = bakeryAiGrantCookies(message);
+          let reply = bakeryAiOwnerAction(message);
+          if (!reply) reply = bakeryAiConversation(message);
+          if (!reply) reply = bakeryAiGrantCookies(message);
           if (!reply) reply = bakeryAiGrantHelper(message);
           if (!reply) reply = bakeryAiTutorial(message);
+          reply = bakeryAiPersonalize(message, reply);
           appendBakeryAiMessage("assistant", reply);
           renderBakeryAiMessages(true);
           if (form.isConnected) {
@@ -3993,6 +4382,17 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         state.pendingOfflineSeconds = addSafeCounter(state.pendingOfflineSeconds, elapsedSeconds);
         return earned;
       }
+      function formatOfflineDuration(totalSeconds) {
+        const seconds = Math.max(0, Math.floor(totalSeconds));
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor(seconds % 3600 / 60);
+        const remainingSeconds = seconds % 60;
+        const parts = [];
+        if (hours) parts.push(`${fmt(hours)} hour${hours === 1 ? "" : "s"}`);
+        if (minutes || hours) parts.push(`${fmt(minutes)} minute${minutes === 1 ? "" : "s"}`);
+        parts.push(`${fmt(remainingSeconds)} second${remainingSeconds === 1 ? "" : "s"}`);
+        return parts.join(" ");
+      }
       function offlineMultiplierOptions() {
         if (isOwner()) return [1, 2, 4, 8, 16, 100, 1000, 10000, 100000, 100000000000000000000000];
         if (isAdmin()) return [1, 2, 4, 8, 16];
@@ -4004,14 +4404,11 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const multipliers = offlineMultiplierOptions();
         const canDuplicate = isOwner() || isAdmin();
         const elapsed = state.pendingOfflineSeconds;
-        const elapsedMinutes = Math.max(1, Math.floor(elapsed / 60));
-        const elapsedLabel = elapsed >= 3600
-          ? `${fmt(elapsed / 3600)} hour${Math.floor(elapsed / 3600) === 1 ? "" : "s"}`
-          : `${fmt(elapsedMinutes)} minute${elapsedMinutes === 1 ? "" : "s"}`;
+        const elapsedLabel = formatOfflineDuration(elapsed);
         offlineCookieDialog.innerHTML = `<section class="offline-cookie-panel" role="dialog" aria-modal="true" aria-labelledby="offline-cookie-title" aria-describedby="offline-cookie-copy">
           <div class="offline-cookie-kicker">WHILE YOU WERE AWAY</div>
           <h2 id="offline-cookie-title">Welcome back, baker!</h2>
-          <p id="offline-cookie-copy" class="offline-cookie-copy">Your bakery kept producing cookies while you were away for about ${escapeHTML(elapsedLabel)}. Your offline batch is ready to collect.</p>
+          <p id="offline-cookie-copy" class="offline-cookie-copy">Your bakery kept producing cookies while you were away for ${escapeHTML(elapsedLabel)}. Your offline batch is ready to collect.</p>
           <div class="offline-cookie-stats">
             <div class="offline-cookie-stat"><div class="offline-cookie-stat-label">Offline cookies earned</div><div class="offline-cookie-stat-value" data-offline-base>${fmt(state.pendingOfflineCookies)}</div></div>
             <div class="offline-cookie-stat"><div class="offline-cookie-stat-label">Cookies you will receive</div><div class="offline-cookie-stat-value" data-offline-preview>${fmt(state.pendingOfflineCookies)}</div></div>
@@ -4134,7 +4531,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const newlyUnlocked = [];
         let reward = 0n;
         while (true) {
-          const eligible = visibleAchievements().filter(achievement =>
+          const eligible = visibleAchievements(unlocked, !unlockAll).filter(achievement =>
             !unlocked.has(achievement.id) &&
             (unlockAll || (achievement.metric === "baked"
               ? achievementMetric(achievement.metric) >= bakedBigInt(achievement.goal)
@@ -4199,7 +4596,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       function updateAchievementProgress() {
         const unlocked = new Set(state.achievements);
         main.querySelectorAll("[data-achievement-id]").forEach(card => {
-          const achievement = achievements.find(item => item.id === card.dataset.achievementId);
+          const achievement = visibleAchievements().find(item => item.id === card.dataset.achievementId);
           if (!achievement || unlocked.has(achievement.id)) return;
           const goal = achievement.metric === "baked" ? bakedBigInt(achievement.goal) : achievement.goal;
           const metricProgress = achievementMetric(achievement.metric);
@@ -4260,7 +4657,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
               </div>
               <div class="card daily-card">
                 <div class="daily-top"><div class="daily-title">${milestone ? escapeHTML(milestone.title) : "Every baking milestone complete"}</div><div class="daily-icon">${iconArt("cookie")}</div></div>
-                <p class="daily-copy">${milestone ? `Bake ${fmt(nextGoal)} lifetime cookies to earn +${fmt(milestone.reward)} cookies.` : "You have earned every baking milestone in this galaxy."}</p>
+                <p class="daily-copy">${milestone ? `Bake ${fmt(nextGoal)} lifetime cookie${nextGoal === 1n ? "" : "s"} to earn +${fmt(milestone.reward)} cookies.` : "You have earned every baking milestone in this galaxy."}</p>
                 <div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div>
                 <div class="progress-label"><span><span data-counter="progress-baked" data-counter-value="${earnedProgress}">${fmt(earnedProgress)}</span> earned</span><span>${milestone ? `${fmt(nextGoal)} cookies` : "Complete"}</span></div>
               </div>
@@ -5996,7 +6393,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           if (milestoneTitle) milestoneTitle.textContent = milestoneData?.title || "Every baking milestone complete";
           const milestoneCopy = main.querySelector(".daily-copy");
           if (milestoneCopy) milestoneCopy.textContent = milestoneData
-            ? `Bake ${fmt(nextGoal)} lifetime cookies to earn +${fmt(milestoneData.reward)} cookies.`
+            ? `Bake ${fmt(nextGoal)} lifetime cookie${nextGoal === 1n ? "" : "s"} to earn +${fmt(milestoneData.reward)} cookies.`
             : "You have earned every baking milestone in this galaxy.";
           const milestoneGoal = main.querySelector(".progress-label span:last-child");
           if (milestoneGoal) milestoneGoal.textContent = milestoneData ? `${fmt(nextGoal)} cookies` : "Complete";
@@ -6046,7 +6443,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (document.hidden) {
           if (!currentUser && !isDemo) return;
           if (!hiddenSince) hiddenSince = Date.now();
-          if (currentUser && !isDemo) save(false);
+          if (currentUser && !isDemo) {
+            state.lastSave = hiddenSince;
+            save(false);
+          }
           return;
         }
         if (!hiddenSince || (!currentUser && !isDemo)) {
@@ -6081,7 +6481,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         else if (currentPage === "boosts") updateLiveNumbers();
       }, 1000);
       setInterval(() => { if (currentUser && !document.hidden) save(); }, 10000);
-      window.addEventListener("beforeunload", () => save(false));
+      window.addEventListener("beforeunload", () => save());
       document.querySelectorAll(".dock-button").forEach(button => {
         const iconName = { bake: "bake", market: "market", boosts: "rush", ledger: "ledger", profile: "profile", achievements: "achievements", admin: "comet", owner: "comet" }[button.dataset.page];
         button.querySelector(".dock-icon").innerHTML = iconArt(iconName);
