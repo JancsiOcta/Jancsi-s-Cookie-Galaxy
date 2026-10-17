@@ -190,9 +190,16 @@
     @keyframes bakery-ai-owner-reduced-reply { from { opacity:0; transform:translate3d(-7px,4px,0) scale(.97); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
     .bakery-ai-message strong { color:#ffe6ad; }
     .bakery-ai-message.user strong { color:inherit; }
+    .bakery-ai-quick-tools { display:flex; flex:0 0 auto; align-items:center; gap:10px; padding:0 20px 10px; }
+    .bakery-ai-quick-search { width:100%; min-width:0; min-height:38px; padding:8px 13px; border:1px solid rgba(255,202,112,.25); border-radius:999px; outline:none; color:#f9f0dc; background:rgba(0,0,0,.2); font:inherit; font-size:11px; }
+    .bakery-ai-quick-search::placeholder { color:#aa9a83; }
+    .bakery-ai-quick-search:focus { border-color:rgba(255,202,112,.75); box-shadow:0 0 0 3px rgba(255,202,112,.1); }
+    .bakery-ai-quick-count { flex:0 0 auto; color:#c7b38f; font-size:9px; white-space:nowrap; }
     .bakery-ai-quick { display:grid; flex:0 0 auto; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-rows:40px; gap:8px; max-height:149px; padding:0 20px 13px; overflow-y:auto; overscroll-behavior:contain; scrollbar-color:rgba(255,202,112,.5) rgba(255,255,255,.05); scrollbar-width:thin; scroll-snap-type:y proximity; }
+    .bakery-ai-quick button[hidden] { display:none; }
     .bakery-ai-quick button { display:-webkit-box; min-width:0; min-height:40px; height:40px; padding:5px 8px; overflow:hidden; border:1px solid rgba(255,202,112,.3); border-radius:999px; color:#ffe6ad; background:rgba(255,202,112,.07); font-size:10px; font-weight:800; line-height:1.2; text-align:center; overflow-wrap:anywhere; line-clamp:2; -webkit-box-orient:vertical; -webkit-line-clamp:2; cursor:pointer; scroll-snap-align:start; transition:transform .18s ease,background .18s ease; }
     .bakery-ai-quick button:hover { transform:translateY(-1px); background:rgba(255,202,112,.14); }
+    .bakery-ai-quick-empty { grid-column:1/-1; margin:0; padding:12px 4px; color:#c7b38f; font-size:10px; line-height:1.5; text-align:center; }
     .bakery-ai-compose { display:flex; flex:0 0 auto; gap:9px; padding:14px 20px 18px; border-top:1px solid rgba(255,238,207,.1); }
     .bakery-ai-input { min-width:0; min-height:46px; flex:1 1 auto; padding:10px 16px; border:1px solid rgba(255,202,112,.25); border-radius:999px; outline:none; color:#f9f0dc; background:rgba(0,0,0,.2); font:inherit; font-size:12px; }
     .bakery-ai-input:focus { border-color:rgba(255,202,112,.75); box-shadow:0 0 0 3px rgba(255,202,112,.1); }
@@ -209,6 +216,9 @@
     body.admin-mode .bakery-ai-message.user { border-color:rgba(255,155,211,.48); color:#351629; background:linear-gradient(120deg,#ffc1e4,#e96cad); }
     body.admin-mode .bakery-ai-message strong { color:#ffc1e4; }
     body.admin-mode .bakery-ai-message.user strong { color:inherit; }
+    body.admin-mode .bakery-ai-quick-search { border-color:rgba(255,155,211,.3); }
+    body.admin-mode .bakery-ai-quick-search:focus { border-color:rgba(255,155,211,.78); box-shadow:0 0 0 3px rgba(255,114,189,.13); }
+    body.admin-mode .bakery-ai-quick-count, body.admin-mode .bakery-ai-quick-empty { color:#c7a9be; }
     body.admin-mode .bakery-ai-quick { scrollbar-color:rgba(255,155,211,.55) rgba(255,255,255,.05); }
     body.admin-mode .bakery-ai-quick button { border-color:rgba(255,155,211,.38); color:#ffc1e4; background:rgba(255,114,189,.09); }
     body.admin-mode .bakery-ai-quick button:hover { background:rgba(255,114,189,.18); }
@@ -230,6 +240,7 @@
       .bakery-ai-panel { height:calc(100vh - 18px); height:calc(100dvh - 18px); border-radius:24px; }
       .bakery-ai-head { padding:14px; }
       .bakery-ai-thread { padding:14px; }
+      .bakery-ai-quick-tools { padding-right:14px; padding-left:14px; }
       .bakery-ai-quick { padding-right:14px; padding-left:14px; }
       .bakery-ai-compose { padding:12px 14px 14px; }
       .bakery-ai-note { padding-right:14px; padding-left:14px; }
@@ -1759,6 +1770,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       let offlineMultiplier = 1;
       let bakeryAiMessages = [];
       let bakeryAiProcessing = false;
+      let repeatedOwnerAutoBuyTimer = null;
       const main = document.getElementById("main");
       const toast = document.getElementById("toast");
       const dock = document.querySelector(".dock");
@@ -3267,6 +3279,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       }
       function startDemo() {
         stopBakeryWhispers();
+        stopRepeatedOwnerAutoBuy();
         clearRememberedAccountSession();
         hiddenSince = 0;
         isDemo = true;
@@ -3705,6 +3718,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (accountClosing) return;
         if (!await confirmAccountExit()) return;
         accountClosing = true;
+        stopRepeatedOwnerAutoBuy();
         const ownerSignedOut = isOwner();
         const signedOutEmail = currentUser?.email;
         const sessionMessage = clearRememberedAccountSession();
@@ -3948,6 +3962,9 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           "Turn on all autonomous commands",
           "Turn on all Owner tools",
           "Turn off all OP Owner Tools",
+          "Auto-buy all affordable helpers, best value first",
+          "Repeatedly buy all affordable items",
+          "Stop buying affordable items repeatedly",
           "Keep my bakery baking automatically",
           "Take over bakery operations",
           "Start all Owner production systems",
@@ -4005,7 +4022,8 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         bakeryAiDialog.innerHTML = `<section class="bakery-ai-panel" role="dialog" aria-modal="true" aria-labelledby="bakery-ai-title">
           <header class="bakery-ai-head"><div class="bakery-ai-mark" aria-hidden="true">AI</div><div><h2 id="bakery-ai-title" class="bakery-ai-title"></h2><p class="bakery-ai-subtitle">Step-by-step bakery help, quick ideas, and role-limited local tools</p></div><button class="bakery-ai-close" type="button" aria-label="Close Bakery AI">×</button></header>
           <div class="bakery-ai-thread" data-ai-thread role="log" aria-live="polite" aria-relevant="additions"></div>
-          <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}</div>
+          <div class="bakery-ai-quick-tools"><input class="bakery-ai-quick-search" type="search" aria-label="Search quick chats" placeholder="Search quick chats…" autocomplete="off"><span class="bakery-ai-quick-count" data-ai-quick-count aria-live="polite"></span></div>
+          <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}<p class="bakery-ai-quick-empty" data-ai-quick-empty hidden>No quick chats match that search.</p></div>
           <form class="bakery-ai-compose"><input class="bakery-ai-input" type="text" maxlength="500" autocomplete="off" aria-label="Message Bakery AI" placeholder="Ask a bakery question or request a supported game action"><button class="bakery-ai-send" type="submit">Send</button></form>
           <p class="bakery-ai-note">This helper runs locally with built-in guidance; it is not a remote AI service. Account saves and any game actions stay in this browser.</p>
         </section>`;
@@ -4018,8 +4036,24 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         }
         renderBakeryAiMessages();
         const input = bakeryAiDialog.querySelector(".bakery-ai-input");
+        const quickSearch = bakeryAiDialog.querySelector(".bakery-ai-quick-search");
         const quickPromptTray = bakeryAiDialog.querySelector(".bakery-ai-quick");
         quickPromptTray.scrollTop = 0;
+        const updateQuickPromptFilter = () => {
+          const query = quickSearch.value.trim().toLocaleLowerCase();
+          const prompts = [...quickPromptTray.querySelectorAll("[data-ai-prompt]")];
+          const matches = prompts.filter(button => {
+            const isMatch = button.textContent.toLocaleLowerCase().includes(query);
+            button.hidden = !isMatch;
+            return isMatch;
+          });
+          quickPromptTray.querySelector("[data-ai-quick-empty]").hidden = matches.length > 0;
+          bakeryAiDialog.querySelector("[data-ai-quick-count]").textContent =
+            query ? `${matches.length} of ${prompts.length}` : `${prompts.length} quick chats`;
+          quickPromptTray.scrollTop = 0;
+        };
+        quickSearch.addEventListener("input", updateQuickPromptFilter);
+        updateQuickPromptFilter();
         bakeryAiDialog.querySelector(".bakery-ai-close").addEventListener("click", () => closeAnimatedOverlay(bakeryAiDialog));
         bakeryAiDialog.onclick = event => {
           if (event.target === bakeryAiDialog) closeAnimatedOverlay(bakeryAiDialog);
@@ -4121,6 +4155,25 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (hadInfiniteJar) state.cookies = Math.min(state.cookies, 1000000);
         return `All active Owner Studio tools are off. Your helpers and active timed boosts were left untouched.${hadInfiniteJar ? " The infinite jar was turned off, so its balance is capped at 1,000,000 cookies, as in Owner Studio." : ""}`;
       }
+      function stopRepeatedOwnerAutoBuy() {
+        if (repeatedOwnerAutoBuyTimer === null) return false;
+        clearInterval(repeatedOwnerAutoBuyTimer);
+        repeatedOwnerAutoBuyTimer = null;
+        return true;
+      }
+      function startRepeatedOwnerAutoBuy() {
+        if (!isOwner() || !currentUser || isDemo) return "This repeating auto-buyer is available only in Jancsi Chief's Owner account.";
+        if (repeatedOwnerAutoBuyTimer !== null) return "The Owner auto-buyer is already running. It will keep buying the best-value helper it can afford until you tell me to stop.";
+        const firstBatch = autoBuyBestAffordableUpgrade(false);
+        repeatedOwnerAutoBuyTimer = window.setInterval(() => {
+          if (!isOwner() || !currentUser || isDemo || accountClosing) {
+            stopRepeatedOwnerAutoBuy();
+            return;
+          }
+          autoBuyBestAffordableUpgrade(false);
+        }, 1000);
+        return `Owner background auto-buy is on. It checks once per second and buys the best-value helpers your cookie balance can afford${firstBatch ? `; ${firstBatch}` : ". It will wait for cookies if nothing is affordable yet."} Tell me “stop buying affordable items repeatedly” to stop it. It runs only while this Owner game is open.`;
+      }
       function bakeryAiOwnerAction(message) {
         if (!isOwner() || !currentUser || isDemo) return null;
         const text = message.toLowerCase();
@@ -4129,12 +4182,24 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const disableAutonomousMode = /\b(turn off|disable|stop)\b.*\bautonomous\b/i.test(text);
         const enableAllOwnerTools = /\b(turn on|enable|activate)\b.*\ball (?:op )?owner tools\b/i.test(text);
         const disableAllOwnerTools = /\b(turn off|disable|stop)\b.*\ball (?:op )?owner tools\b/i.test(text);
-        if (/\b(don't|do not|never)\b/i.test(text) || (/\b(stop|disable|turn off)\b/i.test(text) && !disableAutonomousMode && !disableAllOwnerTools)) return null;
+        const startRepeatedAutoBuy = /\brepeatedly\b.*\bbuy\b.*\b(all )?affordable\b/i.test(text);
+        const stopRepeatedAutoBuy = /\bstop\b.*\bbuying\b.*\baffordable\b.*\brepeatedly\b/i.test(text);
+        if (/\b(don't|do not|never)\b/i.test(text) || (/\b(stop|disable|turn off)\b/i.test(text) && !disableAutonomousMode && !disableAllOwnerTools && !stopRepeatedAutoBuy)) return null;
+        if (stopRepeatedAutoBuy) {
+          return stopRepeatedOwnerAutoBuy()
+            ? "Stopped. Jancsi Chief AI will no longer buy helpers in the background."
+            : "The repeating Owner auto-buyer is already stopped.";
+        }
+        if (startRepeatedAutoBuy) return startRepeatedOwnerAutoBuy();
+        if (/\b(auto[- ]?buy|buy (?:the )?(?:best|most efficient)|best affordable)\b/i.test(text) && /\b(all|every|helper|upgrade|market|item|shelf)\b/i.test(text)) {
+          return autoBuyBestAffordableUpgrade() || "No helper is affordable right now. Keep baking or turn on the Owner free market, then ask me again.";
+        }
         const clearBakery = /\b(clear|reset|wipe|start over)\b.*\b(my bakery|bakery|bakery progress|bakery save)\b/i.test(text);
         if (clearBakery) {
           if (!window.confirm("Clear this Owner bakery and reset its cookies, lifetime baking, helpers, achievements, boosts, and Owner settings to zero? This cannot be undone.")) {
             return "I left your bakery unchanged. Nothing was cleared.";
           }
+          stopRepeatedOwnerAutoBuy();
           state = freshState();
           save();
           render();
@@ -4670,6 +4735,8 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
       }
       function renderMarket() {
         main.innerHTML = `<section class="page">${pageTitle("THE LITTLE MARKET", "Good things for your oven.", "Spend your cookies on clever helpers. Each one makes the next batch easier.")}
+          <div class="section-row"><h2 class="section-title">Smart shopping</h2><button class="flow-button" type="button" data-auto-buy-best ${bestAffordableUpgrade() ? "" : "disabled"}>Auto-buy all affordable</button></div>
+          <p class="intro">Keep buying the best value helper you can afford until no more purchases fit your cookie jar. Free-market mode buys one of each helper per activation.</p>
           <div class="section-row" style="margin-top:0"><h2 class="section-title">Baking helpers</h2></div>
           <div class="shop-grid">${upgrades.map(item => {
             const price = canBuyForFree() ? 0 : costOf(item);
@@ -4678,6 +4745,11 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             return `<article class="shop-item ${item.kind === "passive" ? "passive-tool" : ""}"><div class="shop-icon">${iconArt(item.icon)}</div><div class="shop-details"><div class="shop-name">${item.name} <span style="color:var(--muted);font-size:10px">×<span data-counter="market-owned-${item.id}" data-counter-value="${owned(item.id)}">${fmt(owned(item.id))}</span></span></div><div class="shop-desc">${item.description}</div></div><button class="shop-buy" data-buy="${item.id}" data-cost="${price}" ${state.cookies < price && !canBuyForFree() ? "disabled" : ""}>${costLabel}<span>BUY · ${amount}</span></button></article>`;
           }).join("")}</div>
         </section>`;
+        main.querySelector("[data-auto-buy-best]")?.addEventListener("click", () => {
+          const result = autoBuyBestAffordableUpgrade();
+          if (result) showToast(result);
+          else showToast("No helper is affordable right now.");
+        });
         main.querySelectorAll("[data-buy]").forEach(button => button.addEventListener("click", () => buyUpgrade(button.dataset.buy)));
       }
       function renderBoosts() {
@@ -4706,6 +4778,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         </section>`;
         document.getElementById("reset").addEventListener("click", () => {
           if (!window.confirm("Start over? Your cookie jar and helpers will be reset.")) return;
+          stopRepeatedOwnerAutoBuy();
           state = freshState();
           save();
           render();
@@ -5273,6 +5346,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             <article class="owner-tool-card"><h3>Double the crew</h3><p>Duplicate every helper currently on your counter.</p><button class="owner-tool-button" data-owner-action="double-helpers">Double every helper</button></article>
             <article class="owner-tool-card"><h3>Million-strong counter</h3><p>Set every helper to at least one million copies.</p><button class="owner-tool-button" data-owner-action="million-helpers">Fill every station</button></article>
             <article class="owner-tool-card"><h3>Buy the affordable shelf</h3><p>Buy one of each currently affordable helper. Your free-market setting still applies.</p><button class="owner-tool-button" data-owner-action="buy-affordable">Buy affordable helpers</button></article>
+            <article class="owner-tool-card"><h3>Smart-market auto-buyer</h3><p>Keep buying the best value helper you can afford until no more purchases fit your jar. Free-market mode buys one of each helper per activation.</p><button class="owner-tool-button" data-owner-action="auto-buy-best">Auto-buy all affordable</button></article>
             <article class="owner-tool-card"><h3>Day-long boost constellation</h3><p>Activate all timed boosts for 24 hours, with your boost-duration setting applied.</p><button class="owner-tool-button" data-owner-action="activate-day-boosts">Activate 24-hour boosts</button></article>
             <article class="owner-tool-card"><h3>One-hour boost extension</h3><p>Add one full hour to every boost that is still active.</p><button class="owner-tool-button" data-owner-action="extend-hour">Extend active boosts +1 hour</button></article>
             <article class="owner-tool-card"><h3>Expired-boost cleanup</h3><p>Remove expired boost entries while keeping all currently active boosts.</p><button class="owner-tool-button" data-owner-action="clean-boosts">Clean expired boosts</button></article>
@@ -5402,6 +5476,12 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             showToast(result.count
               ? `All remaining achievements unlocked! +${fmt(result.reward)} cookies.`
               : "Every achievement is already unlocked.");
+            return;
+          }
+          if (action === "auto-buy-best") {
+            const result = autoBuyBestAffordableUpgrade();
+            if (result) showToast(result);
+            else showToast("No helper is affordable right now.");
             return;
           }
           if (action === "crate-boost-power-max") {
@@ -6135,6 +6215,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             return;
           } else if (action === "reset-bakery") {
             if (!window.confirm("Reset this owner bakery, including all game progress and owner tools?")) return;
+            stopRepeatedOwnerAutoBuy();
             state = freshState();
           }
           const finalAchievementResult = awardAchievements();
@@ -6339,6 +6420,51 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         render();
         showToast(`${item.name} joined your counter.`);
       }
+      function affordableUpgradeChoices(items = upgrades) {
+        return items
+          .filter(item => owned(item.id) < Number.MAX_SAFE_INTEGER)
+          .map(item => {
+            const price = canBuyForFree() ? 0 : costOf(item);
+            return { item, price, valuePerCookie: item.value / Math.max(1, price), index: upgrades.indexOf(item) };
+          })
+          .filter(candidate => canBuyForFree() || state.cookies >= candidate.price)
+          .sort((left, right) =>
+            right.valuePerCookie - left.valuePerCookie ||
+            left.price - right.price ||
+            left.index - right.index
+          );
+      }
+      function bestAffordableUpgrade() {
+        return affordableUpgradeChoices()[0] || null;
+      }
+      function autoBuyBestAffordableUpgrade(showNotification = true) {
+        const freeMarket = canBuyForFree();
+        const purchasedCounts = new Map();
+        const purchaseOrder = [];
+        let spent = 0;
+        let bought = 0;
+        while (true) {
+          const candidates = affordableUpgradeChoices(
+            upgrades.filter(item => !freeMarket || !purchasedCounts.has(item.id))
+          );
+          const choice = candidates[0];
+          if (!choice) break;
+          state.cookies -= choice.price;
+          state.bought[choice.item.id] = addSafeCounter(owned(choice.item.id), 1);
+          spent += choice.price;
+          purchasedCounts.set(choice.item.id, (purchasedCounts.get(choice.item.id) || 0) + 1);
+          if (purchaseOrder.length < 5) purchaseOrder.push(choice.item.name);
+          bought++;
+        }
+        if (!bought) return null;
+        const earned = awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        const result = `Auto-bought ${fmt(bought)} helper${bought === 1 ? "" : "s"} by repeatedly selecting the strongest listed bonus per cookie${purchaseOrder.length ? `; first picks: ${purchaseOrder.join(", ")}` : ""}. ${freeMarket ? "Free-market mode bought one of each helper." : `Spent ${fmt(spent)} cookies.`}${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+        if (showNotification) showToast(result);
+        return result;
+      }
       function buyBoost(id) {
         const item = boosts.find(boost => boost.id === id);
         const price = canBuyForFree() ? 0 : item?.cost;
@@ -6364,6 +6490,8 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         main.querySelectorAll(".shop-buy[data-cost]").forEach(buyButton => {
           buyButton.disabled = state.cookies < Number(buyButton.dataset.cost) && !canBuyForFree();
         });
+        const autoBuyButton = main.querySelector("[data-auto-buy-best]");
+        if (autoBuyButton) autoBuyButton.disabled = !bestAffordableUpgrade();
         const bakedStat = document.getElementById("stat-baked");
         if (bakedStat) setCounter(bakedStat, "stat-baked", bakedForCounter());
         const tapsStat = document.getElementById("stat-taps");
