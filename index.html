@@ -1739,7 +1739,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         { id: "chief-ultimate-helper-kingdom", label: "Crew x50K", description: "50,000 of every helper", type: "helper-bundle", amount: 50000, tier: "mega", color: "#bf7540" }
       );
       const freshState = () => ({
-        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineSeconds: 0, bought: {}, active: [], lastSave: Date.now(),
+        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineMilliseconds: 0, pendingOfflineSeconds: 0, bought: {}, active: [], lastSave: Date.now(),
         ownerTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, boostDurationMultiplier: 1, boostPowerMultiplier: 1, timeSkipSeconds: 3600 },
         adminTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, boostDurationMultiplier: 1 },
         wheelTools: { infiniteSpins: false, infiniteLuck: false }
@@ -3819,7 +3819,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
               (isOwner() ? ownerWheelPrizes : isAdmin() ? adminWheelPrizes : wheelPrizes).some(prize => prize.id === saved.pendingWheelPrize)
               ? saved.pendingWheelPrize
               : "",
-            bought: Object.fromEntries(upgrades.map(item => [item.id, safeCounter(savedBought[item.id])])),
+            pendingOfflineMilliseconds: safeCounter(
+              saved.pendingOfflineMilliseconds ?? safeCounter(saved.pendingOfflineSeconds) * 1000
+            ),
+            bought: Object.fromEntries(upgrades.map(item => [item.id, safeCounter(savedBought[item.id])])) ,
             active: savedActive.flatMap(activeBoost => {
               if (!activeBoost || typeof activeBoost !== "object") return [];
               const boost = [...boosts, ...(isOwner() ? ownerBoosts : [])].find(item => item.id === activeBoost.id);
@@ -4434,28 +4437,40 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         }, delay);
       }
       function queueOfflineCookies(elapsedMilliseconds) {
-        const elapsedSeconds = Math.min(86400, Math.max(0, Math.floor(elapsedMilliseconds / 1000)));
-        if (!elapsedSeconds) return 0;
+        const elapsedMs = Math.max(0, Math.floor(Number(elapsedMilliseconds) || 0));
+        if (!elapsedMs) return 0;
+        const rewardMs = Math.min(7 * 24 * 60 * 60 * 1000, elapsedMs);
         const autoBakeRate = roleTools()?.autoBakeRate || 0;
         const baseProductionMultiplier = roleProductionMultiplier();
         const offlinePassiveRate = (passiveRate() * rolePassiveMultiplier() + (roleTools()?.passiveBonus || 0)) * baseProductionMultiplier * vipProductionBonus();
         const offlineTapRate = tapPower() * (roleTools()?.tapMultiplier || 1) * baseProductionMultiplier * autoBakeRate * vipTapBonus();
         const offlineRate = offlinePassiveRate + offlineTapRate;
-        const earned = safeCounter(offlineRate * elapsedSeconds);
+        const earned = safeCounter(offlineRate * rewardMs / 1000);
+        state.pendingOfflineMilliseconds = addSafeCounter(state.pendingOfflineMilliseconds, elapsedMs);
+        state.pendingOfflineSeconds = Math.floor(state.pendingOfflineMilliseconds / 1000);
         if (!earned) return 0;
         state.pendingOfflineCookies = addSafeCounter(state.pendingOfflineCookies, earned);
-        state.pendingOfflineSeconds = addSafeCounter(state.pendingOfflineSeconds, elapsedSeconds);
         return earned;
       }
-      function formatOfflineDuration(totalSeconds) {
-        const seconds = Math.max(0, Math.floor(totalSeconds));
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor(seconds % 3600 / 60);
-        const remainingSeconds = seconds % 60;
+      function saveOfflineDeparture() {
+        if (!currentUser || isDemo) return;
+        if (!hiddenSince) hiddenSince = Date.now();
+        state.lastSave = hiddenSince;
+        save(false);
+      }
+      function formatOfflineDuration(totalMilliseconds) {
+        const elapsedMs = Math.max(0, Math.floor(Number(totalMilliseconds) || 0));
+        const days = Math.floor(elapsedMs / 86400000);
+        const hours = Math.floor(elapsedMs % 86400000 / 3600000);
+        const minutes = Math.floor(elapsedMs % 3600000 / 60000);
+        const remainingMs = elapsedMs % 60000;
+        const seconds = Math.floor(remainingMs / 10) / 100;
+        const secondLabel = Number.isInteger(seconds) ? fmt(seconds) : String(seconds).replace(/0+$/, "").replace(/\.$/, "");
         const parts = [];
-        if (hours) parts.push(`${fmt(hours)} hour${hours === 1 ? "" : "s"}`);
-        if (minutes || hours) parts.push(`${fmt(minutes)} minute${minutes === 1 ? "" : "s"}`);
-        parts.push(`${fmt(remainingSeconds)} second${remainingSeconds === 1 ? "" : "s"}`);
+        if (days) parts.push(`${fmt(days)} day${days === 1 ? "" : "s"}`);
+        if (hours || days) parts.push(`${fmt(hours)} hour${hours === 1 ? "" : "s"}`);
+        if (minutes || hours || days) parts.push(`${fmt(minutes)} minute${minutes === 1 ? "" : "s"}`);
+        parts.push(`${secondLabel} second${seconds === 1 ? "" : "s"}`);
         return parts.join(" ");
       }
       function offlineMultiplierOptions() {
@@ -4468,7 +4483,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         offlineMultiplier = 1;
         const multipliers = offlineMultiplierOptions();
         const canDuplicate = isOwner() || isAdmin();
-        const elapsed = state.pendingOfflineSeconds;
+        const elapsed = state.pendingOfflineMilliseconds;
         const elapsedLabel = formatOfflineDuration(elapsed);
         offlineCookieDialog.innerHTML = `<section class="offline-cookie-panel" role="dialog" aria-modal="true" aria-labelledby="offline-cookie-title" aria-describedby="offline-cookie-copy">
           <div class="offline-cookie-kicker">WHILE YOU WERE AWAY</div>
@@ -4479,7 +4494,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             <div class="offline-cookie-stat"><div class="offline-cookie-stat-label">Cookies you will receive</div><div class="offline-cookie-stat-value" data-offline-preview>${fmt(state.pendingOfflineCookies)}</div></div>
           </div>
           ${canDuplicate ? `<p class="offline-multiplier-label">Choose your ${isOwner() ? "Owner" : "Admin"} offline cookie multiplier</p><div class="offline-multiplier-options" role="group" aria-label="Offline cookie multiplier">${multipliers.map(multiplier => `<button class="offline-multiplier-pill" type="button" data-offline-multiplier="${multiplier}" aria-pressed="${multiplier === 1}">${fmt(multiplier)}×</button>`).join("")}</div>` : ""}
-          <p class="offline-cookie-limit">Offline production is capped at 24 hours per absence. Timed boosts are not included in the offline calculation, so expired boosts cannot multiply cookies for longer than their normal duration.</p>
+          <p class="offline-cookie-limit">Offline production is calculated from elapsed milliseconds, up to seven days per absence. Timed boosts are not included, so expired boosts cannot multiply offline production.</p>
           <button class="offline-cookie-claim" type="button" data-offline-claim>Collect ${fmt(state.pendingOfflineCookies)} cookies</button>
         </section>`;
         offlineCookieDialog.hidden = false;
@@ -4552,6 +4567,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const multiplier = offlineMultiplierOptions().includes(offlineMultiplier) ? offlineMultiplier : 1;
         const reward = safeCounter(state.pendingOfflineCookies * multiplier);
         state.pendingOfflineCookies = 0;
+        state.pendingOfflineMilliseconds = 0;
         state.pendingOfflineSeconds = 0;
         offlineMultiplier = 1;
         addCookies(reward);
@@ -6571,10 +6587,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         if (document.hidden) {
           if (!currentUser && !isDemo) return;
           if (!hiddenSince) hiddenSince = Date.now();
-          if (currentUser && !isDemo) {
-            state.lastSave = hiddenSince;
-            save(false);
-          }
+          saveOfflineDeparture();
           return;
         }
         if (!hiddenSince || (!currentUser && !isDemo)) {
@@ -6582,7 +6595,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
           return;
         }
         const now = Date.now();
-        const elapsed = isDemo ? now - hiddenSince : now - safeCounter(state.lastSave);
+        const elapsed = Math.max(0, now - hiddenSince);
         hiddenSince = 0;
         queueOfflineCookies(elapsed);
         state.lastSave = now;
@@ -6608,8 +6621,9 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         if (before !== state.active.length) render();
         else if (currentPage === "boosts") updateLiveNumbers();
       }, 1000);
-      setInterval(() => { if (currentUser && !document.hidden) save(); }, 10000);
-      window.addEventListener("beforeunload", () => save());
+      setInterval(() => { if (currentUser && !document.hidden) save(); }, 1000);
+      window.addEventListener("pagehide", saveOfflineDeparture);
+      window.addEventListener("beforeunload", saveOfflineDeparture);
       document.querySelectorAll(".dock-button").forEach(button => {
         const iconName = { bake: "bake", market: "market", boosts: "rush", ledger: "ledger", profile: "profile", achievements: "achievements", admin: "comet", owner: "comet" }[button.dataset.page];
         button.querySelector(".dock-icon").innerHTML = iconArt(iconName);
