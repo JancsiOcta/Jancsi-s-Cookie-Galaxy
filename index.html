@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17120f">
-  <title>Jancsi's Crumb Galaxy — a little baking universe</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23211812'/%3E%3Cellipse cx='32' cy='32' rx='25' ry='11' transform='rotate(-32 32 32)' fill='none' stroke='%23ffca70' stroke-width='2.4'/%3E%3Cpath d='M47 31c3 5 1 9-3 12l-1 6-7 2-5 5-7-2-6-5-6-1-2-7-4-5 3-7-1-6 6-4 3-6 8 1 6-3 5 5 7 1 1 8z' fill='%23e8a550' stroke='%23ffe3a0' stroke-width='2'/%3E%3Ccircle cx='23' cy='29' r='2.5' fill='%23552e20'/%3E%3Ccircle cx='37' cy='25' r='2.4' fill='%23552e20'/%3E%3Ccircle cx='33' cy='40' r='3' fill='%23552e20'/%3E%3Cpath d='m12 17 1.5 4.5L18 23l-4.5 1.5L12 29l-1.5-4.5L6 23l4.5-1.5zM49 10l1.3 3.7L54 15l-3.7 1.3L49 20l-1.3-3.7L44 15l3.7-1.3z' fill='%23fff0bd'/%3E%3C/svg%3E">
+  <title>Jancsi's Cookie Galaxy — a little baking universe</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='32%25' cy='24%25' r='82%25'%3E%3Cstop stop-color='%234d3477'/%3E%3Cstop offset='1' stop-color='%231b1428'/%3E%3C/radialGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ffe6a6'/%3E%3Cstop offset='.52' stop-color='%23eda64d'/%3E%3Cstop offset='1' stop-color='%23bc673c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='20' fill='url(%23g)'/%3E%3Cellipse cx='32' cy='34' rx='26' ry='12' transform='rotate(-32 32 34)' fill='none' stroke='%237b61c7' stroke-width='1.7' opacity='.75'/%3E%3Cellipse cx='32' cy='34' rx='20' ry='9' transform='rotate(35 32 34)' fill='none' stroke='%23ffcf78' stroke-width='1.5' opacity='.88'/%3E%3Cpath d='M48 30c2 4 1 8-3 11l-1 6-7 2-5 5-7-2-6-5-6-1-2-7-4-5 3-7-1-6 6-4 3-6 8 1 6-3 5 5 7 1 1 8z' fill='url(%23c)' stroke='%23fff0c5' stroke-width='2'/%3E%3Cpath d='M20 22c4-4 8-5 12-4' fill='none' stroke='%23fff7df' stroke-width='2' stroke-linecap='round' opacity='.9'/%3E%3Ccircle cx='23' cy='29' r='2.5' fill='%23552e20'/%3E%3Ccircle cx='37' cy='25' r='2.4' fill='%23552e20'/%3E%3Ccircle cx='33' cy='40' r='3' fill='%23552e20'/%3E%3Cpath d='m12 17 1.5 4.5L18 23l-4.5 1.5L12 29l-1.5-4.5L6 23l4.5-1.5zM51 9l1.6 4.4L57 15l-4.4 1.6L51 21l-1.6-4.4L45 15l4.4-1.6z' fill='%23fff0bd'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -75,10 +75,12 @@
     .brand-mark {
       display: block; width: 42px; height: 42px; flex: 0 0 42px; overflow: hidden;
       border: 1px solid rgba(255, 202, 112, .35); border-radius: 15px;
-      background: rgba(255, 202, 112, .09);
+      background:radial-gradient(circle at 30% 22%,rgba(136,105,208,.36),transparent 62%),linear-gradient(145deg,#302342,#17120f);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 5px 16px rgba(0,0,0,.25);
     }
-    .brand-mark svg { display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 0 8px rgba(255,202,112,.24)); }
-    .brand-name { font-size: 15px; font-weight: 800; letter-spacing: .025em; white-space: nowrap; }
+    .brand-mark svg { display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 0 8px rgba(255,202,112,.34)); }
+    .brand-mark .brand-cookie-glow { fill:rgba(255,213,130,.12); }
+    .brand-name { color:#fff1d2; font-family:"Space Grotesk","Oxanium","Trebuchet MS",system-ui,sans-serif; font-size:15px; font-weight:700; letter-spacing:-.035em; white-space:nowrap; text-shadow:0 1px 0 rgba(255,255,255,.12),0 0 18px rgba(255,202,112,.16); }
     .brand-sub { margin-top: 2px; color: var(--muted); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; white-space: nowrap; }
     .top-status { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
     .top-actions { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
@@ -199,7 +201,48 @@
     .bakery-ai-quick button[hidden] { display:none; }
     .bakery-ai-quick button { display:-webkit-box; min-width:0; min-height:40px; height:40px; padding:5px 8px; overflow:hidden; border:1px solid rgba(255,202,112,.3); border-radius:999px; color:#ffe6ad; background:rgba(255,202,112,.07); font-size:10px; font-weight:800; line-height:1.2; text-align:center; overflow-wrap:anywhere; line-clamp:2; -webkit-box-orient:vertical; -webkit-line-clamp:2; cursor:pointer; scroll-snap-align:start; transition:transform .18s ease,background .18s ease; }
     .bakery-ai-quick button:hover { transform:translateY(-1px); background:rgba(255,202,112,.14); }
-    .bakery-ai-quick-empty { grid-column:1/-1; margin:0; padding:12px 4px; color:#c7b38f; font-size:10px; line-height:1.5; text-align:center; }
+    .bakery-ai-quick-empty { grid-column:1/-1; display:flex; min-height:108px; margin:0; padding:4px; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:#c7b38f; font-size:10px; line-height:1.35; text-align:center; }
+    .bakery-ai-quick-empty[hidden] { display:none; }
+    .bakery-ai-quick-empty:not([hidden]) { animation:bakery-ai-search-empty 10s cubic-bezier(.16,1,.3,1) both; }
+    .bakery-ai-quick.is-empty { grid-auto-rows:auto; overflow:visible; }
+    .bakery-ai-empty-illustration { display:flex; height:57px; flex:0 0 57px; align-items:center; justify-content:center; gap:2px; }
+    .bakery-ai-not-found-art { display:block; width:56px; height:56px; overflow:visible; color:#ffcf78; filter:drop-shadow(0 0 8px rgba(255,202,112,.32)); }
+    .bakery-ai-not-found-question-art { display:block; width:27px; height:37px; overflow:visible; color:#ffe9ab; filter:drop-shadow(0 0 7px rgba(255,202,112,.42)); }
+    .bakery-ai-question-draw { fill:none; stroke:currentColor; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100; animation:bakery-ai-question-draw 10s ease-in-out both; }
+    .bakery-ai-question-dot { fill:currentColor; opacity:0; animation:bakery-ai-question-dot 10s ease-in-out both; }
+    .bakery-ai-search-orbit { fill:none; stroke:rgba(255,202,112,.2); stroke-width:1; stroke-dasharray:2 5; transform-origin:48px 43px; animation:bakery-ai-search-orbit 10s linear both; }
+    .bakery-ai-search-lens { fill:rgba(255,202,112,.055); stroke:url(#bakery-ai-search-gradient); stroke-width:4; stroke-linecap:round; }
+    .bakery-ai-search-lens-inner { fill:none; stroke:rgba(255,235,186,.48); stroke-width:1.2; }
+    .bakery-ai-search-handle { fill:none; stroke:#f5b85e; stroke-width:7; stroke-linecap:round; }
+    .bakery-ai-search-glint { fill:none; stroke:#fff0c5; stroke-width:2; stroke-linecap:round; animation:bakery-ai-search-glint 10s ease-in-out both; }
+    .bakery-ai-search-spark { fill:#ffe9ab; transform-box:fill-box; transform-origin:center; animation:bakery-ai-search-spark 10s ease-out both; }
+    .bakery-ai-not-found-label { display:block; color:#ffe6ad; font-size:11px; font-weight:850; letter-spacing:.035em; }
+    .bakery-ai-not-found-hint { color:#aa9a83; font-size:9px; }
+    @keyframes bakery-ai-search-empty { 0% { opacity:0; transform:translate3d(0,13px,0) scale(.96); filter:blur(5px); } 8% { opacity:1; transform:translate3d(0,-2px,0) scale(1.015); filter:blur(0); } 16%,82% { opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0); } 91% { opacity:.9; transform:translate3d(0,-2px,0) scale(1.01); filter:blur(0); } 100% { opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0); } }
+    @keyframes bakery-ai-search-orbit { 0% { transform:rotate(-90deg) scale(.82); opacity:.25; } 12% { transform:rotate(15deg) scale(1); opacity:1; } 50% { transform:rotate(190deg) scale(1.04); opacity:.82; } 82% { transform:rotate(300deg) scale(1); opacity:.72; } 100% { transform:rotate(360deg) scale(1); opacity:.35; } }
+    @keyframes bakery-ai-search-glint { 0%,12%,100% { opacity:0; transform:translateX(-8px); } 22% { opacity:.95; transform:translateX(0); } 38% { opacity:.2; transform:translateX(7px); } 58% { opacity:.85; transform:translateX(0); } 72% { opacity:0; transform:translateX(8px); } }
+    @keyframes bakery-ai-search-spark { 0%,15%,100% { opacity:0; transform:scale(.2) rotate(0); } 28% { opacity:1; transform:scale(1.2) rotate(45deg); } 42% { opacity:.25; transform:scale(.55) rotate(90deg); } 61% { opacity:.9; transform:scale(1) rotate(180deg); } 76% { opacity:0; transform:scale(.2) rotate(240deg); } }
+    @keyframes bakery-ai-question-draw { 0%,8% { stroke-dashoffset:100; opacity:.25; } 36% { stroke-dashoffset:0; opacity:1; } 44%,100% { stroke-dashoffset:0; opacity:.9; } }
+    @keyframes bakery-ai-question-dot { 0%,55% { opacity:0; transform:scale(.2); } 61% { opacity:1; transform:scale(1.25); } 68%,100% { opacity:.9; transform:scale(1); } }
+    body.owner-mode .bakery-ai-not-found-art { color:#ffe08a; filter:drop-shadow(0 0 10px rgba(255,202,112,.44)) drop-shadow(0 0 18px rgba(147,111,255,.2)); }
+    body.owner-mode .bakery-ai-quick-empty:not([hidden]) { animation:bakery-ai-owner-search-empty 10s cubic-bezier(.16,1,.3,1) both; }
+    body.owner-mode .bakery-ai-not-found-art { animation:bakery-ai-owner-search-art 10s cubic-bezier(.22,1,.36,1) both; }
+    body.owner-mode .bakery-ai-not-found-question-art { animation:bakery-ai-owner-question-art 10s cubic-bezier(.22,1,.36,1) both; }
+    body.owner-mode .bakery-ai-question-draw { animation-name:bakery-ai-owner-question-draw; }
+    body.owner-mode .bakery-ai-question-dot { animation-name:bakery-ai-owner-question-dot; }
+    @keyframes bakery-ai-owner-search-empty { 0% { opacity:0; transform:translate3d(0,18px,0) scale(.9); filter:blur(9px); } 12% { opacity:1; transform:translate3d(0,-3px,0) scale(1.04); filter:blur(0); } 22%,78% { opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0); } 86% { transform:translate3d(0,-2px,0) scale(1.015); } 94%,100% { opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0); } }
+    @keyframes bakery-ai-owner-search-art { 0% { transform:scale(.55) rotate(-22deg); filter:brightness(.7) drop-shadow(0 0 0 rgba(255,202,112,0)); } 14% { transform:scale(1.12) rotate(8deg); filter:brightness(1.5) drop-shadow(0 0 20px rgba(255,202,112,.75)) drop-shadow(0 0 28px rgba(147,111,255,.4)); } 23% { transform:scale(.96) rotate(-3deg); } 31%,76% { transform:scale(1) rotate(0); filter:brightness(1.15) drop-shadow(0 0 13px rgba(255,202,112,.65)) drop-shadow(0 0 24px rgba(147,111,255,.34)); } 84% { transform:scale(1.07) rotate(3deg); filter:brightness(1.5) drop-shadow(0 0 22px rgba(92,220,255,.65)) drop-shadow(0 0 32px rgba(255,105,195,.35)); } 92%,100% { transform:scale(1) rotate(0); filter:brightness(1.1) drop-shadow(0 0 11px rgba(255,202,112,.55)) drop-shadow(0 0 20px rgba(147,111,255,.3)); } }
+    @keyframes bakery-ai-owner-question-art { 0%,8% { transform:translateY(6px) scale(.72) rotate(-12deg); opacity:.4; } 18% { transform:translateY(-3px) scale(1.16) rotate(5deg); opacity:1; } 26% { transform:translateY(1px) scale(.96) rotate(-2deg); } 36%,82% { transform:translateY(0) scale(1) rotate(0); opacity:1; } 90% { transform:translateY(-2px) scale(1.08) rotate(3deg); } 100% { transform:translateY(0) scale(1) rotate(0); opacity:1; } }
+    @keyframes bakery-ai-owner-question-draw { 0%,8% { stroke-dashoffset:100; opacity:.2; } 18% { opacity:.85; } 46% { stroke-dashoffset:0; opacity:1; } 53%,100% { stroke-dashoffset:0; opacity:.92; } }
+    @keyframes bakery-ai-owner-question-dot { 0%,58% { opacity:0; transform:scale(.2); } 65% { opacity:1; transform:scale(1.45); } 72%,100% { opacity:.95; transform:scale(1); } }
+    @keyframes bakery-ai-reduced-search-empty { from { opacity:0; } to { opacity:1; } }
+    @keyframes bakery-ai-reduced-question-draw { from { stroke-dashoffset:100; opacity:.35; } to { stroke-dashoffset:0; opacity:.9; } }
+    @keyframes bakery-ai-reduced-question-dot { from { opacity:0; } to { opacity:.9; } }
+    @keyframes bakery-ai-reduced-owner-empty { 0% { opacity:0; filter:brightness(.8); } 55% { opacity:1; filter:brightness(1.25); } 100% { opacity:1; filter:brightness(1); } }
+    @keyframes bakery-ai-reduced-owner-art { 0% { filter:brightness(.8) drop-shadow(0 0 0 rgba(255,202,112,0)); } 55% { filter:brightness(1.45) drop-shadow(0 0 18px rgba(255,202,112,.7)) drop-shadow(0 0 22px rgba(147,111,255,.42)); } 100% { filter:brightness(1.1) drop-shadow(0 0 11px rgba(255,202,112,.55)) drop-shadow(0 0 20px rgba(147,111,255,.3)); } }
+    body.admin-mode .bakery-ai-not-found-art { color:#ffc1e4; filter:drop-shadow(0 0 10px rgba(255,114,189,.35)); }
+    body.owner-mode .bakery-ai-quick-search { transition:border-color .3s ease,box-shadow .35s ease,background .35s ease; }
+    body.owner-mode .bakery-ai-quick-search:focus { border-color:rgba(255,220,139,.9); background:linear-gradient(110deg,rgba(255,202,112,.1),rgba(151,116,255,.08),rgba(92,220,255,.07)),rgba(0,0,0,.2); box-shadow:0 0 0 3px rgba(255,202,112,.12),0 0 24px rgba(162,127,255,.18); }
     .bakery-ai-compose { display:flex; flex:0 0 auto; gap:9px; padding:14px 20px 18px; border-top:1px solid rgba(255,238,207,.1); }
     .bakery-ai-input { min-width:0; min-height:46px; flex:1 1 auto; padding:10px 16px; border:1px solid rgba(255,202,112,.25); border-radius:999px; outline:none; color:#f9f0dc; background:rgba(0,0,0,.2); font:inherit; font-size:12px; }
     .bakery-ai-input:focus { border-color:rgba(255,202,112,.75); box-shadow:0 0 0 3px rgba(255,202,112,.1); }
@@ -228,6 +271,15 @@
     @keyframes bakery-ai-reduced-message { from { opacity:0; } to { opacity:1; } }
     @media(prefers-reduced-motion:reduce) {
       .bakery-ai-thread { scroll-behavior:auto; }
+      .bakery-ai-quick-empty:not([hidden]) { animation:bakery-ai-reduced-search-empty .3s ease-out both !important; }
+      .bakery-ai-search-orbit, .bakery-ai-search-glint, .bakery-ai-search-spark { animation:none !important; }
+      .bakery-ai-question-draw { animation:bakery-ai-reduced-question-draw 1.35s ease-out both !important; }
+      .bakery-ai-question-dot { animation:bakery-ai-reduced-question-dot .2s ease-out 1.4s both !important; }
+      body.owner-mode .bakery-ai-quick-empty:not([hidden]) { animation:bakery-ai-reduced-owner-empty .65s ease-out both !important; }
+      body.owner-mode .bakery-ai-not-found-art { animation:bakery-ai-reduced-owner-art .85s ease-out both !important; }
+      body.owner-mode .bakery-ai-not-found-question-art { animation:none !important; }
+      body.owner-mode .bakery-ai-question-draw { animation:bakery-ai-reduced-question-draw 1.65s ease-out both !important; }
+      body.owner-mode .bakery-ai-question-dot { animation:bakery-ai-reduced-question-dot .24s ease-out 1.72s both !important; }
       body:not(.owner-mode) .bakery-ai-message.is-entering { animation:bakery-ai-reduced-message .16s ease both !important; }
       .owner-mode .bakery-ai-message.is-entering.user { animation:bakery-ai-owner-reduced-send .2s ease-out both !important; }
       .owner-mode .bakery-ai-message.is-entering.assistant { animation:bakery-ai-owner-reduced-reply .2s ease-out both !important; }
@@ -485,13 +537,19 @@
     .prize-reveal.is-closing { animation:overlay-exit .24s ease-in both; pointer-events:none; }
     .prize-reveal.is-closing .prize-reveal-card { animation:dialog-exit .24s cubic-bezier(.4,0,.8,.3) both; }
     .owner-mode .demo-dialog.is-closing, .owner-mode .screen-flow.is-closing, .owner-mode .welcome-confetti.is-closing,
-    .owner-mode .tutorial-screen.is-closing, .owner-mode .wheel-dialog.is-closing, .owner-mode .prize-reveal.is-closing {
+    .owner-mode .tutorial-screen.is-closing, .owner-mode .wheel-dialog.is-closing, .owner-mode .prize-reveal.is-closing,
+    .owner-mode .facebook-dialog.is-closing, .owner-mode .bakery-ai-dialog.is-closing,
+    .owner-mode .vip-dialog.is-closing, .owner-mode .signout-confirm.is-closing {
       animation:owner-overlay-exit .58s cubic-bezier(.55,0,.8,.25) both;
     }
     .owner-mode .role-info-dialog.is-closing { animation:owner-overlay-exit .58s cubic-bezier(.55,0,.8,.25) both; }
     .owner-mode .demo-dialog.is-closing .demo-card, .owner-mode .screen-flow.is-closing .flow-panel,
     .owner-mode .welcome-confetti.is-closing .welcome-card, .owner-mode .tutorial-screen.is-closing .tutorial-card,
-    .owner-mode .wheel-dialog.is-closing .wheel-panel, .owner-mode .prize-reveal.is-closing .prize-reveal-card {
+    .owner-mode .wheel-dialog.is-closing .wheel-panel, .owner-mode .prize-reveal.is-closing .prize-reveal-card,
+    .owner-mode .facebook-dialog.is-closing .facebook-panel,
+    .owner-mode .bakery-ai-dialog.is-closing .bakery-ai-panel,
+    .owner-mode .vip-dialog.is-closing .vip-panel,
+    .owner-mode .signout-confirm.is-closing .signout-confirm-panel {
       animation:owner-dialog-exit .58s cubic-bezier(.55,0,.8,.25) both;
     }
     .owner-mode .role-info-dialog.is-closing .role-info-panel { animation:owner-dialog-exit .58s cubic-bezier(.55,0,.8,.25) both; }
@@ -534,7 +592,7 @@
       padding: 0; place-items: center; border: 0; border-radius: 50%;
       background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent;
       transition: transform .24s cubic-bezier(.2,.9,.2,1);
-      will-change:transform;
+      transform-style:preserve-3d; touch-action:manipulation; will-change:transform;
       box-shadow: 0 24px 25px rgba(0,0,0,.28);
     }
     .cookie-button:hover { transform: translateY(-5px) scale(1.025); }
@@ -629,6 +687,11 @@
     }
     body.owner-mode, body.owner-mode button, body.owner-mode input, body.owner-mode select, body.owner-mode textarea {
       font-family: "Space Grotesk","Oxanium",system-ui,sans-serif;
+      font-kerning:normal;
+      font-optical-sizing:auto;
+    }
+    body.owner-mode {
+      letter-spacing:.006em;
     }
     .owner-mode body, body.owner-mode { background-color: #130f0b; }
     body.owner-mode {
@@ -713,6 +776,7 @@
       box-shadow: 0 0 28px rgba(255,210,113,.48),inset 0 1px rgba(255,255,255,.72);
       transition: width .576s cubic-bezier(.16,1,.3,1),transform .736s cubic-bezier(.16,1,.3,1),opacity .192s ease;
     }
+    .owner-mode .dock.is-gliding { animation:owner-dock-settle .84s cubic-bezier(.16,1,.3,1) both; }
     .owner-mode .dock-highlight::after {
       position:absolute;
       inset:-40% -30%;
@@ -734,6 +798,18 @@
     }
     .owner-mode button:not(:disabled):not(.cookie-button):not(.dock-button):active { transform:scale(.975); transition-duration:.12s; }
     .owner-mode .dock-button:not(.active):hover { transform:translateY(-2px) scale(1.04); }
+    .owner-mode .facebook-dialog:not(.is-closing),
+    .owner-mode .bakery-ai-dialog:not(.is-closing),
+    .owner-mode .offline-cookie-dialog:not(.is-closing),
+    .owner-mode .role-info-dialog:not(.is-closing),
+    .owner-mode .vip-dialog:not(.is-closing),
+    .owner-mode .signout-confirm:not(.is-closing),
+    .owner-mode .demo-dialog:not(.is-closing),
+    .owner-mode .screen-flow:not(.is-closing),
+    .owner-mode .tutorial-screen:not(.is-closing),
+    .owner-mode .welcome-confetti.owner-welcome:not(.is-closing) {
+      animation:owner-overlay-enter .68s cubic-bezier(.16,1,.3,1) both;
+    }
     .owner-mode .facebook-dialog:not(.is-closing) .facebook-panel,
     .owner-mode .bakery-ai-dialog:not(.is-closing) .bakery-ai-panel,
     .owner-mode .offline-cookie-dialog:not(.is-closing) .offline-cookie-panel,
@@ -742,9 +818,23 @@
     .owner-mode .signout-confirm:not(.is-closing) .signout-confirm-panel,
     .owner-mode .demo-dialog:not(.is-closing) .demo-card,
     .owner-mode .screen-flow:not(.is-closing) .flow-panel,
-    .owner-mode .tutorial-screen:not(.is-closing) .tutorial-card {
-      animation:owner-interface-panel-arrive .62s cubic-bezier(.16,1,.3,1) both;
+    .owner-mode .tutorial-screen:not(.is-closing) .tutorial-card,
+    .owner-mode .demo-dialog:not(.is-closing) .demo-card {
+      animation:owner-interface-panel-arrive .72s cubic-bezier(.16,1,.3,1) both;
       transform-origin:50% 65%;
+    }
+    .owner-mode .owner-welcome:not(.is-closing) .welcome-card { animation:owner-welcome-arrive .76s cubic-bezier(.16,1,.3,1) both; }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > * {
+      animation:owner-panel-arrive .56s cubic-bezier(.16,1,.3,1) both;
+    }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > :nth-child(2) { animation-delay:.045s; }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > :nth-child(3) { animation-delay:.09s; }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > :nth-child(4) { animation-delay:.135s; }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > :nth-child(5) { animation-delay:.18s; }
+    .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > :nth-child(n+6) { animation-delay:.225s; }
+    .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card):focus-within {
+      border-color:rgba(255,224,138,.42);
+      box-shadow:0 0 0 1px rgba(255,224,138,.14),0 0 26px rgba(255,202,112,.12);
     }
     @media (hover:hover) {
       .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card):hover {
@@ -763,6 +853,10 @@
       68% { opacity:1; transform:translate3d(0,-3px,0) scale(1.012) rotateX(-.5deg); filter:blur(0); }
       100% { opacity:1; transform:translate3d(0,0,0) scale(1) rotateX(0); filter:blur(0); }
     }
+    @keyframes owner-overlay-enter {
+      0% { opacity:0; backdrop-filter:blur(0) saturate(.8); }
+      100% { opacity:1; backdrop-filter:blur(18px) saturate(1.18); }
+    }
     @keyframes owner-glyph-arrive {
       0% { opacity:.5; transform:translateY(5px) rotate(-18deg) scale(.72); }
       62% { opacity:1; transform:translateY(-3px) rotate(7deg) scale(1.24); }
@@ -773,9 +867,28 @@
       18% { opacity:.8; }
       100% { opacity:0; transform:translate3d(-55%,0,0); }
     }
+    @keyframes owner-dock-settle {
+      0% { transform:translateY(8px) scale(.94); filter:brightness(.88); }
+      46% { transform:translateY(-3px) scale(1.025); filter:brightness(1.12); }
+      76% { transform:translateY(1px) scale(.995); filter:brightness(1.04); }
+      100% { transform:translateY(0) scale(1); filter:brightness(1); }
+    }
     @media (prefers-reduced-motion:reduce) {
       .owner-mode .topbar { animation:none; }
+      .owner-mode .dock.is-gliding, .owner-mode .page.owner-page-enter,
+      .owner-mode .page.owner-page-enter > *, .owner-mode .dock-button.active .dock-icon svg {
+        animation:interface-reduced-motion-enter .16s ease both !important;
+      }
+      .owner-mode .page.owner-page-exit, .owner-mode .page.owner-page-exit > * {
+        animation:interface-reduced-motion-exit .14s ease-in both !important;
+      }
+      .owner-mode .page.owner-page-enter::before, .owner-mode .page.owner-page-exit::before { animation:none !important; }
+      .owner-mode .page.owner-page-enter > *, .owner-mode .page.owner-page-exit > *,
+      .owner-mode .page.owner-page-enter :is(.shop-grid,.featured-row,.achievement-grid,.owner-tool-grid,.boost-grid) > * {
+        animation-delay:0s !important;
+      }
       .owner-mode .brand:hover .brand-mark,
+      .owner-mode .dock-button,
       .owner-mode .dock-button:not(.active):hover,
       .owner-mode :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.achievement-card):hover {
         transform:none;
@@ -817,7 +930,7 @@
     @keyframes owner-cookie-crumb {
       0% { opacity:0; transform:translate(-50%,-50%) scale(.2) rotate(0); }
       14% { opacity:1; transform:translate(-50%,-50%) scale(1.25) rotate(35deg); }
-      100% { opacity:0; transform:translate(calc(-50% + var(--crumb-x)),calc(-50% + var(--crumb-y))) scale(.08) rotate(var(--crumb-spin)); }
+      100% { opacity:0; transform:translate(calc(-50% + var(--crumb-x)),calc(-50% + var(--crumb-y) + var(--crumb-gravity))) scale(.08) rotate(var(--crumb-spin)); }
     }
     @keyframes owner-cookie-value {
       0% { opacity:0; transform:translate(-50%,0) scale(.55); filter:blur(5px); }
@@ -853,8 +966,8 @@
     .owner-mode .page.owner-page-enter > :nth-child(5) { animation-delay:.176s; }
     .owner-mode .page.owner-page-enter > :nth-child(6) { animation-delay:.22s; }
     .owner-mode .page.owner-page-enter > :nth-child(n+7) { animation-delay:.264s; }
-    .owner-mode .page.owner-page-exit { position:relative; isolation:isolate; animation:owner-page-exit .58s cubic-bezier(.55,0,.8,.25) both; pointer-events:none; }
-    .owner-mode .page.owner-page-exit > * { animation:owner-panel-exit .46s cubic-bezier(.55,0,.8,.25) both; }
+    .owner-mode .page.owner-page-exit { position:relative; isolation:isolate; animation:owner-page-exit .82s cubic-bezier(.55,0,.8,.25) both; pointer-events:none; }
+    .owner-mode .page.owner-page-exit > * { animation:owner-panel-exit .66s cubic-bezier(.55,0,.8,.25) both; }
     .owner-mode .page.owner-page-exit > :nth-child(2) { animation-delay:.035s; }
     .owner-mode .page.owner-page-exit > :nth-child(3) { animation-delay:.07s; }
     .owner-mode .page.owner-page-exit > :nth-child(4) { animation-delay:.105s; }
@@ -1287,8 +1400,9 @@
     body button.auth-submit { border-radius: 18px; }
     body.admin-mode :is(.card, [class$="-card"], [class$="-panel"]) { border-radius: 45px; }
     body.admin-mode button, body.admin-mode button[class], body.admin-mode input, body.admin-mode select, body.admin-mode textarea { border-radius: 24px; }
-    body.owner-mode :is(.card, [class$="-card"], [class$="-panel"]) { border-radius: 56px; }
-    body.owner-mode button, body.owner-mode button[class], body.owner-mode input, body.owner-mode select, body.owner-mode textarea { border-radius: 30px; }
+    body.owner-mode :is(.card, [class$="-card"], [class$="-panel"]) { border-radius: 64px; }
+    body.owner-mode button, body.owner-mode button[class] { border-radius: 999px; }
+    body.owner-mode input, body.owner-mode select, body.owner-mode textarea { border-radius: 24px; }
     body.admin-mode .auth-card, body.owner-mode .auth-card { border-radius: 35px; }
     body.admin-mode .auth-field input, body.owner-mode .auth-field input,
     body.admin-mode .auth-field select, body.owner-mode .auth-field select { border-radius: 16px; }
@@ -1296,6 +1410,9 @@
     body button.cookie-button, body button.modal-close { border-radius: 50%; }
     body.admin-mode button.cookie-button, body.owner-mode button.cookie-button,
     body.admin-mode button.modal-close, body.owner-mode button.modal-close { border-radius: 50%; }
+    body.owner-mode .auth-field input, body.owner-mode .auth-field select { border-radius: 24px; }
+    body.owner-mode button.auth-submit { border-radius: 999px; }
+    body.owner-mode button.cookie-button, body.owner-mode button.modal-close, body.owner-mode button.bakery-ai-close { border-radius: 50%; }
     body.owner-mode .account-name button.owner-badge, body.admin-mode .account-name button.admin-badge { min-height:24px; padding:4px 8px; border-radius:999px; line-height:1.2; }
     .role-info-panel button { min-height:42px; border-radius:13px; }
     body input.bakery-ai-input, body button.bakery-ai-open, body button.bakery-ai-send, body .bakery-ai-quick button { border-radius:999px; }
@@ -1310,14 +1427,14 @@
   <div id="game-app" class="app auth-locked">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="32" rx="26" ry="11" transform="rotate(-32 32 32)" stroke="#ffca70" stroke-width="2.4" opacity=".9"/><ellipse cx="32" cy="32" rx="22" ry="8" transform="rotate(28 32 32)" stroke="#f19158" stroke-width="1.5" opacity=".72"/><path d="M47 31c3 5 1 9-3 12l-1 6-7 2-5 5-7-2-6-5-6-1-2-7-4-5 3-7-1-6 6-4 3-6 8 1 6-3 5 5 7 1 1 8z" fill="#e8a550" stroke="#ffe3a0" stroke-width="2"/><path d="M20 22c4-4 8-5 12-4" stroke="#fff0bd" stroke-width="2" stroke-linecap="round" opacity=".8"/><circle cx="23" cy="29" r="2.5" fill="#552e20"/><circle cx="37" cy="25" r="2.4" fill="#552e20"/><circle cx="33" cy="40" r="3" fill="#552e20"/><circle cx="20" cy="41" r="1.8" fill="#552e20"/><path d="m12 17 1.5 4.5L18 23l-4.5 1.5L12 29l-1.5-4.5L6 23l4.5-1.5zM50 9l1.6 4.4L56 15l-4.4 1.6L50 21l-1.6-4.4L44 15l4.4-1.6z" fill="#fff0bd"/><circle cx="52" cy="43" r="1.5" fill="#fff0bd"/></svg></div>
-        <div><div class="brand-name">Jancsi's Crumb Galaxy</div><div class="brand-sub">a little baking universe</div></div>
+        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><defs><radialGradient id="brand-space" cx="30%" cy="22%" r="85%"><stop stop-color="#59427f"/><stop offset="1" stop-color="#17120f"/></radialGradient><linearGradient id="brand-cookie" x1="12" y1="12" x2="52" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#ffe9b6"/><stop offset=".52" stop-color="#e8a550"/><stop offset="1" stop-color="#b96740"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#brand-space)"/><circle cx="32" cy="32" r="28" fill="none" stroke="#9c7de1" stroke-width=".8" opacity=".32"/><ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(-32 32 32)" stroke="#ffca70" stroke-width="2" opacity=".95"/><ellipse cx="32" cy="32" rx="22" ry="8" transform="rotate(31 32 32)" stroke="#d8b9ff" stroke-width="1.5" opacity=".85"/><circle cx="8.8" cy="42.5" r="2.2" fill="#fff0bd"/><circle cx="52.4" cy="20" r="1.8" fill="#fff0bd"/><circle cx="47.2" cy="49.5" r="1.2" fill="#aeeeff"/><circle class="brand-cookie-glow" cx="32" cy="32" r="23"/><path d="M47 31c3 5 1 9-3 12l-1 6-7 2-5 5-7-2-6-5-6-1-2-7-4-5 3-7-1-6 6-4 3-6 8 1 6-3 5 5 7 1 1 8z" fill="url(#brand-cookie)" stroke="#fff1cc" stroke-width="2"/><path d="M20 22c4-4 8-5 12-4" stroke="#fff8e5" stroke-width="2" stroke-linecap="round" opacity=".9"/><circle cx="23" cy="29" r="2.5" fill="#552e20"/><circle cx="37" cy="25" r="2.4" fill="#552e20"/><circle cx="33" cy="40" r="3" fill="#552e20"/><circle cx="20" cy="41" r="1.8" fill="#552e20"/><path d="m12 17 1.5 4.5L18 23l-4.5 1.5L12 29l-1.5-4.5L6 23l4.5-1.5zM50 9l1.6 4.4L56 15l-4.4 1.6L50 21l-1.6-4.4L44 15l4.4-1.6z" fill="#fff0bd"/><circle cx="52" cy="43" r="1.5" fill="#fff0bd"/></svg></div>
+        <div><div class="brand-name">Jancsi's Cookie Galaxy</div><div class="brand-sub">a little baking universe</div></div>
       </div>
       <div class="top-actions">
         <button id="bakery-ai-open" class="bakery-ai-open" type="button" aria-label="Open bakery AI helper"><span class="bakery-ai-wordmark" aria-hidden="true">AI</span><span>Bakery AI</span></button>
         <button id="vip-open" class="vip-open-button" type="button" aria-label="Open VIP bakery plans" hidden>✦ VIP plans</button>
         <button id="facebook-open" class="facebook-open-button" type="button" aria-label="Open Facebook follow information" title="Visit Jancsi on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Facebook</span></button>
-        <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Crumb Galaxy Facebook page information" title="Visit Jancsi's Crumb Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
+        <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Cookie Galaxy Facebook page information" title="Visit Jancsi's Cookie Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
         <button id="spin-wheel-open" class="spin-open-button" type="button" aria-label="Open daily prize wheel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.64 5.64l12.72 12.72M18.36 5.64 5.64 18.36"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/></svg><span>Spin the Wheel</span></button>
         <div id="account-area" class="top-status"><span class="status-dot"></span> Your oven is happily humming</div>
       </div>
@@ -1376,7 +1493,7 @@
         "What was the name of your first pet?",
         "What is the name of a memorable childhood friend?"
       ];
-      const APP_NAME = "Jancsi's Crumb Galaxy";
+      const APP_NAME = "Jancsi's Cookie Galaxy";
       const BAKERY_WHISPERS = [
         "A patient baker can turn one quiet tap into a whole constellation.",
         "Somewhere in the oven, a golden batch is finding its perfect edge.",
@@ -1465,7 +1582,7 @@
         {
           kicker: "A NEW LITTLE UNIVERSE",
           title: "Welcome to your own bakery.",
-          copy: "Jancsi's Crumb Galaxy is a cozy, original cookie-making game about turning a single warm batch into a whole constellation of baking helpers.\n\nYou begin with one handmade cookie and your own two hands. Each tap adds to your jar; every thoughtful upgrade makes the bakery a little more capable. There is no rush and no wrong pace. Your tiny kitchen is a place to experiment, watch numbers climb, and enjoy the satisfying rhythm of building something one batch at a time.\n\nThis short introduction explains the game, your account, and how to keep your progress safe before we walk through the controls together."
+          copy: "Jancsi's Cookie Galaxy is a cozy, original cookie-making game about turning a single warm batch into a whole constellation of baking helpers.\n\nYou begin with one handmade cookie and your own two hands. Each tap adds to your jar; every thoughtful upgrade makes the bakery a little more capable. There is no rush and no wrong pace. Your tiny kitchen is a place to experiment, watch numbers climb, and enjoy the satisfying rhythm of building something one batch at a time.\n\nThis short introduction explains the game, your account, and how to keep your progress safe before we walk through the controls together."
         },
         {
           kicker: "BAKE AT YOUR OWN PACE",
@@ -1483,7 +1600,7 @@
           copy: "This is a relaxed, single-player game. There are no purchases with real money, no competition, and no penalty for stepping away. The demo is temporary and is not saved. A registered local account keeps its game and recovery details in this browser only.\n\nYour password and recovery answer are stored as salted password-based hashes rather than readable text. That is a local-browser safeguard, not a substitute for a professionally operated authentication server. Keep your credentials private, use a unique password, and do not use sensitive personal information as a recovery answer.\n\nNext, take a moment to review the complete terms of use. The acceptance checkbox appears only after you reach the end of the terms. Then a short, guided tour will point directly to the things you need to know."
         }
       ];
-      const TERMS_TEXT = `Jancsi's Crumb Galaxy — Terms of Use
+      const TERMS_TEXT = `Jancsi's Cookie Galaxy — Terms of Use
 Last updated: October 10, 2026
 
 PLEASE READ THESE TERMS BEFORE CONTINUING
@@ -1492,7 +1609,7 @@ PLEASE READ THESE TERMS BEFORE CONTINUING
 By selecting the agreement checkbox and continuing, you confirm that you have read and understood these terms for this standalone browser game. These terms describe use of the game files and features available in the version you are running. If you do not agree, do not continue to the game. You may close the page at any time.
 
 2. What this game is
-Jancsi's Crumb Galaxy is an original, informal, single-player entertainment experience. It is provided for personal enjoyment and demonstration. It is not a financial service, a productivity guarantee, a competition, a wagering product, or a promise that a particular score or outcome can be achieved. Game values and balance may change as the game is improved. Optional VIP membership is purchased only with in-game cookies; there is no real-money checkout. VIP status and its expiration are stored only in this browser and are not a server-backed service.
+Jancsi's Cookie Galaxy is an original, informal, single-player entertainment experience. It is provided for personal enjoyment and demonstration. It is not a financial service, a productivity guarantee, a competition, a wagering product, or a promise that a particular score or outcome can be achieved. Game values and balance may change as the game is improved. Optional VIP membership is purchased only with in-game cookies; there is no real-money checkout. VIP status and its expiration are stored only in this browser and are not a server-backed service.
 
 3. Local accounts; no online server
 This version is a static web page. It does not connect to an account service, remote database, identity provider, or game server. Registration creates a local account record in this browser's storage. Signing in checks that local record; it does not contact or verify an account on the internet. Your account, security question, and saved game are available only in this browser profile on this device. They do not automatically move to another browser or device, and the developer cannot retrieve a record that has been removed from your browser.
@@ -1837,8 +1954,12 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const animatedValues = new Map();
       const counterFrames = new Map();
       const cookieAnimations = new WeakMap();
+      const interfaceButtonAnimations = new WeakMap();
       const overlayClosures = new WeakMap();
       let activeCookieEffects = 0;
+      let cookieAudioContext = null;
+      let cookieAudioGain = null;
+      let cookieNoiseBuffer = null;
       let tapSaveTimer = null;
       let liveNumberUpdateFrame = 0;
       const owned = id => safeCounter(state.bought?.[id]);
@@ -1965,15 +2086,19 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${art[name] || art.cookie}</svg>`;
       };
       const brandArt = () => `<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><ellipse cx="32" cy="32" rx="26" ry="11" transform="rotate(-32 32 32)" stroke="#ffca70" stroke-width="2.4" opacity=".9"/><ellipse cx="32" cy="32" rx="22" ry="8" transform="rotate(28 32 32)" stroke="#f19158" stroke-width="1.5" opacity=".72"/><path d="M47 31c3 5 1 9-3 12l-1 6-7 2-5 5-7-2-6-5-6-1-2-7-4-5 3-7-1-6 6-4 3-6 8 1 6-3 5 5 7 1 1 8z" fill="#e8a550" stroke="#ffe3a0" stroke-width="2"/><path d="M20 22c4-4 8-5 12-4" stroke="#fff0bd" stroke-width="2" stroke-linecap="round" opacity=".8"/><circle cx="23" cy="29" r="2.5" fill="#552e20"/><circle cx="37" cy="25" r="2.4" fill="#552e20"/><circle cx="33" cy="40" r="3" fill="#552e20"/><circle cx="20" cy="41" r="1.8" fill="#552e20"/><path d="m12 17 1.5 4.5L18 23l-4.5 1.5L12 29l-1.5-4.5L6 23l4.5-1.5zM50 9l1.6 4.4L56 15l-4.4 1.6L50 21l-1.6-4.4L44 15l4.4-1.6z" fill="#fff0bd"/><circle cx="52" cy="43" r="1.5" fill="#fff0bd"/></svg>`;
-      function updateDockHighlight() {
+      function updateDockHighlight(animate = false) {
         const activeButton = dock.querySelector(`[data-page="${currentPage}"]`);
         if (!activeButton) return;
         dockHighlight.style.width = `${activeButton.offsetWidth}px`;
         dockHighlight.style.transform = `translateX(${activeButton.offsetLeft - dockHighlight.offsetLeft}px)`;
         dockHighlight.style.opacity = "1";
-        dock.classList.add("is-gliding");
-        clearTimeout(dock.glideTimer);
-        dock.glideTimer = setTimeout(() => dock.classList.remove("is-gliding"), isOwner() ? 1050 : 700);
+        if (animate && isOwner() && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          dock.classList.remove("is-gliding");
+          void dock.offsetWidth;
+          dock.classList.add("is-gliding");
+          clearTimeout(dock.glideTimer);
+          dock.glideTimer = setTimeout(() => dock.classList.remove("is-gliding"), 1120);
+        }
       }
       function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, character => ({
@@ -2045,7 +2170,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           links = `<button class="auth-link" type="button" data-auth-mode="login">Cancel recovery</button>`;
         }
         if (mode === "login" || mode === "register") {
-          links += `<div class="auth-facebook-actions"><button class="auth-facebook-button facebook-profile-button" type="button" data-facebook-profile-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Facebook profile</button><button class="auth-facebook-button" type="button" data-facebook-galaxy-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Crumb Galaxy on Facebook</button></div>`;
+          links += `<div class="auth-facebook-actions"><button class="auth-facebook-button facebook-profile-button" type="button" data-facebook-profile-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Facebook profile</button><button class="auth-facebook-button" type="button" data-facebook-galaxy-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Cookie Galaxy on Facebook</button></div>`;
         }
         authScreen.hidden = false;
         authScreen.innerHTML = `<div class="auth-shell">
@@ -2203,18 +2328,18 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       function openFacebookNotice(destination = "profile", trigger = document.activeElement) {
         const galaxyPage = destination === "galaxy";
         facebookTrigger = trigger instanceof HTMLElement ? trigger : facebookOpenButton;
-        const title = galaxyPage ? "Jancsi's Crumb Galaxy" : "Find Jancsi on Facebook";
+        const title = galaxyPage ? "Jancsi's Cookie Galaxy" : "Find Jancsi on Facebook";
         const kicker = galaxyPage ? "THE OFFICIAL GALAXY PAGE" : "A NOTE FROM THE BAKERY";
         const noticeOne = galaxyPage
-          ? "Before continuing, this button will open the Facebook page named Jancsi's Crumb Galaxy in a new browser tab. That page is the social-media home for this little baking universe: a place to find updates about the project, share its name with other interested bakers, and see posts the page owner chooses to publish. The link goes directly to the page address provided for this game, https://www.facebook.com/profile.php?id=61595084322437, so there is no need to search through similarly named results. This website does not control Facebook or guarantee what posts, comments, images, or page details Facebook currently displays; those may change over time and may depend on Facebook's own sign-in, region, and privacy settings. Facebook is a separate service, and any decision to sign in, follow the page, react, comment, or leave feedback is made on Facebook under its own rules. This game will remain open in its current tab, so you can return here whenever you are ready."
+          ? "Before continuing, this button will open the Facebook page named Jancsi's Cookie Galaxy in a new browser tab. That page is the social-media home for this little baking universe: a place to find updates about the project, share its name with other interested bakers, and see posts the page owner chooses to publish. The link goes directly to the page address provided for this game, https://www.facebook.com/profile.php?id=61595084322437, so there is no need to search through similarly named results. This website does not control Facebook or guarantee what posts, comments, images, or page details Facebook currently displays; those may change over time and may depend on Facebook's own sign-in, region, and privacy settings. Facebook is a separate service, and any decision to sign in, follow the page, react, comment, or leave feedback is made on Facebook under its own rules. This game will remain open in its current tab, so you can return here whenever you are ready."
           : "Before you continue, please know that the next button opens Jancsi’s Facebook profile in a new browser tab. You’ll leave the bakery game’s page for Facebook, where you can view the profile and decide for yourself whether you would like to follow it. Facebook is a separate service with its own sign-in, privacy settings, and terms; this website does not control what Facebook displays or ask you to enter your Facebook password here. You can close the new tab any time to return to your bakery, and this page will stay open with your game still here. Depending on your browser and Facebook’s settings, you may be asked to sign in before you can see or interact with the profile. If Facebook is unavailable, asks you to sign in, or opens a page you did not expect, you can simply close that tab—your bakery account, saved game, and progress on this site are not affected. The link goes directly to the profile address Jancsi provided, so you do not need to search for the name or choose among similar profiles. Please check that you are comfortable opening an external website before proceeding.";
         const noticeTwo = galaxyPage
-          ? "Jancsi's Crumb Galaxy is a browser-based cookie bakery game. On the bakery screen, tapping the cookie adds cookies; the Market lets you spend cookies on helpers that improve tap strength or bake automatically over time; and timed boosts can temporarily make parts of production stronger. Your Ledger and achievement screens show progress and milestones, while the profile and role-specific studios provide additional information or controls where available. The account and game are saved locally in this browser rather than synchronized through an online game server, so storage can be lost if browser data is cleared or may not follow you to another device. The Owner and Admin labels describe local game modes and are not proof of identity or server-secured access. The Facebook page is for the project and community updates; opening it does not sign you in to the game, change your cookies, or automatically send your game data to Facebook. Following or interacting with the page is optional, and you can use the bakery without visiting Facebook. If you choose to leave a comment or message there, avoid including passwords, recovery answers, private account information, or anything you would not want visible under Facebook's privacy settings. Thank you for checking out the page and for helping this original baking galaxy find its next curious visitor."
+          ? "Jancsi's Cookie Galaxy is a browser-based cookie bakery game. On the bakery screen, tapping the cookie adds cookies; the Market lets you spend cookies on helpers that improve tap strength or bake automatically over time; and timed boosts can temporarily make parts of production stronger. Your Ledger and achievement screens show progress and milestones, while the profile and role-specific studios provide additional information or controls where available. The account and game are saved locally in this browser rather than synchronized through an online game server, so storage can be lost if browser data is cleared or may not follow you to another device. The Owner and Admin labels describe local game modes and are not proof of identity or server-secured access. The Facebook page is for the project and community updates; opening it does not sign you in to the game, change your cookies, or automatically send your game data to Facebook. Following or interacting with the page is optional, and you can use the bakery without visiting Facebook. If you choose to leave a comment or message there, avoid including passwords, recovery answers, private account information, or anything you would not want visible under Facebook's privacy settings. Thank you for checking out the page and for helping this original baking galaxy find its next curious visitor."
           : "If you choose to follow the page, that would mean a lot and help Jancsi share the project with more people. You’re also welcome to contact Jancsi through Facebook if you notice a bug, run into an error, or have an idea for a feature that could make the website more fun or useful. When you send feedback, it helps to mention what you were doing, what you expected to happen, and what you saw instead; a screenshot can be useful too, as long as it does not reveal private information. Suggestions are welcome whether they are small fixes, new bakery activities, accessibility improvements, or bigger ideas for the galaxy. Feedback is always appreciated, though replies may take time and messages should never include your password or other private account details. Following is entirely optional, and you can still enjoy the website without visiting Facebook. Thank you for taking a moment to read this, for supporting the project if you wish, and for helping this little baking galaxy grow one thoughtful suggestion at a time.";
         const pageUrl = galaxyPage
           ? "https://www.facebook.com/profile.php?id=61595084322437"
           : "https://www.facebook.com/jancsi.ethan.millan.2024/";
-        const proceedLabel = galaxyPage ? "Proceed to Jancsi's Crumb Galaxy on Facebook" : "Proceed to Jancsi’s Facebook profile";
+        const proceedLabel = galaxyPage ? "Proceed to Jancsi's Cookie Galaxy on Facebook" : "Proceed to Jancsi’s Facebook profile";
         const panel = `<section class="facebook-panel" role="dialog" aria-modal="true" aria-labelledby="facebook-title" aria-describedby="facebook-notice-one facebook-notice-two">
           <header class="facebook-panel-head">
             <span class="facebook-panel-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg></span>
@@ -2273,7 +2398,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const title = owner ? "Owner account" : "Japhia's admin account";
         const copy = owner
           ? [
-              "Chief Jancsi is the keeper of Jancsi’s Crumb Galaxy. The OWNER badge opens the door to Chief Studio, the legendary Mega Spin, and a constellation of owner-only achievements. This is where the galaxy’s grandest bakery ideas take shape.",
+              "Chief Jancsi is the keeper of Jancsi’s Cookie Galaxy. The OWNER badge opens the door to Chief Studio, the legendary Mega Spin, and a constellation of owner-only achievements. This is where the galaxy’s grandest bakery ideas take shape.",
               "Inside Chief Studio, you can tune the bakery, rally its helpers, and unleash powerful local controls. Try things, shape your own kind of cookie cosmos, and watch your choices transform the bakery. These tools can change this browser’s save, so use each one with care.",
               "A quick note from the galaxy: accounts and progress live in this browser; there is no online account server. The badge shows which role this page recognizes, but it cannot verify someone’s real-world identity. Anyone with access to this device or the game files may be able to change local data."
             ]
@@ -2590,7 +2715,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             pageTransitioning = false;
             resolve();
           };
-          const fallback = setTimeout(() => finish(), ownerTransition ? 700 : 380);
+          const fallback = setTimeout(() => finish(), ownerTransition ? 920 : 380);
           page.addEventListener("animationend", finish);
         });
       }
@@ -3465,7 +3590,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             const accounts = readAccounts();
             const account = accounts[OWNER_EMAIL] || {
               name: "Chief Jancsi",
-              bakery: "Jancsi's Crumb Galaxy",
+              bakery: "Jancsi's Cookie Galaxy",
               favorite: "",
               question: SECURITY_QUESTIONS[0],
               onboardingComplete: true,
@@ -3473,7 +3598,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             };
             account.owner = true;
             account.name = account.name || "Chief Jancsi";
-            account.bakery = account.bakery || "Jancsi's Crumb Galaxy";
+            if (!account.bakery || account.bakery === "Jancsi's Crumb Galaxy") account.bakery = APP_NAME;
             if (!account.passwordSalt || !account.passwordHash) {
               account.passwordSalt = randomSalt();
               account.passwordHash = await deriveSecret(randomSalt() + randomSalt(), account.passwordSalt);
@@ -3847,7 +3972,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (!currentUser || isDemo) return;
         if (updateActivity) state.lastSave = Date.now();
         try { localStorage.setItem(SAVE_PREFIX + currentUser.email, JSON.stringify(state)); }
-        catch (error) { showToast("Your browser couldn’t save this batch."); console.error("Could not save Jancsi's Crumb Galaxy progress.", error); }
+        catch (error) { showToast("Your browser couldn’t save this batch."); console.error("Could not save Jancsi's Cookie Galaxy progress.", error); }
       }
       function scheduleTapSave() {
         if (!currentUser || isDemo) return;
@@ -3961,6 +4086,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           "Operate my bakery at full power",
           "Manage my bakery operations",
           "Can you clear my bakery",
+          "Buy all boosters and upgrades to max",
           "Turn off all autonomous commands",
           "Turn on all autonomous commands",
           "Turn on all Owner tools",
@@ -4026,7 +4152,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           <header class="bakery-ai-head"><div class="bakery-ai-mark" aria-hidden="true">AI</div><div><h2 id="bakery-ai-title" class="bakery-ai-title"></h2><p class="bakery-ai-subtitle">Step-by-step bakery help, quick ideas, and role-limited local tools</p></div><button class="bakery-ai-close" type="button" aria-label="Close Bakery AI">×</button></header>
           <div class="bakery-ai-thread" data-ai-thread role="log" aria-live="polite" aria-relevant="additions"></div>
           <div class="bakery-ai-quick-tools"><input class="bakery-ai-quick-search" type="search" aria-label="Search quick chats" placeholder="Search quick chats…" autocomplete="off"><span class="bakery-ai-quick-count" data-ai-quick-count aria-live="polite"></span></div>
-          <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}<p class="bakery-ai-quick-empty" data-ai-quick-empty hidden>No quick chats match that search.</p></div>
+          <div class="bakery-ai-quick" aria-label="Quick prompts">${quickPrompts.map(prompt => `<button type="button" data-ai-prompt="${escapeHTML(prompt)}">${escapeHTML(prompt)}</button>`).join("")}<div class="bakery-ai-quick-empty" data-ai-quick-empty role="status" aria-live="polite" hidden><span class="bakery-ai-empty-illustration"><svg class="bakery-ai-not-found-art" viewBox="0 0 96 96" aria-hidden="true"><defs><linearGradient id="bakery-ai-search-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0bd"/><stop offset=".48" stop-color="currentColor"/><stop offset="1" stop-color="#9f79ff"/></linearGradient></defs><circle class="bakery-ai-search-orbit" cx="48" cy="43" r="29"/><path class="bakery-ai-search-handle" d="m66 63 16 16"/><circle class="bakery-ai-search-lens" cx="44" cy="41" r="20"/><circle class="bakery-ai-search-lens-inner" cx="44" cy="41" r="15"/><path class="bakery-ai-search-glint" d="M33 32a15 15 0 0 1 16-5"/><path class="bakery-ai-search-spark" d="m76 21 2.2 5.8L84 29l-5.8 2.2L76 37l-2.2-5.8L68 29l5.8-2.2z"/><path class="bakery-ai-search-spark" d="m25 65 1.4 3.6L30 70l-3.6-1.4L25 75l-1.4-3.6L20 70l3.6-1.4z"/></svg><svg class="bakery-ai-not-found-question-art" viewBox="0 0 32 44" aria-hidden="true"><path class="bakery-ai-question-draw" pathLength="100" d="M5 12C5 5 10 2 16 2s11 4 11 10c0 7-6 9-10 13-2 2-2 4-2 7"/><circle class="bakery-ai-question-dot" cx="15" cy="39" r="2.4"/></svg></span><span class="bakery-ai-not-found-label">Not found</span><span class="bakery-ai-not-found-hint">Try a different search</span></div></div>
           <form class="bakery-ai-compose"><input class="bakery-ai-input" type="text" maxlength="500" autocomplete="off" aria-label="Message Bakery AI" placeholder="Ask a bakery question or request a supported game action"><button class="bakery-ai-send" type="submit">Send</button></form>
           <p class="bakery-ai-note">This helper runs locally with built-in guidance; it is not a remote AI service. Account saves and any game actions stay in this browser.</p>
         </section>`;
@@ -4041,8 +4167,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const input = bakeryAiDialog.querySelector(".bakery-ai-input");
         const quickSearch = bakeryAiDialog.querySelector(".bakery-ai-quick-search");
         const quickPromptTray = bakeryAiDialog.querySelector(".bakery-ai-quick");
+        const quickPromptAnimations = new WeakMap();
+        let quickPromptFilterRun = 0;
         quickPromptTray.scrollTop = 0;
-        const updateQuickPromptFilter = () => {
+        const updateQuickPromptFilter = (animateOwnerResults = false) => {
           const query = quickSearch.value.trim().toLocaleLowerCase();
           const prompts = [...quickPromptTray.querySelectorAll("[data-ai-prompt]")];
           const matches = prompts.filter(button => {
@@ -4050,12 +4178,45 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             button.hidden = !isMatch;
             return isMatch;
           });
-          quickPromptTray.querySelector("[data-ai-quick-empty]").hidden = matches.length > 0;
+          const emptyState = quickPromptTray.querySelector("[data-ai-quick-empty]");
+          if (matches.length === 0) {
+            emptyState.hidden = true;
+            void emptyState.offsetWidth;
+            emptyState.hidden = false;
+          } else {
+            emptyState.hidden = true;
+          }
+          quickPromptTray.classList.toggle("is-empty", matches.length === 0);
           bakeryAiDialog.querySelector("[data-ai-quick-count]").textContent =
             query ? `${matches.length} of ${prompts.length}` : `${prompts.length} quick chats`;
           quickPromptTray.scrollTop = 0;
+          if (!animateOwnerResults || !isOwner() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          const run = ++quickPromptFilterRun;
+          requestAnimationFrame(() => {
+            if (run !== quickPromptFilterRun) return;
+            matches.forEach((button, index) => {
+              quickPromptAnimations.get(button)?.cancel();
+              const tilt = index % 2 === 0 ? -1 : 1;
+              const animation = button.animate([
+                { opacity: 0, transform: `perspective(700px) translate3d(0,22px,0) scale(.84) rotateX(${-tilt * 12}deg)`, filter: "blur(9px) saturate(.55) hue-rotate(-22deg)", boxShadow: "0 0 0 0 rgba(255,202,112,0)", backgroundColor: "rgba(255,202,112,0)", offset: 0 },
+                { opacity: .72, transform: `perspective(700px) translate3d(0,-4px,0) scale(1.055) rotateX(${tilt * 3}deg)`, filter: "blur(1px) saturate(1.45) hue-rotate(18deg)", boxShadow: "0 0 0 3px rgba(255,202,112,.24), 0 0 28px 5px rgba(255,202,112,.22)", backgroundColor: "rgba(255,202,112,.2)", offset: .28 },
+                { opacity: 1, transform: `perspective(700px) translate3d(0,2px,0) scale(.985) rotateX(${-tilt * 1.5}deg)`, filter: "blur(0) saturate(1.7) hue-rotate(-8deg)", boxShadow: "0 0 0 2px rgba(255,105,195,.2), 0 0 25px 6px rgba(255,105,195,.27), 0 0 42px 9px rgba(98,216,255,.18)", backgroundColor: "rgba(255,105,195,.12)", offset: .52 },
+                { opacity: 1, transform: `perspective(700px) translate3d(0,-1px,0) scale(1.025) rotateX(${tilt}deg)`, filter: "blur(0) saturate(1.45) hue-rotate(8deg)", boxShadow: "0 0 0 2px rgba(147,111,255,.2), 0 0 24px 6px rgba(147,111,255,.24), 0 0 36px 8px rgba(255,202,112,.16)", backgroundColor: "rgba(147,111,255,.1)", offset: .76 },
+                { opacity: 1, transform: "perspective(700px) translate3d(0,0,0) scale(1) rotateX(0deg)", filter: "blur(0) saturate(1) hue-rotate(0deg)", boxShadow: "0 0 0 0 rgba(255,202,112,0)", backgroundColor: "rgba(255,202,112,0)", offset: 1 }
+              ], {
+                duration: 5000,
+                delay: Math.min(index * 18, 360),
+                easing: "cubic-bezier(.16,1,.3,1)",
+                fill: "backwards"
+              });
+              quickPromptAnimations.set(button, animation);
+              animation.onfinish = () => {
+                if (quickPromptAnimations.get(button) === animation) quickPromptAnimations.delete(button);
+              };
+            });
+          });
         };
-        quickSearch.addEventListener("input", updateQuickPromptFilter);
+        quickSearch.addEventListener("input", () => updateQuickPromptFilter(true));
         updateQuickPromptFilter();
         bakeryAiDialog.querySelector(".bakery-ai-close").addEventListener("click", () => closeAnimatedOverlay(bakeryAiDialog));
         bakeryAiDialog.onclick = event => {
@@ -4181,6 +4342,41 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (!isOwner() || !currentUser || isDemo) return null;
         const text = message.toLowerCase();
         if (/\b(how|teach|explain|why|what|help me learn|show me)\b/i.test(text)) return null;
+        if (/\bbuy all boosters and upgrades to max\b/i.test(text)) {
+          const maximumBoostDurationMultiplier = 1000000;
+          const maximumBoostPowerMultiplier = 10000;
+          Object.assign(state.ownerTools, {
+            freeMarket: true,
+            tapMultiplier: 1000000000,
+            passiveBonus: 1000000000000000,
+            productionMultiplier: 1000000000,
+            passiveMultiplier: 10000,
+            autoBakeRate: 1000000,
+            boostDurationMultiplier: maximumBoostDurationMultiplier,
+            boostPowerMultiplier: maximumBoostPowerMultiplier
+          });
+          upgrades.forEach(item => { state.bought[item.id] = Number.MAX_SAFE_INTEGER; });
+          const allBoosts = [...boosts, ...ownerBoosts];
+          const boostIds = new Set(allBoosts.map(boost => boost.id));
+          const now = Date.now();
+          state.active = state.active.filter(active => active.endsAt > now && !boostIds.has(active.id));
+          allBoosts.forEach(boost => {
+            state.boostsUsed = addSafeCounter(state.boostsUsed, 1);
+            if (boost.type === "instant") {
+              addCookies(boost.amount);
+              return;
+            }
+            state.active.push({
+              ...boost,
+              endsAt: now + boost.duration * maximumBoostDurationMultiplier * 1000
+            });
+          });
+          const earned = awardAchievements();
+          save();
+          render();
+          updateLiveNumbers();
+          return `All ${upgrades.length} helper upgrades are now at the maximum safe count, and the Owner free market is on. Production, auto-baking, boost duration (×${fmt(maximumBoostDurationMultiplier)}), and boost power (×${fmt(maximumBoostPowerMultiplier)}) are maxed. Every ${allBoosts.length} standard and Owner boost is active at maximum duration and power. I saved the changes to this Owner bakery on this device.${earned.count ? ` You also earned ${fmt(earned.count)} achievement${earned.count === 1 ? "" : "s"} for +${fmt(earned.reward)} cookies.` : ""}`;
+        }
         const enableAutonomousMode = /\b(turn on|enable|activate|start)\b.*\bautonomous\b/i.test(text);
         const disableAutonomousMode = /\b(turn off|disable|stop)\b.*\bautonomous\b/i.test(text);
         const enableAllOwnerTools = /\b(turn on|enable|activate)\b.*\ball (?:op )?owner tools\b/i.test(text);
@@ -4863,7 +5059,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const helpers = upgrades.filter(item => owned(item.id) > 0).map(item => `${item.name}: ${fmt(owned(item.id))}`);
         const activeBoosts = liveBoosts().map(boost => `${boost.name}: ${Math.max(0, Math.ceil((boost.endsAt - Date.now()) / 60000))} minute(s) left`);
         const report = [
-          "Jancsi's Crumb Galaxy — bakery report",
+          "Jancsi's Cookie Galaxy — bakery report",
           `Exported: ${new Date().toLocaleString()}`,
           `Cookies: ${fmt(state.cookies)}`,
           `Lifetime cookies earned: ${fmt(state.baked)}`,
@@ -6319,7 +6515,181 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
           }
         });
         syncPageCounters();
-        updateDockHighlight();
+        updateDockHighlight(animatePage);
+      }
+      function playCookieClickSound() {
+        const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextConstructor) return;
+        if (!cookieAudioContext) {
+          cookieAudioContext = new AudioContextConstructor();
+          cookieAudioGain = cookieAudioContext.createGain();
+          cookieAudioGain.gain.value = 0.42;
+          cookieAudioGain.connect(cookieAudioContext.destination);
+        }
+        const context = cookieAudioContext;
+        const output = cookieAudioGain;
+        if (context.state === "suspended") {
+          void context.resume().catch(error => console.warn("Cookie click audio could not start.", error));
+        }
+        const startAt = context.currentTime;
+        const playTone = (frequency, endFrequency, duration, volume, type, delay = 0) => {
+          const oscillator = context.createOscillator();
+          const envelope = context.createGain();
+          const start = startAt + delay;
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(frequency, start);
+          oscillator.frequency.exponentialRampToValueAtTime(endFrequency, start + duration);
+          envelope.gain.setValueAtTime(0.0001, start);
+          envelope.gain.exponentialRampToValueAtTime(volume, start + 0.004);
+          envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+          oscillator.connect(envelope);
+          envelope.connect(output);
+          oscillator.start(start);
+          oscillator.stop(start + duration + 0.01);
+        };
+        const playNoise = (duration, volume, filterType, filterFrequency, delay = 0, filterQ = 0.7) => {
+          if (!cookieNoiseBuffer) {
+            cookieNoiseBuffer = context.createBuffer(1, Math.ceil(context.sampleRate * 0.12), context.sampleRate);
+            const samples = cookieNoiseBuffer.getChannelData(0);
+            for (let index = 0; index < samples.length; index++) samples[index] = Math.random() * 2 - 1;
+          }
+          const source = context.createBufferSource();
+          const filter = context.createBiquadFilter();
+          const envelope = context.createGain();
+          const start = startAt + delay;
+          source.buffer = cookieNoiseBuffer;
+          filter.type = filterType;
+          filter.frequency.setValueAtTime(filterFrequency, start);
+          filter.Q.setValueAtTime(filterQ, start);
+          envelope.gain.setValueAtTime(0.0001, start);
+          envelope.gain.exponentialRampToValueAtTime(volume, start + 0.003);
+          envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+          source.connect(filter);
+          filter.connect(envelope);
+          envelope.connect(output);
+          source.start(start, Math.random() * Math.max(0, 0.12 - duration), duration);
+        };
+        if (isOwner()) {
+          const pitch = 0.96 + Math.random() * 0.08;
+          const crunchDelay = 0.012 + Math.random() * 0.012;
+          playTone(154 * pitch, 68 * pitch, 0.16, 0.16, "sine");
+          playTone(490 * pitch, 205 * pitch, 0.12, 0.13, "triangle", 0.006);
+          playNoise(0.105, 0.11, "lowpass", 720, 0, 0.8);
+          playNoise(0.092, 0.11, "bandpass", 1750, crunchDelay, 1.2);
+          playNoise(0.048, 0.07, "highpass", 3900, crunchDelay + 0.014, 0.65);
+          playNoise(0.036, 0.045, "highpass", 5200, crunchDelay + 0.058, 0.6);
+          playTone(930 * pitch, 510 * pitch, 0.06, 0.055, "triangle", crunchDelay + 0.025);
+          playTone(730 * pitch, 390 * pitch, 0.075, 0.035, "sine", crunchDelay + 0.085);
+        } else if (isAdmin()) {
+          playTone(620, 245, 0.07, 0.13, "triangle");
+          playTone(175, 105, 0.085, 0.065, "sine");
+          playNoise(0.035, 0.075, "highpass", 1500);
+          playTone(980, 570, 0.04, 0.07, "triangle", 0.045);
+        } else {
+          playTone(520, 215, 0.065, 0.12, "triangle");
+          playNoise(0.022, 0.045, "highpass", 1700);
+        }
+      }
+      function playInterfaceButtonSound() {
+        const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextConstructor) return;
+        if (!cookieAudioContext) {
+          cookieAudioContext = new AudioContextConstructor();
+          cookieAudioGain = cookieAudioContext.createGain();
+          cookieAudioGain.gain.value = 0.42;
+          cookieAudioGain.connect(cookieAudioContext.destination);
+        }
+        const context = cookieAudioContext;
+        const output = cookieAudioGain;
+        if (context.state === "suspended") {
+          void context.resume().catch(error => console.warn("Interface click audio could not start.", error));
+        }
+        const startAt = context.currentTime;
+        const tone = (frequency, endFrequency, duration, volume, type, delay = 0) => {
+          const oscillator = context.createOscillator();
+          const envelope = context.createGain();
+          const start = startAt + delay;
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(frequency, start);
+          oscillator.frequency.exponentialRampToValueAtTime(endFrequency, start + duration);
+          envelope.gain.setValueAtTime(0.0001, start);
+          envelope.gain.exponentialRampToValueAtTime(volume, start + 0.004);
+          envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+          oscillator.connect(envelope);
+          envelope.connect(output);
+          oscillator.start(start);
+          oscillator.stop(start + duration + 0.01);
+        };
+        if (isOwner()) {
+          const pitch = 0.985 + Math.random() * 0.03;
+          const note = [1, 1.122, 1.335, 1.498][Math.floor(Math.random() * 4)];
+          tone(118 * pitch, 74 * pitch, 0.115, 0.075, "sine");
+          tone(294 * pitch * note, 392 * pitch * note, 0.105, 0.043, "triangle", 0.008);
+          tone(440 * pitch * note, 587 * pitch * note, 0.14, 0.052, "sine", 0.026);
+          tone(660 * pitch * note, 880 * pitch * note, 0.19, 0.043, "triangle", 0.052);
+          tone(990 * pitch * note, 1320 * pitch * note, 0.22, 0.031, "sine", 0.082);
+          tone(1320 * pitch * note, 1760 * pitch * note, 0.2, 0.019, "sine", 0.116);
+          tone(740 * pitch * note, 554 * pitch * note, 0.17, 0.025, "triangle", 0.16);
+          if (!cookieNoiseBuffer) {
+            cookieNoiseBuffer = context.createBuffer(1, Math.ceil(context.sampleRate * 0.12), context.sampleRate);
+            const samples = cookieNoiseBuffer.getChannelData(0);
+            for (let index = 0; index < samples.length; index++) samples[index] = Math.random() * 2 - 1;
+          }
+          const sparkle = context.createBufferSource();
+          const sparkleFilter = context.createBiquadFilter();
+          const sparkleGain = context.createGain();
+          sparkle.buffer = cookieNoiseBuffer;
+          sparkleFilter.type = "highpass";
+          sparkleFilter.frequency.setValueAtTime(3600 + Math.random() * 1600, startAt);
+          sparkleGain.gain.setValueAtTime(0.0001, startAt);
+          sparkleGain.gain.exponentialRampToValueAtTime(0.016, startAt + 0.006);
+          sparkleGain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.095);
+          sparkle.connect(sparkleFilter);
+          sparkleFilter.connect(sparkleGain);
+          sparkleGain.connect(output);
+          sparkle.start(startAt, Math.random() * 0.025, 0.095);
+        } else if (isAdmin()) {
+          tone(610, 320, 0.06, 0.075, "triangle");
+          tone(940, 680, 0.055, 0.04, "sine", 0.018);
+        } else {
+          tone(480, 280, 0.045, 0.055, "sine");
+        }
+      }
+      function animateInterfaceButton(button) {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        interfaceButtonAnimations.get(button)?.cancel();
+        const owner = isOwner();
+        const admin = isAdmin();
+        const dockButton = button.classList.contains("dock-button");
+        const frames = owner
+          ? [
+              { scale: "1", rotate: "0deg", filter: "brightness(1) saturate(1)", boxShadow: "0 0 0 0 rgba(255,190,82,0)", offset: 0 },
+              { scale: ".91", rotate: "-2deg", filter: "brightness(1.14) saturate(1.3)", boxShadow: "0 0 0 2px rgba(255,218,132,.55), 0 0 17px 3px rgba(255,190,82,.42)", offset: .14 },
+              { scale: "1.075", rotate: "1.8deg", filter: "brightness(1.3) saturate(1.6)", boxShadow: "0 0 0 5px rgba(255,111,193,.25), 0 0 25px 7px rgba(255,93,190,.45), 0 0 40px 10px rgba(105,226,255,.2)", offset: .36 },
+              { scale: ".985", rotate: "-.8deg", filter: "brightness(1.16) saturate(1.4)", boxShadow: "0 0 0 3px rgba(255,205,91,.28), 0 0 22px 5px rgba(255,205,91,.34), 0 0 34px 8px rgba(156,112,255,.2)", offset: .58 },
+              { scale: "1.035", rotate: ".45deg", filter: "brightness(1.09) saturate(1.2)", boxShadow: "0 0 0 2px rgba(93,235,255,.2), 0 0 15px 3px rgba(93,235,255,.26), 0 0 24px 6px rgba(255,118,202,.18)", offset: .78 },
+              { scale: "1", rotate: "0deg", filter: "brightness(1) saturate(1)", boxShadow: "0 0 0 0 rgba(255,190,82,0)", offset: 1 }
+            ]
+          : admin
+            ? [
+                { scale: "1", offset: 0 },
+                { scale: ".93", offset: .22 },
+                { scale: "1.045", offset: .58 },
+                { scale: "1", offset: 1 }
+              ]
+            : [
+                { scale: "1", offset: 0 },
+                { scale: ".96", offset: .3 },
+                { scale: "1.025", offset: .68 },
+                { scale: "1", offset: 1 }
+              ];
+        const duration = owner ? (dockButton ? 860 : 700) : admin ? (dockButton ? 480 : 400) : dockButton ? 360 : 280;
+        const animation = button.animate(frames, {
+          duration,
+          easing: owner ? "cubic-bezier(.2,.9,.25,1.35)" : "cubic-bezier(.2,.8,.25,1)",
+          composite: "add"
+        });
+        interfaceButtonAnimations.set(button, animation);
       }
       function bakeTap(event) {
         const amount = cookiesPerTap();
@@ -6327,42 +6697,71 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         state.taps = addSafeCounter(state.taps, 1);
         const button = event.currentTarget;
         const owner = isOwner();
+        const admin = isAdmin();
         const effectLimit = owner ? 160 : 48;
         cookieAnimations.get(button)?.cancel();
-        const interactionDuration = owner ? 920 : 384;
+        const interactionDuration = owner ? 5000 : admin ? 560 : 420;
+        const bounds = button.getBoundingClientRect();
+        const hitX = event.clientX || bounds.left + bounds.width / 2;
+        const hitY = event.clientY || bounds.top + bounds.height / 2;
+        const impactX = Math.max(-1, Math.min(1, (hitX - bounds.left) / bounds.width * 2 - 1));
+        const impactY = Math.max(-1, Math.min(1, (hitY - bounds.top) / bounds.height * 2 - 1));
+        const shouldAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const pressFrames = owner ? [
-          { transform: "scale(1) rotate(0deg)" },
-          { transform: "scale(.78,.72) rotate(-8deg)", offset: .16 },
-          { transform: "scale(1.13,1.18) rotate(5deg)", offset: .4 },
-          { transform: "scale(.97,1.02) rotate(-2deg)", offset: .68 },
-          { transform: "scale(1) rotate(0deg)" }
+          { transform: "perspective(700px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)" },
+          { transform: `perspective(700px) translate3d(0,7px,0) rotateX(${-impactY * 10}deg) rotateY(${impactX * 10}deg) scale3d(.78,.7,1)`, offset: .035 },
+          { transform: `perspective(700px) translate3d(0,-20px,0) rotateX(${impactY * 4}deg) rotateY(${-impactX * 4}deg) scale3d(1.16,1.2,1)`, offset: .12 },
+          { transform: "perspective(700px) translate3d(0,7px,0) scale3d(.93,.9,1)", offset: .22 },
+          { transform: "perspective(700px) translate3d(0,-14px,0) scale3d(1.1,1.13,1)", offset: .34 },
+          { transform: "perspective(700px) translate3d(0,5px,0) scale3d(.96,.95,1)", offset: .46 },
+          { transform: "perspective(700px) translate3d(0,-9px,0) scale3d(1.06,1.08,1)", offset: .59 },
+          { transform: "perspective(700px) translate3d(0,3px,0) scale3d(.98,.98,1)", offset: .71 },
+          { transform: "perspective(700px) translate3d(0,-5px,0) scale3d(1.03,1.04,1)", offset: .82 },
+          { transform: "perspective(700px) translate3d(0,1px,0) scale3d(.995,.995,1)", offset: .92 },
+          { transform: "perspective(700px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)", offset: 1 }
+        ] : admin ? [
+          { transform: "perspective(700px) scale3d(1,1,1)" },
+          { transform: `perspective(700px) translate3d(0,4px,0) rotateX(${-impactY * 8}deg) rotateY(${impactX * 8}deg) scale3d(.84,.77,1)`, offset: .2 },
+          { transform: `perspective(700px) translate3d(0,-3px,0) rotateX(${impactY * 3}deg) rotateY(${-impactX * 3}deg) scale3d(1.1,1.15,1)`, offset: .48 },
+          { transform: "perspective(700px) scale3d(.985,1.015,1)", offset: .76 },
+          { transform: "perspective(700px) scale3d(1,1,1)" }
         ] : [
-          { transform: "scale(1) rotate(0deg)" },
-          { transform: "scale(.82,.76) rotate(-6deg)", offset: .2 },
-          { transform: "scale(1.09,1.12) rotate(4deg)", offset: .45 },
-          { transform: "scale(.98,1.01) rotate(-2deg)", offset: .7 },
-          { transform: "scale(1) rotate(0deg)" }
+          { transform: "perspective(700px) scale3d(1,1,1)" },
+          { transform: `perspective(700px) translate3d(0,3px,0) rotateX(${-impactY * 6}deg) rotateY(${impactX * 6}deg) scale3d(.87,.81,1)`, offset: .22 },
+          { transform: `perspective(700px) translate3d(0,-2px,0) rotateX(${impactY * 2}deg) rotateY(${-impactX * 2}deg) scale3d(1.08,1.11,1)`, offset: .5 },
+          { transform: "perspective(700px) scale3d(.99,1.01,1)", offset: .78 },
+          { transform: "perspective(700px) scale3d(1,1,1)" }
         ];
-        const pressAnimation = button.animate(pressFrames, { duration: interactionDuration, easing: "cubic-bezier(.16,1,.3,1)" });
-        cookieAnimations.set(button, pressAnimation);
         const cookieSvg = button.querySelector(".cookie-svg");
         cookieAnimations.get(cookieSvg)?.cancel();
         const turnFrames = owner ? [
           { transform: "rotate(0deg) scale(1)", filter: "brightness(1)" },
-          { transform: "rotate(-16deg) scale(1.08)", filter: "brightness(1.25)", offset: .24 },
-          { transform: "rotate(12deg) scale(1.15)", filter: "brightness(1.4)", offset: .48 },
-          { transform: "rotate(-5deg) scale(1.04)", filter: "brightness(1.18)", offset: .72 },
+          { transform: "rotate(-15deg) scale(1.08)", filter: "brightness(1.3)", offset: .12 },
+          { transform: "rotate(12deg) scale(1.12)", filter: "brightness(1.24)", offset: .23 },
+          { transform: "rotate(-9deg) scale(1.06)", filter: "brightness(1.16)", offset: .36 },
+          { transform: "rotate(7deg) scale(1.08)", filter: "brightness(1.12)", offset: .49 },
+          { transform: "rotate(-5deg) scale(1.035)", filter: "brightness(1.08)", offset: .62 },
+          { transform: "rotate(3deg) scale(1.025)", filter: "brightness(1.05)", offset: .76 },
+          { transform: "rotate(-1.5deg) scale(1.01)", filter: "brightness(1.025)", offset: .89 },
+          { transform: "rotate(0deg) scale(1)", filter: "brightness(1)", offset: 1 }
+        ] : admin ? [
+          { transform: "rotate(0deg) scale(1)", filter: "brightness(1)" },
+          { transform: "rotate(-11deg) scale(1.08)", filter: "brightness(1.2)", offset: .32 },
+          { transform: "rotate(7deg) scale(1.1)", filter: "brightness(1.28)", offset: .62 },
+          { transform: "rotate(-2deg) scale(.99)", offset: .82 },
           { transform: "rotate(0deg) scale(1)", filter: "brightness(1)" }
         ] : [
           { transform: "rotate(0deg) scale(1)" },
-          { transform: "rotate(-8deg) scale(1.045)", offset: .35 },
-          { transform: "rotate(4deg) scale(.98)", offset: .68 },
+          { transform: "rotate(-7deg) scale(1.05)", offset: .35 },
+          { transform: "rotate(4deg) scale(.98)", offset: .7 },
           { transform: "rotate(0deg) scale(1)" }
         ];
-        const turnAnimation = cookieSvg.animate(turnFrames, { duration: interactionDuration, easing: "cubic-bezier(.16,1,.3,1)" });
-        cookieAnimations.set(cookieSvg, turnAnimation);
-        const hitX = event.clientX || button.getBoundingClientRect().left + button.offsetWidth / 2;
-        const hitY = event.clientY || button.getBoundingClientRect().top + button.offsetHeight / 2;
+        if (shouldAnimate) {
+          const pressAnimation = button.animate(pressFrames, { duration: interactionDuration, easing: "cubic-bezier(.16,1,.3,1)" });
+          cookieAnimations.set(button, pressAnimation);
+          const turnAnimation = cookieSvg.animate(turnFrames, { duration: interactionDuration, easing: "cubic-bezier(.16,1,.3,1)" });
+          cookieAnimations.set(cookieSvg, turnAnimation);
+        }
         const clickEffects = document.createDocumentFragment();
         const addClickEffect = (effect, lifetime) => {
           if (activeCookieEffects >= effectLimit) return;
@@ -6373,7 +6772,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             activeCookieEffects--;
           }, Math.round(lifetime * (owner ? 1.4 : 1)));
         };
-        if (activeCookieEffects < effectLimit) {
+        if (activeCookieEffects < effectLimit && shouldAnimate) {
           if (owner) {
             const flare = document.createElement("span");
             flare.className = "owner-cookie-flare";
@@ -6417,6 +6816,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             crumb.style.setProperty("--crumb-x", `${Math.cos(angle) * distance}px`);
             crumb.style.setProperty("--crumb-y", `${Math.sin(angle) * distance}px`);
             crumb.style.setProperty("--crumb-spin", `${owner ? (index % 2 ? 220 : -220) : (index % 2 ? 150 : -150)}deg`);
+            if (owner) crumb.style.setProperty("--crumb-gravity", `${36 + index % 4 * 14}px`);
             crumb.style.setProperty("--crumb-color", owner ? (index % 3 ? "#f7cf82" : "#fff0b3") : isAdmin() ? (index % 2 ? "#e97db9" : "#ffc3e4") : index % 2 ? "#d88b49" : "#f7cf82");
             addClickEffect(crumb, 900);
           }
@@ -6424,6 +6824,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         }
         scheduleLiveNumberUpdate();
         scheduleTapSave();
+        playCookieClickSound();
       }
       function buyUpgrade(id) {
         const item = upgrades.find(upgrade => upgrade.id === id);
@@ -6628,6 +7029,13 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const iconName = { bake: "bake", market: "market", boosts: "rush", ledger: "ledger", profile: "profile", achievements: "achievements", admin: "comet", owner: "comet" }[button.dataset.page];
         button.querySelector(".dock-icon").innerHTML = iconArt(iconName);
       });
+      document.addEventListener("click", event => {
+        if (!event.isTrusted || !(event.target instanceof Element)) return;
+        const button = event.target.closest("button");
+        if (!button || button.disabled || button.getAttribute("aria-disabled") === "true" || button.classList.contains("cookie-button")) return;
+        animateInterfaceButton(button);
+        playInterfaceButtonSound();
+      }, true);
       window.addEventListener("resize", updateDockHighlight);
       restoreRememberedAccountSession();
     })();
