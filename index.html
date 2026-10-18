@@ -1966,7 +1966,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         { id: "chief-ultimate-helper-kingdom", label: "Crew x50K", description: "50,000 of every helper", type: "helper-bundle", amount: 50000, tier: "mega", color: "#bf7540" }
       );
       const freshState = () => ({
-        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineMilliseconds: 0, pendingOfflineSeconds: 0, bought: {}, active: [], goldenCookie: { nextAt: Date.now() + goldenCookieInterval, ready: false, pendingRewardId: "" }, lastSave: Date.now(),
+        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineMilliseconds: 0, pendingOfflineSeconds: 0, bought: {}, active: [], boostsPausedAt: 0, goldenCookie: { nextAt: Date.now() + goldenCookieInterval, ready: false, pendingRewardId: "" }, lastSave: Date.now(),
         ownerTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, autoClickCookie: false, boostDurationMultiplier: 1, boostPowerMultiplier: 1, goldenCookieOpBoosters: false, timeSkipSeconds: 3600 },
         adminTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, boostDurationMultiplier: 1 },
         wheelTools: { infiniteSpins: false, infiniteLuck: false }
@@ -2033,6 +2033,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const ownerDockButton = document.querySelector('[data-page="owner"]');
       const adminDockButton = document.querySelector('[data-page="admin"]');
       const pageOrder = ["bake", "market", "boosts", "ledger", "profile", "achievements", "admin", "owner"];
+      const appHistoryStateKey = "__jancsisCookieGalaxy";
+      const priorHistoryState = history.state && typeof history.state === "object" && !Array.isArray(history.state) ? history.state : {};
+      history.replaceState({ ...priorHistoryState, [appHistoryStateKey]: { page: currentPage, sentinel: true, guard: false } }, "", location.href);
+      history.pushState({ ...priorHistoryState, [appHistoryStateKey]: { page: currentPage, sentinel: true, guard: true } }, "", location.href);
       const fmt = value => {
         if (typeof value === "bigint") return value.toLocaleString();
         if (typeof value === "string" && /^\d+$/.test(value)) {
@@ -2184,7 +2188,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           <section aria-labelledby="active-boost-list-title"><h3 id="active-boost-list-title">All current active boosters</h3><ul class="active-boost-list" data-active-boost-list></ul></section>
           <div id="active-boost-info-copy">
             <p>Chief's Golden Touch is a Divine golden-cookie boost that multiplies hand-baked tap power by 5,000 for its standard 25-minute duration. The Chief AI can use a custom duration when one is requested, and Owner boost-power settings can increase the multiplier. It is one of the timed rewards that can be activated by collecting a golden cookie.</p>
-            <p>While a boost is active, its remaining time counts down in the bakery. Tap boosts multiply cookies earned from tapping, while all-baking boosts also multiply passive production. Multiple active boosts can apply together; each ends when its own timer runs out. This tile opens the complete list so you can review every currently active booster and its remaining time.</p>
+            <p>While the bakery is open, a boost's remaining time counts down. Its timer pauses when you switch away from or close the page, then resumes when you return. Tap boosts multiply cookies earned from tapping, while all-baking boosts also multiply passive production. Multiple active boosts can apply together; each ends when its own timer runs out. This tile opens the complete list so you can review every currently active booster and its remaining time.</p>
             <p>Boost effects apply only while the boost is active in this bakery. Your regular account role does not restrict access to this information.</p>
           </div>
           <button class="golden-cookie-info-close" type="button" data-active-boost-info-close>Got it</button>
@@ -4248,6 +4252,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           };
           const savedBought = saved.bought && typeof saved.bought === "object" && !Array.isArray(saved.bought) ? saved.bought : {};
           const savedActive = Array.isArray(saved.active) ? saved.active : [];
+          const boostsPausedAt = Number.isFinite(Number(saved.boostsPausedAt)) && Number(saved.boostsPausedAt) > 0
+            ? Number(saved.boostsPausedAt)
+            : 0;
+          const pausedDuration = boostsPausedAt ? Math.max(0, Date.now() - boostsPausedAt) : 0;
           return {
             ...freshState(),
             ...saved,
@@ -4288,8 +4296,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
               if (!activeBoost || typeof activeBoost !== "object") return [];
               const boost = allTimedBoosts().find(item => item.id === activeBoost.id);
               const endsAt = Number(activeBoost.endsAt);
-              return boost && Number.isFinite(endsAt) && endsAt > 0 ? [{ ...boost, endsAt }] : [];
+              if (!boost || !Number.isFinite(endsAt) || endsAt <= 0 || boostsPausedAt && endsAt <= boostsPausedAt) return [];
+              return [{ ...boost, endsAt: Math.min(8640000000000000, endsAt + pausedDuration) }];
             }),
+            boostsPausedAt: 0,
             ownerTools: sanitizeTools(saved.ownerTools, freshState().ownerTools, numericSettings.ownerTools),
             adminTools: sanitizeTools(saved.adminTools, freshState().adminTools, numericSettings.adminTools),
             wheelTools: {
@@ -5190,7 +5200,19 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         if (!currentUser || isDemo) return;
         if (!hiddenSince) hiddenSince = Date.now();
         state.lastSave = hiddenSince;
+        if (!state.boostsPausedAt) state.boostsPausedAt = hiddenSince;
         save(false);
+      }
+      function resumePausedBoosts(now = Date.now()) {
+        if (!state.boostsPausedAt) return false;
+        const pausedAt = state.boostsPausedAt;
+        const pausedDuration = Math.max(0, now - pausedAt);
+        state.active = state.active.flatMap(boost => {
+          if (!Number.isFinite(Number(boost.endsAt)) || boost.endsAt <= pausedAt) return [];
+          return [{ ...boost, endsAt: Math.min(8640000000000000, boost.endsAt + pausedDuration) }];
+        });
+        state.boostsPausedAt = 0;
+        return true;
       }
       function formatOfflineDuration(totalMilliseconds) {
         const elapsedMs = Math.max(0, Math.floor(Number(totalMilliseconds) || 0));
@@ -7152,6 +7174,28 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         syncPageCounters();
         updateDockHighlight(animatePage);
       }
+      function writeAppPageHistory(page) {
+        const currentState = history.state && typeof history.state === "object" && !Array.isArray(history.state) ? history.state : {};
+        history.pushState({ ...currentState, [appHistoryStateKey]: { page, sentinel: false, guard: false } }, "", location.href);
+      }
+      window.addEventListener("popstate", event => {
+        const welcomeScreen = document.getElementById("welcome-screen");
+        if (!welcomeScreen.hidden) void closeAnimatedOverlay(welcomeScreen);
+        const entry = event.state?.[appHistoryStateKey];
+        if (!entry || typeof entry !== "object") {
+          history.go(1);
+          return;
+        }
+        if (entry.sentinel && !entry.guard) {
+          history.go(1);
+          return;
+        }
+        if (!currentUser && !isDemo) return;
+        const requestedPage = pageOrder.includes(entry.page) ? entry.page : "bake";
+        currentPage = requestedPage === "owner" && !isOwner() || requestedPage === "admin" && !isAdmin() ? "bake" : requestedPage;
+        slideDirection = "right";
+        render(true);
+      });
       function playCookieClickSound() {
         const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextConstructor) return;
@@ -7616,6 +7660,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
           const newIndex = pageOrder.indexOf(button.dataset.page);
           slideDirection = newIndex > oldIndex ? "left" : "right";
           await animatePageExit(main.querySelector(".page"), slideDirection);
+          writeAppPageHistory(button.dataset.page);
           currentPage = button.dataset.page;
           render(true);
           showPageWelcome(button.dataset.page, button);
@@ -7640,6 +7685,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const now = Date.now();
         const elapsed = Math.max(0, now - hiddenSince);
         hiddenSince = 0;
+        resumePausedBoosts(now);
         queueOfflineCookies(elapsed);
         processGoldenCookieSchedule(now);
         state.lastSave = now;
