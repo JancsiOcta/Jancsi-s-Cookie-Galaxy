@@ -68,10 +68,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      column-gap: 2px;
       max-width: 1240px;
       margin: 0 auto;
     }
     .brand { display: flex; min-width: 0; gap: 12px; align-items: center; }
+    .brand > div:last-child { min-width: 0; }
     .brand-mark {
       display: block; width: 42px; height: 42px; flex: 0 0 42px; overflow: hidden;
       border: 1px solid rgba(255, 220, 145, .56); border-radius: 15px;
@@ -80,12 +82,12 @@
     }
     .brand-mark svg { display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 0 8px rgba(255,202,112,.42)); }
     .brand-mark .brand-cookie-glow { fill:rgba(255,213,130,.12); }
-    .brand-name { position:relative; display:inline-block; color:#fff0c9; font-family:"Space Grotesk","Oxanium","Trebuchet MS",system-ui,sans-serif; font-size:16px; font-weight:800; letter-spacing:-.045em; white-space:nowrap; text-shadow:0 1px 0 rgba(255,255,255,.14),0 0 19px rgba(255,202,112,.2); }
+    .brand-name { position:relative; display:inline-block; max-width:100%; overflow:visible; color:#fff0c9; font-family:"Space Grotesk","Oxanium","Trebuchet MS",system-ui,sans-serif; font-size:16px; font-weight:800; letter-spacing:-.045em; line-height:1.1; overflow-wrap:anywhere; text-overflow:clip; white-space:normal; text-shadow:0 1px 0 rgba(255,255,255,.14),0 0 19px rgba(255,202,112,.2); }
     .brand-name::after { position:absolute; right:0; bottom:-4px; left:0; height:1px; background:linear-gradient(90deg,rgba(255,202,112,0),rgba(255,215,139,.66) 32%,rgba(255,202,112,.12) 86%,transparent); content:""; }
-    .brand-sub { margin-top: 5px; color: #c5ad88; font-size: 9px; font-weight:700; letter-spacing: .19em; text-transform: uppercase; white-space: nowrap; }
+    .brand-sub { max-width:100%; overflow:visible; margin-top: 5px; color: #c5ad88; font-size: 9px; font-weight:700; letter-spacing: .19em; overflow-wrap:anywhere; text-overflow:clip; text-transform: uppercase; white-space:normal; }
     .top-status { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
     .top-actions { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
-    .top-quick-actions { display:flex; min-width:0; align-items:center; justify-content:flex-end; gap:10px; }
+    .top-quick-actions { display:flex; min-width:0; align-items:center; justify-content:flex-end; gap:6px; }
     .facebook-open-button { display:flex; flex:0 0 auto; min-height:42px; padding:9px 13px; align-items:center; gap:8px; border:1px solid rgba(117,176,255,.48); border-radius:14px; color:#fff; background:linear-gradient(135deg,#2677e8,#1455b8); box-shadow:0 7px 22px rgba(24,95,199,.24),inset 0 1px rgba(255,255,255,.2); font-size:11px; font-weight:850; white-space:nowrap; cursor:pointer; transition:transform .176s,box-shadow .176s; }
     .facebook-open-button:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(24,95,199,.38); }
     .facebook-open-button svg { width:17px; height:17px; flex:0 0 17px; }
@@ -328,6 +330,82 @@
     .bakery-ai-head { display:flex; flex:0 0 auto; align-items:center; gap:12px; padding:18px 20px; border-bottom:1px solid rgba(255,238,207,.1); }
     .bakery-ai-mark { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border:1px solid rgba(255,202,112,.35); border-radius:50%; color:#2a1b0d; background:linear-gradient(135deg,#ffe3a1,#df9d3b); box-shadow:0 4px 16px rgba(198,132,43,.24); }
     .bakery-ai-mark .bakery-ai-logo { width:29px; height:29px; }
+    .updates-open-button { display:flex; min-height:42px; flex:0 0 auto; padding:9px 13px; align-items:center; justify-content:center; gap:7px; border:1px solid rgba(196,174,255,.4); border-radius:999px; color:#efe5ff; background:linear-gradient(125deg,rgba(116,83,174,.32),rgba(58,43,87,.4)); box-shadow:0 6px 20px rgba(93,64,149,.17); font-size:11px; font-weight:850; white-space:nowrap; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1),border-color .2s,box-shadow .2s; }
+    .updates-open-button:hover { transform:translateY(-2px); border-color:rgba(220,203,255,.72); box-shadow:0 9px 26px rgba(119,87,183,.3); }
+    .updates-open-button svg { width:18px; height:18px; flex:0 0 18px; }
+    .updates-dialog { position:fixed; z-index:170; inset:0; display:grid; overflow:auto; padding:18px; place-items:center; background:rgba(8,6,12,.82); backdrop-filter:blur(13px); -webkit-backdrop-filter:blur(13px); animation:updates-regular-overlay-in .3s ease both; }
+    .updates-dialog[hidden] { display:none; }
+    .updates-dialog.is-closing { animation:updates-overlay-out .24s ease-in both; pointer-events:none; }
+    .updates-panel { position:relative; width:min(760px,100%); max-height:calc(100vh - 36px); max-height:calc(100dvh - 36px); overflow:auto; padding:26px; border:1px solid rgba(255,224,160,.32); border-radius:28px; color:#f5e8cf; background:radial-gradient(ellipse at 10% 0,rgba(165,126,233,.15),transparent 44%),radial-gradient(ellipse at 100% 90%,rgba(255,202,112,.08),transparent 42%),#1e1820; box-shadow:0 28px 100px rgba(0,0,0,.72),0 0 60px rgba(151,111,208,.14); animation:updates-regular-panel-in .38s cubic-bezier(.2,.8,.2,1) both; }
+    .updates-panel-head { display:flex; align-items:flex-start; gap:13px; }
+    .updates-heading-mark { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border:1px solid rgba(220,203,255,.38); border-radius:15px; color:#f4eaff; background:linear-gradient(145deg,rgba(183,157,242,.3),rgba(102,77,146,.24)); box-shadow:0 0 24px rgba(163,126,229,.16); }
+    .updates-heading-mark svg { width:23px; height:23px; }
+    .updates-heading-copy { min-width:0; flex:1; }
+    .updates-kicker { color:#cdb6fa; font-size:9px; font-weight:900; letter-spacing:.17em; text-transform:uppercase; }
+    .updates-title { margin:5px 0 4px; color:#fff0ce; font-family:"Space Grotesk","Oxanium",sans-serif; font-size:clamp(22px,4vw,30px); font-weight:850; letter-spacing:-.04em; line-height:1.1; }
+    .updates-intro { margin:0; color:#bfb2a0; font-size:11px; line-height:1.6; }
+    .updates-close { display:grid; width:36px; height:36px; flex:0 0 36px; place-items:center; border:1px solid rgba(255,255,255,.14); border-radius:50%; color:#f4eaff; background:rgba(255,255,255,.06); font-size:20px; cursor:pointer; }
+    .updates-package-banner { display:flex; align-items:center; gap:9px; margin:19px 0 14px; padding:11px 13px; border:1px solid rgba(220,203,255,.2); border-radius:15px; color:#e9ddff; background:linear-gradient(105deg,rgba(145,111,202,.13),rgba(255,255,255,.025)); font-size:10px; font-weight:800; }
+    .updates-package-banner svg { width:16px; height:16px; flex:0 0 16px; color:#e4cbff; }
+    .updates-package-banner span:last-child { margin-left:auto; color:#ad9cbb; font-size:9px; font-weight:650; }
+    .updates-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .updates-card { min-width:0; padding:14px; border:1px solid rgba(255,238,207,.1); border-radius:19px; background:rgba(255,255,255,.035); }
+    .updates-card-top { display:flex; align-items:center; gap:9px; }
+    .updates-card-icon { display:grid; width:32px; height:32px; flex:0 0 32px; place-items:center; border:1px solid rgba(255,202,112,.18); border-radius:11px; color:#ffda91; background:rgba(255,202,112,.08); }
+    .updates-card-icon svg { width:18px; height:18px; }
+    .updates-card h3 { margin:0; color:#ffe9c2; font-size:11px; font-weight:850; line-height:1.35; }
+    .updates-card p { margin:8px 0 0; color:#c2b6a5; font-size:10px; line-height:1.6; }
+    .updates-card-action { min-height:32px; margin-top:10px; padding:7px 10px; border:1px solid rgba(255,224,160,.24); border-radius:999px; color:#ffdf9d; background:rgba(255,202,112,.07); font-size:9px; font-weight:850; cursor:pointer; }
+    .updates-footer { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); color:#9c8e7b; font-size:9px; line-height:1.5; }
+    .updates-dialog.updates-demo { background:radial-gradient(ellipse at 50% 100%,rgba(117,191,255,.12),transparent 50%),rgba(7,11,19,.82); }
+    .updates-demo .updates-panel { border-color:rgba(137,194,255,.38); background:radial-gradient(ellipse at 100% 0,rgba(80,154,225,.17),transparent 46%),#151d29; }
+    .updates-demo .updates-heading-mark { border-color:rgba(137,194,255,.4); color:#d9efff; background:linear-gradient(145deg,rgba(101,179,244,.36),rgba(53,104,159,.27)); box-shadow:0 0 25px rgba(91,167,233,.2); }
+    .updates-demo .updates-kicker,.updates-demo .updates-package-banner svg { color:#a8d7ff; }
+    .updates-dialog.updates-admin { background:radial-gradient(ellipse at 50% 100%,rgba(238,93,176,.14),transparent 52%),rgba(14,6,13,.84); }
+    .updates-admin .updates-panel { border-color:rgba(255,155,211,.48); background:radial-gradient(ellipse at 0 0,rgba(238,93,176,.18),transparent 48%),linear-gradient(145deg,#281a28,#17131a 75%); box-shadow:0 30px 110px rgba(0,0,0,.72),0 0 65px rgba(238,93,176,.18); }
+    .updates-admin .updates-heading-mark { border-color:rgba(255,155,211,.5); color:#fff0fa; background:linear-gradient(145deg,rgba(255,155,211,.34),rgba(150,67,126,.26)); box-shadow:0 0 26px rgba(238,93,176,.24); }
+    .updates-admin .updates-kicker,.updates-admin .updates-package-banner svg { color:#ffb4dc; }
+    .updates-admin .updates-card-icon { border-color:rgba(255,155,211,.22); color:#ffc1e4; background:rgba(238,93,176,.1); }
+    .updates-dialog.updates-owner { background:radial-gradient(ellipse at 50% 40%,rgba(255,202,112,.22),rgba(124,92,181,.12) 40%,transparent 72%),rgba(7,6,12,.88); animation:updates-owner-overlay-in .56s cubic-bezier(.16,1,.3,1) both; }
+    .updates-dialog.updates-owner.is-closing { animation:updates-owner-overlay-out .5s cubic-bezier(.4,0,.8,.3) both; }
+    .updates-dialog.updates-owner.is-closing .updates-panel { animation:updates-owner-panel-out .5s cubic-bezier(.4,0,.8,.3) both; }
+    .updates-owner .updates-panel { border-color:rgba(255,224,138,.58); border-radius:36px; background:radial-gradient(ellipse at 12% -5%,rgba(255,226,165,.22),transparent 43%),radial-gradient(ellipse at 100% 100%,rgba(149,115,219,.18),transparent 48%),linear-gradient(145deg,#302719,#17131a 76%); box-shadow:0 34px 120px rgba(0,0,0,.76),0 0 88px rgba(255,190,56,.25),0 0 42px rgba(147,111,255,.19),inset 0 1px rgba(255,255,255,.18); backdrop-filter:blur(20px) saturate(1.25); animation:updates-owner-panel-in .72s cubic-bezier(.16,1,.3,1) both; }
+    .updates-owner .updates-heading-mark { border-color:rgba(255,224,138,.5); color:#fff2ce; background:linear-gradient(145deg,rgba(255,224,160,.29),rgba(135,101,194,.3)); box-shadow:0 0 28px rgba(255,202,112,.2); }
+    .updates-owner .updates-kicker,.updates-owner .updates-package-banner svg { color:#ffe08a; }
+    .updates-owner .updates-package-banner { border-color:rgba(255,224,138,.28); background:linear-gradient(105deg,rgba(255,214,128,.11),rgba(151,116,220,.1)); }
+    .updates-owner .updates-card { border-color:rgba(255,224,138,.15); border-radius:25px; background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(151,116,220,.035)); }
+    .updates-owner .updates-card-icon { border-color:rgba(255,224,138,.25); color:#ffe29a; background:linear-gradient(145deg,rgba(255,202,112,.14),rgba(147,111,255,.1)); }
+    .updates-owner .updates-card-action { border-color:rgba(255,224,138,.38); color:#fff0c5; background:linear-gradient(110deg,rgba(255,224,160,.12),rgba(147,111,255,.1)); }
+    @keyframes updates-regular-overlay-in { from { opacity:0; } to { opacity:1; } }
+    @keyframes updates-overlay-out { to { opacity:0; } }
+    @keyframes updates-regular-panel-in { from { opacity:0; transform:translateY(14px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes updates-card-in { from { transform:translateY(7px); } to { transform:translateY(0); } }
+    @keyframes updates-demo-panel-in { 0% { opacity:0; transform:translateY(19px) scale(.95); } 70% { opacity:1; transform:translateY(-2px) scale(1.008); } 100% { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes updates-admin-panel-in { 0% { opacity:0; transform:translateX(28px) scale(.94); filter:blur(5px) saturate(.75); } 68% { opacity:1; transform:translateX(-3px) scale(1.012); filter:blur(0) saturate(1.2); } 100% { opacity:1; transform:translateX(0) scale(1); filter:saturate(1); } }
+    @keyframes updates-admin-card-in { from { transform:translateX(11px); } to { transform:translateX(0); } }
+    @keyframes updates-owner-overlay-in { from { opacity:0; backdrop-filter:blur(0) saturate(.8); } to { opacity:1; backdrop-filter:blur(16px) saturate(1.24); } }
+    @keyframes updates-owner-overlay-out { to { opacity:0; backdrop-filter:blur(0) saturate(.8); } }
+    @keyframes updates-owner-panel-in { 0% { opacity:0; transform:translate3d(0,34px,0) scale(.88) rotateX(8deg); filter:blur(8px) saturate(.72); } 58% { opacity:1; transform:translate3d(0,-4px,0) scale(1.012) rotateX(0); filter:blur(0) saturate(1.18); } 82% { transform:translate3d(0,1px,0) scale(.998); } 100% { opacity:1; transform:translate3d(0,0,0) scale(1); filter:saturate(1.08); } }
+    @keyframes updates-owner-panel-out { to { opacity:0; transform:translate3d(0,16px,0) scale(.94); filter:blur(6px) saturate(.78); } }
+    @keyframes updates-owner-card-in { from { transform:translate3d(0,9px,0) scale(.985); } to { transform:translate3d(0,0,0) scale(1); } }
+    .updates-demo:not(.is-closing) .updates-panel { animation:updates-demo-panel-in .46s cubic-bezier(.2,.85,.25,1) both; }
+    .updates-admin:not(.is-closing) .updates-panel { animation:updates-admin-panel-in .5s cubic-bezier(.16,1,.3,1) both; }
+    .updates-dialog:not(.is-closing) .updates-card { animation:updates-card-in .3s cubic-bezier(.2,.8,.2,1) both; }
+    .updates-dialog:not(.is-closing) .updates-card:nth-child(2) { animation-delay:.035s; }
+    .updates-dialog:not(.is-closing) .updates-card:nth-child(3) { animation-delay:.07s; }
+    .updates-dialog:not(.is-closing) .updates-card:nth-child(4) { animation-delay:.105s; }
+    .updates-dialog:not(.is-closing) .updates-card:nth-child(5) { animation-delay:.14s; }
+    .updates-dialog:not(.is-closing) .updates-card:nth-child(6) { animation-delay:.175s; }
+    .updates-admin:not(.is-closing) .updates-card { animation-name:updates-admin-card-in; }
+    .updates-owner:not(.is-closing) .updates-card { animation-name:updates-owner-card-in; animation-duration:.42s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(n) { animation-delay:0s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(2) { animation-delay:.045s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(3) { animation-delay:.09s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(4) { animation-delay:.135s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(5) { animation-delay:.18s; }
+    .updates-owner:not(.is-closing) .updates-card:nth-child(6) { animation-delay:.225s; }
+    @media(max-width:560px) { .updates-dialog { padding:10px; } .updates-panel { max-height:calc(100vh - 20px); max-height:calc(100dvh - 20px); padding:19px 16px; border-radius:23px; } .updates-owner .updates-panel { border-radius:28px; } .updates-grid { grid-template-columns:1fr; gap:8px; } .updates-card { padding:12px; } }
+    @media(max-width:430px) { .updates-open-button { width:38px; min-height:38px; padding:8px; } .updates-open-button span { display:none; } }
     .bakery-ai-title { min-width:0; margin:0; color:#ffe6ad; font-size:17px; font-weight:900; }
     .bakery-ai-subtitle { margin:3px 0 0; color:#c7b38f; font-size:10px; line-height:1.5; }
     .bakery-ai-close { display:grid; width:40px; height:40px; flex:0 0 40px; margin-left:auto; place-items:center; border:1px solid rgba(255,255,255,.13); border-radius:50%; color:#ffe6ad; background:rgba(255,255,255,.06); font-size:22px; cursor:pointer; }
@@ -472,6 +550,7 @@
     @media(max-width:430px) { .offline-cookie-panel { padding:20px 16px; } }
     @media(max-width:680px) {
       .top-actions { gap:6px; }
+      .updates-open-button { min-height:38px; padding:8px 9px; gap:5px; font-size:10px; }
       .facebook-open-button { min-height:38px; padding:8px 9px; gap:5px; font-size:10px; }
       .facebook-galaxy-open-button { min-height:38px; padding:8px 9px; gap:5px; font-size:10px; }
       .spin-open-button { min-height:38px; padding:8px 9px; gap:5px; font-size:10px; }
@@ -553,6 +632,11 @@
     @media (prefers-reduced-motion:reduce) {
       .product-info-dialog, .product-info-dialog .product-info-panel,
       .product-info-dialog .product-info-tab-panel.is-entering {
+        animation:none !important;
+        transition:none !important;
+      }
+      .updates-dialog, .updates-dialog .updates-panel, .updates-dialog .updates-card,
+      .updates-open-button {
         animation:none !important;
         transition:none !important;
       }
@@ -818,6 +902,116 @@
     .progress-label { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; min-width: 0; margin-top: 8px; color: #8f806d; font-size: 10px; }
     .progress-label > span { min-width: 0; overflow-wrap: anywhere; }
     .progress-label > span:last-child { text-align: right; }
+    .mission-board { margin-top:28px; padding:20px; border:1px solid rgba(255,202,112,.2); border-radius:24px; background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.09),transparent 46%),linear-gradient(145deg,rgba(255,255,255,.035),transparent 62%),rgba(30,23,18,.88); }
+    .mission-board-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; }
+    .mission-board-title { display:flex; align-items:center; gap:9px; margin:0; color:#ffe2a0; font-size:16px; font-weight:850; }
+    .mission-board-title svg { width:20px; height:20px; color:var(--gold); }
+    .mission-board-meta { display:flex; flex-wrap:wrap; align-items:center; gap:7px; color:var(--muted); font-size:10px; font-weight:750; }
+    .mission-board-meta span { padding:6px 9px; border:1px solid rgba(255,202,112,.16); border-radius:999px; background:rgba(255,202,112,.055); }
+    .mission-board-copy { margin:0 0 14px; color:var(--muted); font-size:11px; line-height:1.55; }
+    .mission-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .mission-tile { display:grid; min-width:0; grid-template-rows:auto 1fr auto; gap:9px; padding:14px; border:1px solid rgba(255,255,255,.09); border-radius:18px; background:rgba(255,255,255,.035); }
+    .mission-tile.is-ready { border-color:rgba(255,202,112,.38); background:linear-gradient(145deg,rgba(255,202,112,.1),rgba(255,255,255,.025)); }
+    .mission-tile.is-claimed { border-color:rgba(155,211,160,.28); background:linear-gradient(145deg,rgba(105,175,111,.09),rgba(255,255,255,.025)); }
+    .mission-tile-top { display:flex; min-width:0; align-items:flex-start; justify-content:space-between; gap:7px; }
+    .mission-tile h3 { min-width:0; margin:0; color:var(--ink); font-size:12px; line-height:1.4; overflow-wrap:anywhere; }
+    .mission-reward { flex:0 0 auto; color:var(--gold); font-size:9px; font-weight:900; white-space:nowrap; }
+    .mission-tile-copy { min-height:30px; margin:0; color:var(--muted); font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+    .mission-progress-track { height:6px; margin-top:8px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.08); }
+    .mission-progress-fill { width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--orange),var(--gold)); transition:width .3s ease; }
+    .mission-progress-label { display:block; margin-top:6px; color:#c5b69f; font-size:9px; font-variant-numeric:tabular-nums; }
+    .mission-claim { width:100%; min-height:34px; padding:7px 9px; border:1px solid rgba(255,202,112,.25); border-radius:999px; color:var(--gold); background:rgba(255,202,112,.07); font-size:10px; font-weight:850; cursor:pointer; }
+    .mission-claim:disabled { border-color:rgba(255,255,255,.08); color:#968875; background:rgba(255,255,255,.025); cursor:default; opacity:.82; }
+    .mission-admin { border-color:rgba(255,155,211,.24); background:radial-gradient(ellipse at 100% 0,rgba(255,114,189,.11),transparent 50%),rgba(31,19,30,.9); }
+    .mission-admin .mission-board-title,.mission-admin .mission-reward { color:#ffc1e4; }
+    .mission-admin .mission-board-meta span { border-color:rgba(255,155,211,.2); background:rgba(255,114,189,.07); }
+    .mission-admin .mission-progress-fill { background:linear-gradient(90deg,#ee70b5,#ffd7ed); }
+    .mission-owner { border-color:rgba(255,224,138,.34); background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.18),transparent 48%),radial-gradient(ellipse at 0 100%,rgba(147,111,255,.08),transparent 50%),rgba(30,23,18,.93); box-shadow:0 16px 45px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07); }
+    .mission-owner .mission-board-title { color:#fff0bd; text-shadow:0 0 20px rgba(255,202,112,.25); }
+    .mission-owner .mission-tile { border-color:rgba(255,224,138,.15); background:rgba(23,17,12,.5); }
+    .mission-owner .mission-tile.is-ready { border-color:rgba(255,224,138,.48); box-shadow:0 0 25px rgba(255,202,112,.09); }
+    .mission-owner .mission-claim:not(:disabled) { border-color:rgba(255,224,138,.45); color:#2a1b0d; background:linear-gradient(110deg,#fff0bd,#ffc84e 55%,#e9a13c); }
+    .mission-demo { border-color:rgba(137,194,255,.24); background:radial-gradient(ellipse at 100% 0,rgba(80,154,225,.11),transparent 50%),rgba(18,25,35,.9); }
+    .mission-demo .mission-board-title,.mission-demo .mission-reward { color:#a9d7ff; }
+    .mission-demo .mission-board-meta span { border-color:rgba(137,194,255,.2); background:rgba(80,154,225,.07); }
+    .mission-demo .mission-progress-fill { background:linear-gradient(90deg,#5e9ee0,#b7e2ff); }
+    .mission-shortcut { display:flex; width:fit-content; max-width:100%; min-height:44px; margin:-12px 0 24px; padding:8px 13px; align-items:center; gap:10px; border:1px solid rgba(255,202,112,.28); border-radius:999px; color:var(--ink); background:linear-gradient(105deg,rgba(255,202,112,.11),rgba(255,255,255,.035)); text-align:left; cursor:pointer; transition:transform .18s,border-color .18s,box-shadow .18s; }
+    .mission-shortcut:hover { transform:translateY(-1px); border-color:rgba(255,220,131,.58); box-shadow:0 8px 24px rgba(255,202,112,.1); }
+    .mission-shortcut-icon { display:grid; width:28px; height:28px; flex:0 0 28px; place-items:center; border:1px solid rgba(255,202,112,.2); border-radius:50%; color:var(--gold); background:rgba(255,202,112,.08); }
+    .mission-shortcut-icon svg { width:16px; height:16px; }
+    .mission-shortcut-copy { display:grid; gap:2px; min-width:0; }
+    .mission-shortcut-copy strong { font-size:10px; font-weight:900; }
+    .mission-shortcut-copy small { color:var(--muted); font-size:9px; line-height:1.35; }
+    .mission-shortcut-reward { flex:0 0 auto; color:var(--gold); font-size:9px; font-weight:900; }
+    .admin-mode .mission-shortcut { border-color:rgba(255,155,211,.3); }
+    body.admin-mode .mission-shortcut-icon,body.admin-mode .mission-shortcut-reward { color:#ffc1e4; border-color:rgba(255,155,211,.28); }
+    body.owner-mode .mission-shortcut { border-color:rgba(255,224,138,.45); background:linear-gradient(105deg,rgba(255,202,112,.16),rgba(147,111,255,.06)); box-shadow:0 6px 22px rgba(255,202,112,.08); }
+    body.owner-mode .mission-shortcut-copy strong { color:#fff0bd; }
+    .flight-deck { display:grid; gap:14px; margin:28px 0; padding:20px; border:1px solid rgba(255,202,112,.2); border-radius:28px; background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.09),transparent 48%),rgba(30,23,18,.84); }
+    .flight-deck-head { display:flex; min-width:0; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px; }
+    .flight-deck-title { margin:0; color:#ffe2a0; font-size:17px; font-weight:850; }
+    .flight-deck-copy { margin:0; color:var(--muted); font-size:11px; line-height:1.55; }
+    .flight-deck-role { max-width:100%; padding:6px 10px; border:1px solid rgba(255,202,112,.2); border-radius:999px; color:var(--gold); background:rgba(255,202,112,.055); font-size:9px; font-weight:850; letter-spacing:.08em; overflow-wrap:anywhere; }
+    .flight-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .flight-card { display:flex; min-width:0; min-height:190px; padding:16px; flex-direction:column; align-items:stretch; gap:10px; border:1px solid rgba(255,255,255,.09); border-radius:23px; background:rgba(255,255,255,.035); }
+    .flight-card h3 { margin:0; color:var(--ink); font-size:12px; line-height:1.4; overflow-wrap:anywhere; }
+    .flight-card-copy { min-width:0; flex:1 1 auto; margin:0; color:var(--muted); font-size:10px; line-height:1.55; overflow-wrap:anywhere; }
+    .flight-card-value { color:var(--gold); font-size:13px; font-weight:850; line-height:1.35; overflow-wrap:anywhere; }
+    .flight-progress { height:6px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.08); }
+    .flight-progress-fill { width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--orange),var(--gold)); transition:width .35s ease; }
+    .flight-action { display:inline-flex; width:100%; min-height:36px; padding:8px 12px; align-items:center; justify-content:center; border:1px solid rgba(255,202,112,.3); border-radius:999px; color:#ffe2a0; background:rgba(255,202,112,.08); font-size:10px; font-weight:850; text-align:center; cursor:pointer; }
+    .flight-action:disabled { color:#968875; border-color:rgba(255,255,255,.08); background:rgba(255,255,255,.025); cursor:default; opacity:.8; }
+    .flight-tip { display:flex; min-width:0; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px; padding:12px 14px; border:1px solid rgba(255,255,255,.08); border-radius:20px; background:rgba(0,0,0,.14); }
+    .flight-tip strong { color:var(--gold); font-size:10px; }
+    .flight-tip p { min-width:0; flex:1 1 220px; margin:0; color:#c5b69f; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+    .flight-owner-tools { display:flex; min-width:0; flex-wrap:wrap; align-items:center; gap:8px; padding-top:12px; border-top:1px solid rgba(255,224,138,.15); }
+    .flight-owner-tools strong { flex:1 1 100%; color:#fff0bd; font-size:11px; }
+    .flight-owner-tools .flight-action { width:auto; min-width:min(100%,150px); flex:1 1 150px; }
+    .flight-owner-audit { display:grid; min-width:0; gap:9px; padding:15px; border:1px solid rgba(255,224,138,.2); border-radius:22px; background:rgba(16,12,9,.46); }
+    .flight-owner-audit h3 { margin:0; color:#fff0bd; font-size:12px; }
+    .flight-owner-audit p { margin:0; color:#d1c2a7; font-size:10px; line-height:1.55; overflow-wrap:anywhere; }
+    .flight-owner-audit .flight-owner-audit-result { color:#fff0bd; }
+    .flight-owner-audit .flight-action { width:auto; justify-self:start; }
+    .market-batch { display:grid; grid-template-columns:minmax(0,1fr) minmax(170px,.55fr); gap:12px 18px; margin:18px 0 27px; padding:19px; border:1px solid rgba(255,202,112,.23); border-radius:26px; background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.1),transparent 48%),rgba(30,23,18,.72); }
+    .market-batch-copy { min-width:0; }
+    .market-batch-kicker { color:var(--gold); font-size:9px; font-weight:900; letter-spacing:.1em; }
+    .market-batch-copy h2 { margin:5px 0; font-size:16px; }
+    .market-batch-copy p { max-width:620px; margin:0; color:var(--muted); font-size:10px; line-height:1.55; }
+    .market-batch-controls { display:grid; align-content:center; gap:7px; }
+    .market-batch-controls label { color:var(--muted); font-size:9px; font-weight:800; }
+    .market-strategy { min-width:0; min-height:38px; padding:8px 13px; border:1px solid rgba(255,202,112,.3); border-radius:999px; color:var(--ink); background:rgba(0,0,0,.22); font:inherit; font-size:10px; }
+    .market-batch-summary { display:grid; min-width:0; gap:4px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); border-radius:17px; background:rgba(0,0,0,.16); }
+    .market-batch-summary strong { color:var(--gold); font-size:10px; }
+    .market-batch-summary span { color:var(--muted); font-size:9px; line-height:1.5; overflow-wrap:anywhere; }
+    .market-batch-button { min-height:38px; padding:8px 15px; border:1px solid rgba(255,202,112,.4); border-radius:999px; color:#21170e; background:linear-gradient(110deg,#fff0bd,#ffc84e 55%,#e9a13c); font-size:10px; font-weight:900; cursor:pointer; }
+    .market-batch-button:disabled { color:#968875; border-color:rgba(255,255,255,.08); background:rgba(255,255,255,.04); cursor:default; }
+    body.admin-mode .market-batch { border-color:rgba(255,155,211,.28); background:radial-gradient(ellipse at 100% 0,rgba(255,114,189,.1),transparent 48%),rgba(31,19,30,.82); }
+    body.admin-mode .market-batch-kicker,body.admin-mode .market-batch-summary strong { color:#ffc1e4; }
+    body.admin-mode .market-batch-button { border-color:rgba(255,155,211,.38); color:#281522; background:linear-gradient(110deg,#ffe0f1,#ff9bd3); }
+    body.owner-mode .market-batch { border-color:rgba(255,224,138,.35); background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.14),transparent 48%),rgba(30,23,18,.86); }
+    body.demo-mode .market-batch { border-color:rgba(137,194,255,.27); background:radial-gradient(ellipse at 100% 0,rgba(80,154,225,.1),transparent 48%),rgba(18,25,35,.85); }
+    body.demo-mode .market-batch-kicker,body.demo-mode .market-batch-summary strong { color:#a9d7ff; }
+    body.demo-mode .market-batch-button { border-color:rgba(137,194,255,.3); color:#102036; background:linear-gradient(110deg,#d6ebff,#87c2ff); }
+    @media(max-width:600px) { .market-batch { grid-template-columns:minmax(0,1fr); padding:15px; border-radius:23px; } }
+    body.admin-mode .flight-deck { border-color:rgba(255,155,211,.28); background:radial-gradient(ellipse at 100% 0,rgba(255,114,189,.1),transparent 48%),rgba(31,19,30,.88); }
+    body.admin-mode .flight-deck-title,body.admin-mode .flight-card-value { color:#ffc1e4; }
+    body.admin-mode .flight-deck-role { color:#ffc1e4; border-color:rgba(255,155,211,.25); background:rgba(255,114,189,.07); }
+    body.admin-mode .flight-action { color:#ffc1e4; border-color:rgba(255,155,211,.28); background:rgba(255,114,189,.08); }
+    body.owner-mode .flight-deck { border-color:rgba(255,224,138,.38); background:radial-gradient(ellipse at 100% 0,rgba(255,202,112,.17),transparent 48%),radial-gradient(ellipse at 0 100%,rgba(147,111,255,.07),transparent 50%),rgba(30,23,18,.93); box-shadow:0 16px 45px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07); }
+    body.owner-mode .flight-deck-title,body.owner-mode .flight-card-value,body.owner-mode .flight-owner-tools strong { color:#fff0bd; }
+    body.owner-mode .flight-card { border-color:rgba(255,224,138,.16); border-radius:28px; background:rgba(23,17,12,.5); }
+    body.owner-mode .flight-card:first-child { box-shadow:inset 0 0 30px rgba(255,202,112,.035); }
+    body.owner-mode .flight-action { color:#fff0bd; border-color:rgba(255,224,138,.33); background:rgba(255,202,112,.08); }
+    .flight-deck.flight-demo { border-color:rgba(137,194,255,.26); background:radial-gradient(ellipse at 100% 0,rgba(80,154,225,.1),transparent 48%),rgba(18,25,35,.88); }
+    .flight-demo .flight-deck-title,.flight-demo .flight-card-value { color:#a9d7ff; }
+    .flight-demo .flight-deck-role { color:#a9d7ff; border-color:rgba(137,194,255,.24); background:rgba(80,154,225,.07); }
+    .flight-demo .flight-action { color:#b7e2ff; border-color:rgba(137,194,255,.25); background:rgba(80,154,225,.08); }
+    @media (max-width:760px) { .mission-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:760px) { .flight-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .flight-card:last-child { grid-column:1 / -1; } }
+    @media (max-width:520px) { .mission-board { padding:15px; border-radius:22px; } .mission-grid { grid-template-columns:minmax(0,1fr); } .mission-tile { padding:13px; } }
+    @media (max-width:520px) { .flight-deck { padding:15px; border-radius:24px; } .flight-grid { grid-template-columns:minmax(0,1fr); } .flight-card,.flight-card:last-child { min-height:0; grid-column:auto; padding:14px; border-radius:20px; } .flight-card-copy { flex:0 1 auto; } .flight-tip { align-items:flex-start; } }
+    @media (max-width:420px) { .mission-shortcut { width:100%; gap:8px; padding:8px 10px; } .mission-shortcut-copy small { font-size:8px; } .mission-shortcut-reward { font-size:8px; } }
+    @media (prefers-reduced-motion:reduce) { .mission-shortcut { transition:none; } }
     .section-row { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 32px 0 13px; }
     .section-title { margin: 0; font-size: 17px; letter-spacing: -.02em; }
     .featured-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -1626,9 +1820,9 @@
     body .auth-card { border-radius: 35px; }
     body .auth-field input, body .auth-field select { border-radius: 16px; }
     body button.auth-submit { border-radius: 18px; }
-    body.admin-mode :is(.card, [class$="-card"], [class$="-panel"]):not(.product-info-tab-panel) { border-radius: 45px; }
+    body.admin-mode :is(.card, [class$="-card"], [class$="-panel"]):not(.product-info-tab-panel) { border-radius: 40px; }
     body.admin-mode button, body.admin-mode button[class], body.admin-mode input, body.admin-mode select, body.admin-mode textarea { border-radius: 24px; }
-    body.owner-mode :is(.card, [class$="-card"], [class$="-panel"]):not(.product-info-tab-panel) { border-radius: 64px; }
+    body.owner-mode :is(.card, [class$="-card"], [class$="-panel"]):not(.product-info-tab-panel) { border-radius: 44px; }
     body.owner-mode button, body.owner-mode button[class] { border-radius: 999px; }
     body.owner-mode button.owner-tool-product-icon { border-radius:14px; }
     body.owner-mode input, body.owner-mode select, body.owner-mode textarea { border-radius: 24px; }
@@ -1677,12 +1871,62 @@
       .logout-button span { display:none; }
     }
     body.owner-mode .page :is(.shop-item,.boost-banner,.profile-detail,.achievement-card,.owner-kpi,.owner-hero) { border-radius:32px; }
+    body button.flight-action { border-radius:999px; }
     body.owner-mode .page .owner-hero { border-radius:38px; }
     body.owner-mode button.owner-tool-product-icon { border-radius:18px; }
     body.owner-mode :is(.owner-tool-select,.owner-tool-input,.owner-notice-input) { padding:10px 16px; border-radius:28px; }
     body.owner-mode .golden-cookie-panel .golden-cookie-reward,
     body.owner-mode .active-boost-info-panel .active-boost-list li { border-radius:26px; }
     body.owner-mode .product-info-tab-panel { padding:18px; border-radius:24px; }
+    @media (max-width:1273px) {
+      .topbar { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto auto; align-items:center; gap:5px; padding:6px 10px; border-radius:22px; }
+      body.owner-mode .topbar { padding:6px 10px; border-radius:25px; }
+      .topbar > .brand { grid-column:1; grid-row:1; min-width:0; flex:none; }
+      .top-actions { display:contents; }
+      .top-quick-actions { grid-column:1; grid-row:2; flex-wrap:nowrap; justify-content:flex-start; gap:4px; }
+      #account-area { grid-column:1; grid-row:3; width:100%; min-width:0; max-width:100%; margin:0; }
+      .topbar .brand { gap:7px; }
+      .topbar .brand-mark { width:34px; height:34px; flex-basis:34px; border-radius:12px; }
+      .topbar .brand-name { font-size:13px; }
+      .topbar .brand-sub { margin-top:2px; font-size:7px; letter-spacing:.12em; }
+      .top-quick-actions :is(.bakery-ai-open,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button) { width:30px; min-width:30px; min-height:30px; padding:5px; justify-content:center; gap:0; }
+      .top-quick-actions :is(.bakery-ai-logo,.facebook-open-button svg,.facebook-galaxy-open-button svg,.spin-open-button svg,.updates-open-button svg) { width:17px; height:17px; flex-basis:17px; }
+      .top-quick-actions :is(.bakery-ai-label,.facebook-open-button span,.facebook-galaxy-open-button span,.spin-open-button span,.updates-open-button span) { display:none; }
+      .account-chip { display:flex; width:100%; min-width:0; max-width:100%; align-items:center; justify-content:space-between; gap:6px; padding:3px 5px; border:1px solid rgba(255,238,207,.1); border-radius:14px; background:rgba(255,255,255,.025); }
+      .account-name { display:flex; min-width:0; max-width:none; flex:1 1 auto; flex-wrap:nowrap; align-items:center; gap:4px; overflow:hidden; }
+      .account-description { min-width:0; flex:1 1 auto; overflow:hidden; overflow-wrap:normal; text-overflow:ellipsis; white-space:nowrap; font-size:10px; }
+      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:20px; flex:0 0 auto; padding:3px 5px; font-size:8px; letter-spacing:.04em; }
+      .account-chip .logout-button { min-height:26px; flex:0 0 auto; padding:4px 6px; }
+    }
+    @media (min-width:521px) and (max-width:1273px) {
+      .account-chip .account-name .account-description { display:block; }
+    }
+    @media (max-width:520px) {
+      .topbar { grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto auto; gap:4px; padding:6px 9px; border-radius:20px; }
+      body.owner-mode .topbar { padding:6px 9px; border-radius:22px; }
+      .topbar > .brand { grid-column:1; grid-row:1; }
+      .top-quick-actions { grid-column:1; grid-row:2; justify-content:flex-start; }
+      #account-area { grid-column:1; grid-row:3; }
+      .account-chip { gap:4px; padding:2px 4px; }
+      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:18px; padding:2px 4px; font-size:7px; }
+      .account-chip .logout-button { min-height:24px; }
+      .account-chip .account-description { display:block; }
+      .account-chip .logout-button { width:24px; min-width:24px; justify-content:center; padding:4px; }
+      .account-chip .logout-button span { display:none; }
+      .top-quick-actions :is(.bakery-ai-open,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button) { width:28px; min-width:28px; min-height:28px; padding:4px; }
+      .top-quick-actions :is(.bakery-ai-logo,.facebook-open-button svg,.facebook-galaxy-open-button svg,.spin-open-button svg,.updates-open-button svg) { width:16px; height:16px; flex-basis:16px; }
+    }
+    @media (max-width:360px) {
+      .topbar { padding:5px 8px; }
+      body.owner-mode .topbar { padding:5px 8px; }
+      .topbar > .brand { gap:8px; }
+      .brand-name { font-size:12px; }
+      .brand-sub { font-size:6px; letter-spacing:.1em; }
+      .top-quick-actions { gap:3px; }
+      .top-quick-actions :is(.bakery-ai-open,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button) { width:26px; min-width:26px; min-height:26px; padding:3px; }
+      .top-quick-actions :is(.bakery-ai-logo,.facebook-open-button svg,.facebook-galaxy-open-button svg,.spin-open-button svg,.updates-open-button svg) { width:15px; height:15px; flex-basis:15px; }
+      .account-chip .logout-button { width:22px; min-width:22px; min-height:22px; }
+    }
   </style>
 </head>
 <body>
@@ -1699,6 +1943,7 @@
           <button id="facebook-open" class="facebook-open-button" type="button" aria-label="Open Facebook follow information" title="Visit Jancsi on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Facebook</span></button>
           <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Cookie Galaxy Facebook page information" title="Visit Jancsi's Cookie Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
           <button id="spin-wheel-open" class="spin-open-button" type="button" aria-label="Open daily prize wheel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.64 5.64l12.72 12.72M18.36 5.64 5.64 18.36"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/></svg><span>Spin the Wheel</span></button>
+          <button id="updates-open" class="updates-open-button" type="button" aria-label="Open your role-specific Galaxy updates" title="Your Galaxy updates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4m0 10v4M3 12h4m10 0h4M5.64 5.64l2.83 2.83m7.06 7.06 2.83 2.83m0-12.72-2.83 2.83m-7.06 7.06-2.83 2.83"/><circle cx="12" cy="12" r="4.2"/></svg><span>Updates</span></button>
         </div>
         <div id="account-area" class="top-status"><span class="status-dot"></span> Your oven is happily humming</div>
       </div>
@@ -1730,6 +1975,7 @@
   <section id="welcome-screen" class="welcome-confetti" hidden></section>
   <section id="demo-dialog" class="demo-dialog" hidden></section>
   <section id="wheel-dialog" class="wheel-dialog" aria-label="Daily prize wheel" hidden></section>
+  <section id="updates-dialog" class="updates-dialog" aria-label="Role-specific Galaxy updates" hidden></section>
   <section id="role-info-dialog" class="role-info-dialog" aria-label="Account role information" hidden></section>
   <section id="vip-dialog" class="vip-dialog" aria-label="VIP bakery plans" hidden></section>
   <section id="facebook-dialog" class="facebook-dialog" aria-label="Facebook visit information" hidden></section>
@@ -2143,7 +2389,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         { id: "chief-ultimate-helper-kingdom", label: "Crew x50K", description: "50,000 of every helper", type: "helper-bundle", amount: 50000, tier: "mega", color: "#bf7540" }
       );
       const freshState = () => ({
-        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineMilliseconds: 0, pendingOfflineSeconds: 0, bought: {}, active: [], boostsPausedAt: 0, goldenCookie: { nextAt: Date.now() + goldenCookieInterval, ready: false, pendingRewardId: "" }, lastSave: Date.now(),
+        cookies: 0, baked: "0", achievementCookiesCounted: true, taps: 0, boostsUsed: 0, achievements: [], welcomedPages: [], dailyMissions: { date: "", startBaked: "0", startTaps: 0, startBoosts: 0, startHelpers: 0, claimed: [], streak: 0, lastCompletedDate: "" }, lastWheelSpin: 0, pendingWheelPrize: "", pendingOfflineCookies: 0, pendingOfflineMilliseconds: 0, pendingOfflineSeconds: 0, bought: {}, active: [], boostsPausedAt: 0, goldenCookie: { nextAt: Date.now() + goldenCookieInterval, ready: false, pendingRewardId: "" }, lastSave: Date.now(),
         ownerTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, autoClickCookie: false, boostDurationMultiplier: 1, boostPowerMultiplier: 1, goldenCookieOpBoosters: false, timeSkipSeconds: 3600 },
         adminTools: { infiniteCookies: false, freeMarket: false, tapMultiplier: 1, passiveBonus: 0, productionMultiplier: 1, passiveMultiplier: 1, autoBakeRate: 0, boostDurationMultiplier: 1 },
         wheelTools: { infiniteSpins: false, infiniteLuck: false }
@@ -2168,6 +2414,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       let accountClosing = false;
       let pageTransitioning = false;
       let currentPage = "bake";
+      let marketStrategy = "balanced";
       let slideDirection = "left";
       let toastTimer;
       let hiddenSince = 0;
@@ -2188,6 +2435,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const accountArea = document.getElementById("account-area");
       const spinWheelOpenButton = document.getElementById("spin-wheel-open");
       const wheelDialog = document.getElementById("wheel-dialog");
+      const updatesDialog = document.getElementById("updates-dialog");
       const roleInfoDialog = document.getElementById("role-info-dialog");
       const vipDialog = document.getElementById("vip-dialog");
       const facebookDialog = document.getElementById("facebook-dialog");
@@ -2202,6 +2450,8 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const facebookGalaxyOpenButton = document.getElementById("facebook-galaxy-open");
       const vipOpenButton = document.getElementById("vip-open");
       const bakeryAiOpenButton = document.getElementById("bakery-ai-open");
+      const updatesOpenButton = document.getElementById("updates-open");
+      let updatesTrigger = null;
       let roleInfoTrigger = null;
       let productInfoTrigger = null;
       let facebookTrigger = null;
@@ -2641,6 +2891,314 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const allMultiplier = () => liveBoosts().filter(boost => boost.type === "all").reduce((sum, boost) => safeMultiply(sum, boostMultiplier(boost)), 1);
       const canUsePrivilegedWheelTools = () => isOwner() || isAdmin();
       const roleTools = () => isOwner() ? state.ownerTools : isAdmin() ? state.adminTools : null;
+      function localDateStamp(date = new Date()) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      }
+      function dailyMissionRole() {
+        return isOwner() ? "owner" : isAdmin() ? "admin" : isDemo ? "demo" : "regular";
+      }
+      function dailyMissionCatalog() {
+        const role = dailyMissionRole();
+        const catalogs = {
+          regular: [
+            { id: "tap-combo", title: "Cookie click combo", copy: "Tap the big cookie 20 times.", metric: "taps", target: 20, reward: 250 },
+            { id: "fresh-batch", title: "Fresh galaxy batch", copy: "Bake 500 cookies during this session.", metric: "baked", target: 500, reward: 500 },
+            { id: "hire-helper", title: "Welcome a helper", copy: "Hire one new helper for your counter.", metric: "helpers", target: 1, reward: 750 },
+            { id: "try-boost", title: "Add a little sparkle", copy: "Activate any boost from the Boosts shelf.", metric: "boosts", target: 1, reward: 600 }
+          ],
+          demo: [
+            { id: "tap-combo", title: "Demo cookie combo", copy: "Tap the cookie 10 times to warm up.", metric: "taps", target: 10, reward: 100 },
+            { id: "fresh-batch", title: "Practice batch", copy: "Bake 100 cookies in your demo bakery.", metric: "baked", target: 100, reward: 200 },
+            { id: "hire-helper", title: "Meet the helpers", copy: "Hire one helper and see how production grows.", metric: "helpers", target: 1, reward: 250 },
+            { id: "try-boost", title: "Test a boost", copy: "Activate a boost to try a temporary effect.", metric: "boosts", target: 1, reward: 150 }
+          ],
+          admin: [
+            { id: "tap-combo", title: "Japhia's quick batch", copy: "Make 50 deliberate taps on the cookie.", metric: "taps", target: 50, reward: 3000 },
+            { id: "fresh-batch", title: "Operations output", copy: "Bake 10,000 cookies during today's shift.", metric: "baked", target: 10000, reward: 5000 },
+            { id: "hire-helper", title: "Crew expansion", copy: "Add three helpers to the bakery crew.", metric: "helpers", target: 3, reward: 4000 },
+            { id: "try-boost", title: "Boost coordination", copy: "Activate two boosts from the Boosts shelf.", metric: "boosts", target: 2, reward: 6000 }
+          ],
+          owner: [
+            { id: "tap-combo", title: "Chief's golden rhythm", copy: "Tap the cookie 100 times to charge the command deck.", metric: "taps", target: 100, reward: 25000 },
+            { id: "fresh-batch", title: "Forge a million-cookie batch", copy: "Bake one million cookies during today's run.", metric: "baked", target: 1000000, reward: 100000 },
+            { id: "hire-helper", title: "Build a star crew", copy: "Hire 10 helpers and expand the galaxy workforce.", metric: "helpers", target: 10, reward: 75000 },
+            { id: "try-boost", title: "Ignite the Owner armory", copy: "Activate three boosts and power up the bakery.", metric: "boosts", target: 3, reward: 125000 }
+          ]
+        };
+        return catalogs[role];
+      }
+      function ensureDailyMissionBoard() {
+        const today = localDateStamp();
+        if (state.dailyMissions?.date === today) return;
+        const previous = state.dailyMissions || freshState().dailyMissions;
+        state.dailyMissions = {
+          date: today,
+          startBaked: String(state.baked),
+          startTaps: safeCounter(state.taps),
+          startBoosts: safeCounter(state.boostsUsed),
+          startHelpers: Object.values(state.bought).reduce((sum, count) => addSafeCounter(sum, count), 0),
+          claimed: [],
+          streak: safeCounter(previous.streak),
+          lastCompletedDate: typeof previous.lastCompletedDate === "string" ? previous.lastCompletedDate : ""
+        };
+        save(false);
+      }
+      function dailyMissionProgress(mission) {
+        const board = state.dailyMissions;
+        if (mission.metric === "baked") {
+          const earned = bakedBigInt(state.baked) - bakedBigInt(board.startBaked);
+          return earned > BigInt(Number.MAX_SAFE_INTEGER) ? Number.MAX_SAFE_INTEGER : Number(earned > 0n ? earned : 0n);
+        }
+        if (mission.metric === "taps") return Math.max(0, safeCounter(state.taps) - safeCounter(board.startTaps));
+        if (mission.metric === "boosts") return Math.max(0, safeCounter(state.boostsUsed) - safeCounter(board.startBoosts));
+        const helpers = Object.values(state.bought).reduce((sum, count) => addSafeCounter(sum, count), 0);
+        return Math.max(0, helpers - safeCounter(board.startHelpers));
+      }
+      function dailyMissionStreak() {
+        const board = state.dailyMissions;
+        if (!board?.lastCompletedDate) return 0;
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        return board.lastCompletedDate === localDateStamp() || board.lastCompletedDate === localDateStamp(yesterday)
+          ? safeCounter(board.streak)
+          : 0;
+      }
+      function renderDailyMissions() {
+        ensureDailyMissionBoard();
+        const missions = dailyMissionCatalog();
+        const claimedCount = missions.filter(mission => state.dailyMissions.claimed.includes(mission.id)).length;
+        const streak = dailyMissionStreak();
+        const role = dailyMissionRole();
+        const roleLabel = role === "owner" ? "CHIEF'S COMMANDS" : role === "admin" ? "JAPHIA OPERATIONS" : role === "demo" ? "DEMO PRACTICE" : "BAKER'S DAILY RUN";
+        const bonus = role === "owner" ? 250000 : role === "admin" ? 12000 : role === "demo" ? 500 : 1000;
+        return `<section class="mission-board mission-${role}" aria-labelledby="mission-board-title" data-mission-board tabindex="-1">
+          <div class="mission-board-head">
+            <h2 class="mission-board-title" id="mission-board-title">${iconArt("comet")} Today's Galaxy Missions</h2>
+            <div class="mission-board-meta"><span>${roleLabel}</span><span data-mission-streak>${streak ? `🔥 ${streak}-day streak` : "✨ Start a streak"}</span><span>${claimedCount}/${missions.length} claimed</span></div>
+          </div>
+          <p class="mission-board-copy">Finish quick challenges for bonus cookies. Your mission progress and streak belong to this bakery and reset with your local calendar day.</p>
+          <div class="mission-grid">${missions.map(mission => {
+            const progress = Math.min(mission.target, dailyMissionProgress(mission));
+            const claimed = state.dailyMissions.claimed.includes(mission.id);
+            const ready = progress >= mission.target;
+            const buttonText = claimed ? "Reward claimed" : ready ? `Claim +${fmt(mission.reward)} cookies` : "In progress";
+            return `<article class="mission-tile${claimed ? " is-claimed" : ready ? " is-ready" : ""}" data-mission-id="${mission.id}">
+              <div class="mission-tile-top"><h3>${escapeHTML(mission.title)}</h3><span class="mission-reward">+${fmt(mission.reward)}</span></div>
+              <div><p class="mission-tile-copy">${escapeHTML(mission.copy)}</p><div class="mission-progress-track" role="progressbar" aria-label="${escapeHTML(mission.title)} progress" aria-valuemin="0" aria-valuemax="${mission.target}" aria-valuenow="${progress}"><div class="mission-progress-fill" data-mission-fill="${mission.id}" style="width:${progress / mission.target * 100}%"></div></div><span class="mission-progress-label" data-mission-progress="${mission.id}">${fmt(progress)} / ${fmt(mission.target)}</span></div>
+              <button class="mission-claim" type="button" data-claim-daily-mission="${mission.id}" ${!ready || claimed ? "disabled" : ""}>${buttonText}</button>
+            </article>`;
+          }).join("")}</div>
+          <div class="mission-board-meta" style="margin-top:12px"><span data-mission-chest>${claimedCount === missions.length ? "Daily chest collected!" : `Complete all ${missions.length} for a +${fmt(bonus)} cookie chest`}</span></div>
+        </section>`;
+      }
+      function nextFlightDeckAchievement() {
+        const unlocked = new Set(Array.isArray(state.achievements) ? state.achievements : []);
+        return visibleAchievements(unlocked)
+          .filter(achievement => !unlocked.has(achievement.id))
+          .map(achievement => {
+            const goal = achievement.metric === "baked" ? bakedBigInt(achievement.goal) : BigInt(achievement.goal);
+            const currentValue = achievementMetric(achievement.metric);
+            const current = achievement.metric === "baked" ? currentValue : BigInt(Math.max(0, currentValue));
+            const progress = current < goal ? current : goal;
+            return { achievement, progress, goal, percent: Number(progress * 10000n / goal) / 100 };
+          })
+          .sort((left, right) => left.percent - right.percent)[0] || null;
+      }
+      function flightDeckTip() {
+        const tips = {
+          regular: [
+            { copy: "Passive helpers keep baking while you visit other tabs. Compare each helper's output with its price before your next buy.", page: "market" },
+            { copy: "Save a boost for when you can actively tap or when your helper production is already strong.", page: "boosts" },
+            { copy: "Your Ledger tracks lifetime output and taps, while Achievements turn long-term goals into cookie rewards.", page: "ledger" }
+          ],
+          demo: [
+            { copy: "Try a low-cost helper, then watch your cookies-per-second value change in the jar panel.", page: "market" },
+            { copy: "Explore a temporary boost. Demo progress resets when you leave, so experiment freely.", page: "boosts" },
+            { copy: "The Awards page shows the long-term goals your practice bakery can reach in this session.", page: "achievements" }
+          ],
+          admin: [
+            { copy: "Use Japhia's operations tools for controlled batch and helper adjustments; your bakery progress remains local to this browser.", page: "admin" },
+            { copy: "Time your boost tests around your current production rate to see how the multipliers work together.", page: "boosts" },
+            { copy: "Check the Ledger after a batch to compare lifetime output, taps, and crew growth.", page: "ledger" }
+          ],
+          owner: [
+            { copy: "Keep a fresh JSON save snapshot before major command-deck changes; the backup contains game progress, not account credentials.", page: "owner" },
+            { copy: "Stacked boosts multiply together. Check the Boost shelf to review every active effect and its remaining time.", page: "boosts" },
+            { copy: "Your Chief-only constellation tracks owner-exclusive baking, tapping, crew, and boost records.", page: "achievements" }
+          ]
+        };
+        const role = dailyMissionRole();
+        const day = Math.floor(Date.now() / 86400000);
+        return tips[role][day % tips[role].length];
+      }
+      function ownerProductionAudit() {
+        const passiveOutput = cookiesPerSecond();
+        const autoBakeRate = safeCounter(state.ownerTools?.autoBakeRate);
+        const autoBakeOutput = safeCounter(cookiesPerTap() * autoBakeRate);
+        const totalOutput = safeCounter(passiveOutput + autoBakeOutput);
+        const nextHire = bestAffordableUpgrade();
+        const auditSummary = `Helpers: ${fmt(passiveOutput)} cookies/sec · auto-baker: ${fmt(autoBakeOutput)} cookies/sec · hand-baked: ${fmt(cookiesPerTap())} cookies/tap · ${liveBoosts().length} active boost${liveBoosts().length === 1 ? "" : "s"}.`;
+        const recommendation = nextHire
+          ? `Next affordable hire: ${nextHire.item.name} (${canBuyForFree() ? "free" : `${fmt(nextHire.price)} cookies`}).`
+          : "No helper is affordable yet; keep baking or review the Market.";
+        const autoBakeNote = autoBakeRate
+          ? `The auto-baker contributes ${totalOutput ? Math.round(autoBakeOutput / totalOutput * 100) : 0}% of measured automatic output.`
+          : "The Owner auto-baker is off; enable it in Owner Studio if hands-free tapping is useful.";
+        return {
+          summary: auditSummary,
+          report: `Chief's production audit: ${auditSummary} Combined automatic output is ${fmt(totalOutput)} cookies/sec. ${autoBakeNote} ${recommendation}`
+        };
+      }
+      function renderBakeryFlightDeck() {
+        const role = dailyMissionRole();
+        const isChief = role === "owner";
+        const roleLabel = isChief ? "CHIEF JANCSI · LIVE SYSTEMS"
+          : role === "admin" ? "JAPHIA · OPERATIONS BRIEF"
+            : role === "demo" ? "DEMO · PRACTICE FLIGHT" : "BAKER · LIVE FLIGHT PLAN";
+        const deckTitle = isChief ? "Chief's Command Deck" : role === "admin" ? "Japhia's Operations Brief"
+          : role === "demo" ? "Demo Flight Deck" : "Your Galaxy Flight Plan";
+        const nextAchievement = nextFlightDeckAchievement();
+        const tip = flightDeckTip();
+        const active = liveBoosts();
+        const recommendation = bestAffordableUpgrade();
+        const target = nextAchievement ? nextAchievement.achievement : null;
+        const currentAchievement = target ? (target.metric === "baked" ? fmt(nextAchievement.progress) : fmt(Number(nextAchievement.progress))) : "Complete";
+        const targetAchievement = target ? fmt(target.goal) : "Complete";
+        const activeNames = active.length ? active.slice(0, 2).map(boost => escapeHTML(boost.name)).join(" · ") : "No boosts are running right now.";
+        return `<section class="flight-deck flight-${role}" aria-labelledby="flight-deck-title" data-flight-deck>
+          <header class="flight-deck-head"><h2 class="flight-deck-title" id="flight-deck-title">${deckTitle}</h2><span class="flight-deck-role">${roleLabel}</span></header>
+          <p class="flight-deck-copy">${isChief ? "Live readings, one-tap routes, and safe local exports for the Chief's bakery." : role === "admin" ? "A practical operations snapshot with fast routes to your next useful action." : role === "demo" ? "A guided practice dashboard. Explore freely—demo progress stays temporary." : "Personalized shopping, boost, and milestone shortcuts that update as your bakery grows."}</p>
+          <div class="flight-grid">
+            <article class="flight-card">
+              <h3>Smartest next hire</h3><div class="flight-card-value" data-flight-market-value>${recommendation ? escapeHTML(recommendation.item.name) : "Checking the market…"}</div>
+              <p class="flight-card-copy" data-flight-market-copy>${recommendation ? `${recommendation.item.kind === "tap" ? `+${fmt(recommendation.item.value)} cookies per tap` : `+${fmt(recommendation.item.value)} cookies per second`} · best value you can afford right now.` : "Open the Market to compare helpers and plan your next purchase."}</p>
+              <button class="flight-action" type="button" data-flight-buy="${recommendation ? recommendation.item.id : ""}" ${recommendation ? `data-upgrade="${recommendation.item.id}"` : "data-flight-nav=\"market\""}>${recommendation ? `Buy ${escapeHTML(recommendation.item.name)} · ${canBuyForFree() ? "FREE" : fmt(recommendation.price)}` : "Explore the Market"}</button>
+            </article>
+            <article class="flight-card">
+              <h3>Boost radar</h3><div class="flight-card-value" data-flight-boost-count>${active.length ? `${active.length} active effect${active.length === 1 ? "" : "s"}` : "Shelf is quiet"}</div>
+              <p class="flight-card-copy" data-flight-boost-copy>${activeNames}</p>
+              <button class="flight-action" type="button" data-flight-nav="boosts">Review the Boost shelf</button>
+            </article>
+            <article class="flight-card">
+              <h3>Achievement radar</h3><div class="flight-card-value" data-flight-achievement-name>${target ? escapeHTML(target.title) : "All visible milestones complete"}</div>
+              <p class="flight-card-copy" data-flight-achievement-progress>${target ? `${currentAchievement} / ${targetAchievement} · ${fmt(target.reward)}-cookie reward` : "Your constellation is complete."}</p>
+              <div class="flight-progress" role="progressbar" aria-label="Next achievement progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${nextAchievement ? nextAchievement.percent : 100}"><div class="flight-progress-fill" data-flight-achievement-fill style="width:${nextAchievement ? nextAchievement.percent : 100}%"></div></div>
+              <button class="flight-action" type="button" data-flight-nav="achievements">Open your constellation</button>
+            </article>
+          </div>
+          <aside class="flight-tip"><strong>${isChief ? "CHIEF'S DAILY SIGNAL" : role === "admin" ? "JAPHIA'S FIELD NOTE" : role === "demo" ? "PRACTICE TIP" : "TODAY'S BAKER TIP"}</strong><p>${tip.copy}</p><button class="flight-action" type="button" data-flight-nav="${tip.page}">Open ${tip.page === "admin" ? "Japhia tools" : tip.page === "achievements" ? "Awards" : tip.page === "ledger" ? "Ledger" : tip.page === "boosts" ? "Boosts" : tip.page === "owner" ? "Owner Studio" : "Market"}</button></aside>
+          ${isChief ? `<section class="flight-owner-audit" aria-labelledby="flight-owner-audit-title"><h3 id="flight-owner-audit-title">Chief's production telemetry</h3><p data-owner-audit-summary>${ownerProductionAudit().summary}</p><p class="flight-owner-audit-result" data-owner-audit-result aria-live="polite" hidden></p><button class="flight-action" type="button" data-flight-owner-audit>Run read-only production audit</button></section><div class="flight-owner-tools"><strong>CHIEF-ONLY QUICK TOOLS</strong><button class="flight-action" type="button" data-flight-backup>Download save snapshot</button><button class="flight-action" type="button" data-flight-report>Export live bakery report</button><button class="flight-action" type="button" data-flight-nav="owner">Open Owner Studio</button></div>` : ""}
+        </section>`;
+      }
+      function refreshBakeryFlightDeck() {
+        if (currentPage !== "bake" || !main.querySelector("[data-flight-deck]")) return;
+        const ownerAuditSummary = main.querySelector("[data-owner-audit-summary]");
+        if (ownerAuditSummary && isOwner()) ownerAuditSummary.textContent = ownerProductionAudit().summary;
+        const recommendation = bestAffordableUpgrade();
+        const buyButton = main.querySelector("[data-flight-buy]");
+        const marketValue = main.querySelector("[data-flight-market-value]");
+        const marketCopy = main.querySelector("[data-flight-market-copy]");
+        if (recommendation) {
+          if (buyButton) {
+            buyButton.removeAttribute("data-flight-nav");
+            buyButton.dataset.upgrade = recommendation.item.id;
+            buyButton.disabled = false;
+            buyButton.textContent = `Buy ${recommendation.item.name} · ${canBuyForFree() ? "FREE" : fmt(recommendation.price)}`;
+          }
+          if (marketValue) marketValue.textContent = recommendation.item.name;
+          if (marketCopy) marketCopy.textContent = `${recommendation.item.kind === "tap" ? `+${fmt(recommendation.item.value)} cookies per tap` : `+${fmt(recommendation.item.value)} cookies per second`} · best value you can afford right now.`;
+        } else {
+          if (buyButton) {
+            buyButton.removeAttribute("data-upgrade");
+            buyButton.dataset.flightNav = "market";
+            buyButton.disabled = false;
+            buyButton.textContent = "Explore the Market";
+          }
+          if (marketValue) marketValue.textContent = "No helper available";
+          if (marketCopy) marketCopy.textContent = "Open the Market to review the full helper collection.";
+        }
+        const active = liveBoosts();
+        const boostCount = main.querySelector("[data-flight-boost-count]");
+        const boostCopy = main.querySelector("[data-flight-boost-copy]");
+        if (boostCount) boostCount.textContent = active.length ? `${active.length} active effect${active.length === 1 ? "" : "s"}` : "Shelf is quiet";
+        if (boostCopy) boostCopy.textContent = active.length ? active.slice(0, 2).map(boost => boost.name).join(" · ") : "No boosts are running right now.";
+        const next = nextFlightDeckAchievement();
+        const achievementName = main.querySelector("[data-flight-achievement-name]");
+        const achievementProgress = main.querySelector("[data-flight-achievement-progress]");
+        const achievementFill = main.querySelector("[data-flight-achievement-fill]");
+        const achievementBar = achievementFill?.parentElement;
+        if (achievementName) achievementName.textContent = next ? next.achievement.title : "All visible milestones complete";
+        if (achievementProgress) achievementProgress.textContent = next ? `${fmt(next.progress)} / ${fmt(next.goal)} · ${fmt(next.achievement.reward)}-cookie reward` : "Your constellation is complete.";
+        achievementFill?.style.setProperty("width", `${next ? next.percent : 100}%`);
+        achievementBar?.setAttribute("aria-valuenow", String(next ? next.percent : 100));
+      }
+      function refreshDailyMissionProgress() {
+        if (currentPage !== "bake" || !main.querySelector("[data-mission-board]")) return;
+        if (state.dailyMissions?.date !== localDateStamp()) {
+          renderBake();
+          return;
+        }
+        const missions = dailyMissionCatalog();
+        const claimedCount = missions.filter(mission => state.dailyMissions.claimed.includes(mission.id)).length;
+        missions.forEach(mission => {
+          const progress = Math.min(mission.target, dailyMissionProgress(mission));
+          const claimed = state.dailyMissions.claimed.includes(mission.id);
+          const ready = progress >= mission.target;
+          const tile = main.querySelector(`[data-mission-id="${mission.id}"]`);
+          const fill = main.querySelector(`[data-mission-fill="${mission.id}"]`);
+          const label = main.querySelector(`[data-mission-progress="${mission.id}"]`);
+          const button = main.querySelector(`[data-claim-daily-mission="${mission.id}"]`);
+          tile?.classList.toggle("is-ready", ready && !claimed);
+          tile?.classList.toggle("is-claimed", claimed);
+          fill?.style.setProperty("width", `${progress / mission.target * 100}%`);
+          label?.replaceChildren(document.createTextNode(`${fmt(progress)} / ${fmt(mission.target)}`));
+          const progressBar = tile?.querySelector('[role="progressbar"]');
+          progressBar?.setAttribute("aria-valuenow", String(progress));
+          if (button) {
+            button.disabled = !ready || claimed;
+            button.textContent = claimed ? "Reward claimed" : ready ? `Claim +${fmt(mission.reward)} cookies` : "In progress";
+          }
+        });
+        const streak = main.querySelector("[data-mission-streak]");
+        if (streak) streak.textContent = dailyMissionStreak() ? `🔥 ${dailyMissionStreak()}-day streak` : "✨ Start a streak";
+        const chest = main.querySelector("[data-mission-chest]");
+        if (chest) chest.textContent = claimedCount === missions.length ? "Daily chest collected!" : `Complete all ${missions.length} for a +${fmt(dailyMissionCompletionReward())} cookie chest`;
+      }
+      function dailyMissionCompletionReward() {
+        return dailyMissionRole() === "owner" ? 250000
+          : dailyMissionRole() === "admin" ? 12000
+            : dailyMissionRole() === "demo" ? 500 : 1000;
+      }
+      function dailyMissionTotalReward() {
+        return dailyMissionCatalog().reduce((sum, mission) => sum + mission.reward, dailyMissionCompletionReward());
+      }
+      function claimDailyMission(id) {
+        ensureDailyMissionBoard();
+        const missions = dailyMissionCatalog();
+        const mission = missions.find(item => item.id === id);
+        if (!mission || state.dailyMissions.claimed.includes(mission.id) || dailyMissionProgress(mission) < mission.target) return;
+        state.dailyMissions.claimed.push(mission.id);
+        addCookies(mission.reward);
+        const allClaimed = missions.every(item => state.dailyMissions.claimed.includes(item.id));
+        let chestReward = 0;
+        if (allClaimed && state.dailyMissions.lastCompletedDate !== state.dailyMissions.date) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          state.dailyMissions.streak = state.dailyMissions.lastCompletedDate === localDateStamp(yesterday)
+            ? addSafeCounter(state.dailyMissions.streak, 1)
+            : 1;
+          state.dailyMissions.lastCompletedDate = state.dailyMissions.date;
+          chestReward = dailyMissionCompletionReward() + Math.min(20, state.dailyMissions.streak - 1) * Math.floor(dailyMissionCompletionReward() * .05);
+          addCookies(chestReward);
+        }
+        awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        showToast(allClaimed
+          ? `Galaxy mission chest claimed! +${fmt(chestReward)} bonus cookies · ${state.dailyMissions.streak}-day streak!`
+          : `Mission complete! +${fmt(mission.reward)} cookies added to your jar.`);
+      }
       const vipPlans = [
         { id: "basic", label: "Basic VIP", tagClass: "vip-tag-basic", tapBonus: 1.1, productionBonus: 1.1, description: "A silver-blue VIP badge, +10% cookies per tap, and +10% helper production." },
         { id: "super", label: "Super VIP", tagClass: "vip-tag-super", tapBonus: 1.25, productionBonus: 1.25, description: "A violet VIP badge, +25% cookies per tap, and +25% helper production." },
@@ -4563,6 +5121,9 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             throw new TypeError("The saved bakery data is not an object.");
           }
           const savedAchievements = Array.isArray(saved.achievements) ? saved.achievements : [];
+          const savedDailyMissions = saved.dailyMissions && typeof saved.dailyMissions === "object" && !Array.isArray(saved.dailyMissions)
+            ? saved.dailyMissions
+            : {};
           const knownAchievements = [...achievements, ...dynamicBakedAchievements(new Set(savedAchievements))];
           const earnedAchievementCookies = saved.achievementCookiesCounted === true || !Array.isArray(saved.achievements)
             ? 0n
@@ -4624,6 +5185,20 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             welcomedPages: Array.isArray(saved.welcomedPages)
               ? [...new Set(saved.welcomedPages.filter(page => typeof page === "string" && pageOrder.includes(page)))]
               : [],
+            dailyMissions: {
+              date: typeof savedDailyMissions.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(savedDailyMissions.date) ? savedDailyMissions.date : "",
+              startBaked: String(bakedBigInt(savedDailyMissions.startBaked)),
+              startTaps: safeCounter(savedDailyMissions.startTaps),
+              startBoosts: safeCounter(savedDailyMissions.startBoosts),
+              startHelpers: safeCounter(savedDailyMissions.startHelpers),
+              claimed: Array.isArray(savedDailyMissions.claimed)
+                ? [...new Set(savedDailyMissions.claimed.filter(id => typeof id === "string" && /^[a-z-]{1,40}$/.test(id)))]
+                : [],
+              streak: safeCounter(savedDailyMissions.streak),
+              lastCompletedDate: typeof savedDailyMissions.lastCompletedDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(savedDailyMissions.lastCompletedDate)
+                ? savedDailyMissions.lastCompletedDate
+                : ""
+            },
             lastWheelSpin: safeCounter(saved.lastWheelSpin),
             pendingWheelPrize: typeof saved.pendingWheelPrize === "string" &&
               (isOwner() ? ownerWheelPrizes : isAdmin() ? adminWheelPrizes : wheelPrizes).some(prize => prize.id === saved.pendingWheelPrize)
@@ -4734,6 +5309,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         ];
         const ownerPrompts = [
           "Explain the Owner Studio",
+          "Run a production audit",
           "How do Owner production controls work?",
           "How can I tune Owner tap power?",
           "How do I set passive cookie production?",
@@ -4748,6 +5324,13 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           "How do I change offline multipliers?",
           "How do Owner wheel powers work?",
           "How do I use free market tools?",
+          "Buy the smartest affordable helper",
+          "Open my active boost radar",
+          "Show my next achievement",
+          "Give me today's Chief signal",
+          "Download my save snapshot",
+          "Export my live bakery report",
+          "Open my Chief Command Deck",
           "How can I manage my cookie jar?",
           "How can I check my bakery stats?",
           "How do I find Owner achievements?",
@@ -5200,6 +5783,9 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             ? "Owner autoclick cookie is enabled. It will tap once per second while this Owner bakery is open in this browser."
             : "Owner autoclick cookie is disabled. No more automatic cookie taps will be made.";
         }
+        if (isExplicitCommand && /\b(?:run|show|check)\b.*\b(?:production|bakery)\b.*\b(?:audit|telemetry)\b|\bproduction audit\b/i.test(text)) {
+          return ownerProductionAudit().report;
+        }
         if (ownerBoostChatFlow?.stage === "rarity") {
           const rarity = /\bbest\b|\bdivine\b/.test(text) ? "Divine"
             : goldenCookieRarities.find(item => new RegExp(`\\b${item.toLowerCase()}\\b`).test(text));
@@ -5219,6 +5805,40 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             return "I couldn't activate that booster just now. Please ask me to get a boost and we'll choose it again.";
           }
           return `Alright Jancsi! Your booster, ${selected.name}, for ${formatOfflineDuration(duration * 1000)} is currently now running in the bakery.`;
+        }
+        if (/\b(buy|purchase)\b.*\b(smartest|best[- ]value|recommended|next)\b.*\b(helper|hire|upgrade)\b/i.test(text)) {
+          const choice = bestAffordableUpgrade();
+          if (!choice) return "No helper is affordable right now. Keep baking or enable the free market, then ask me again.";
+          buyUpgrade(choice.item.id);
+          return `Done, Jancsi — I bought ${choice.item.name}, your best-value affordable next hire. It adds ${choice.item.kind === "tap" ? `+${fmt(choice.item.value)} cookies per tap` : `+${fmt(choice.item.value)} cookies per second`}.`;
+        }
+        if (/\b(open|show|review|check)\b.*\b(active )?boost (radar|monitor|shelf|effects?)\b/i.test(text)) {
+          currentPage = "boosts";
+          render();
+          return `Your Boost shelf is open. ${liveBoosts().length ? `${liveBoosts().length} boost${liveBoosts().length === 1 ? " is" : "s are"} active right now.` : "No timed boosts are active right now."}`;
+        }
+        if (/\b(open|show|find|view)\b.*\b(next )?(achievement|chief awards|constellation)\b/i.test(text)) {
+          currentPage = "achievements";
+          render();
+          const next = nextFlightDeckAchievement();
+          return next ? `Your Awards constellation is open. Next up: ${next.achievement.title} — ${fmt(next.progress)} of ${fmt(next.goal)} complete, worth ${fmt(next.achievement.reward)} cookies.` : "Your Awards constellation is open. Every visible achievement is complete!";
+        }
+        if (/\b(today'?s|daily|chief'?s)\b.*\b(signal|tip|brief|field note)\b/i.test(text)) {
+          return `Today's Chief signal: ${flightDeckTip().copy}`;
+        }
+        if (/\b(download|export|make|create)\b.*\b(save )?(snapshot|backup)\b/i.test(text)) {
+          save();
+          downloadBakeryBackup("crumb-galaxy-owner-star-map");
+          return "Your Owner save snapshot download has started. It contains bakery game progress, not account passwords or recovery answers.";
+        }
+        if (/\b(download|export|make|create)\b.*\b(live )?(bakery )?(report|readout)\b/i.test(text)) {
+          downloadBakeryReport("crumb-galaxy-owner-report");
+          return "Your live bakery report download has started with your current totals, helpers, achievements, and active boosts.";
+        }
+        if (/\b(open|show|go to)\b.*\b(chief'?s? )?(command|flight) deck\b/i.test(text)) {
+          currentPage = "bake";
+          render();
+          return "The Chief's Command Deck is open on your Bake page with your live hire, boost, achievement, and export shortcuts.";
         }
         if (/\b(how|teach|explain|why|what|help me learn|show me)\b/i.test(text)) return null;
         if (/\b(get|enable|turn on|activate)\b.*\b(op|overpowered|extraordinary)\b.*\bboosters?\b|\bop boosters?\b/i.test(text)) {
@@ -5831,6 +6451,11 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const topItems = upgrades.slice(0, 3);
         main.innerHTML = `<section class="page">
           ${pageTitle("YOUR LITTLE BAKERY", "A fresh batch awaits.", "Tap the cookie to bake, then grow your cozy corner of the cosmos.")}
+          <button class="mission-shortcut" type="button" data-mission-jump aria-label="Jump to today's Galaxy Missions">
+            <span class="mission-shortcut-icon" aria-hidden="true">${iconArt("comet")}</span>
+            <span class="mission-shortcut-copy"><strong>Today's Galaxy Missions</strong><small>Four role-specific challenges, rewards, and streak bonuses</small></span>
+            <span class="mission-shortcut-reward">Up to +${fmt(dailyMissionTotalReward())}</span>
+          </button>
           <div class="bake-layout">
             <div class="card oven-card">
               <div class="oven-label">${iconArt("comet")} hand-baked with stardust</div>
@@ -5854,19 +6479,52 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
               </div>
             </div>
           </div>
+          ${renderDailyMissions()}
+          ${renderBakeryFlightDeck()}
           <div class="section-row"><h2 class="section-title">On the counter</h2></div>
           <div class="featured-row">${topItems.map(item => `<div class="mini-upgrade"><div class="mini-icon">${iconArt(item.icon)}</div><div><div class="mini-name">${item.name}</div><div class="mini-count"><span data-counter="featured-owned-${item.id}" data-counter-value="${owned(item.id)}">${fmt(owned(item.id))}</span> owned · ${item.kind === "tap" ? `+${fmt(item.value)} per tap` : `+${fmt(item.value)}/sec`}</div></div></div>`).join("")}</div>
         </section>`;
         document.getElementById("cookie").addEventListener("click", bakeTap);
+        main.querySelector("[data-mission-jump]")?.addEventListener("click", () => {
+          const board = main.querySelector("[data-mission-board]");
+          board?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+          board?.focus({ preventScroll: true });
+        });
+        main.querySelectorAll("[data-claim-daily-mission]").forEach(button => button.addEventListener("click", () => claimDailyMission(button.dataset.claimDailyMission)));
+        main.querySelectorAll("[data-flight-buy]").forEach(button => button.addEventListener("click", () => {
+          if (button.dataset.upgrade) buyUpgrade(button.dataset.upgrade);
+          else document.querySelector('.dock-button[data-page="market"]')?.click();
+        }));
+        main.querySelectorAll("[data-flight-nav]:not([data-flight-buy])").forEach(button => button.addEventListener("click", () => {
+          document.querySelector(`.dock-button[data-page="${button.dataset.flightNav}"]`)?.click();
+        }));
+        main.querySelector("[data-flight-backup]")?.addEventListener("click", () => downloadBakeryBackup("crumb-galaxy-owner-star-map"));
+        main.querySelector("[data-flight-report]")?.addEventListener("click", () => downloadBakeryReport("crumb-galaxy-owner-report"));
+        main.querySelector("[data-flight-owner-audit]")?.addEventListener("click", () => {
+          const result = main.querySelector("[data-owner-audit-result]");
+          if (result) {
+            result.textContent = ownerProductionAudit().report;
+            result.hidden = false;
+          }
+          showToast("Read-only production audit complete.");
+        });
         main.querySelector("[data-golden-cookie]")?.addEventListener("click", revealGoldenCookieReward);
         main.querySelector("[data-golden-cookie-status]")?.addEventListener("click", openGoldenCookieInfo);
         main.querySelector("[data-golden-cookie-active-status]")?.addEventListener("click", openActiveBoostInfo);
         updateGoldenCookieStatus();
       }
       function renderMarket() {
+        const strategyLabels = { balanced: "Best value", passive: "Hands-free baking", tap: "Stronger taps" };
+        const plan = planMarketOrder(marketStrategy, 5);
         main.innerHTML = `<section class="page">${pageTitle("THE LITTLE MARKET", "Good things for your oven.", "Spend your cookies on clever helpers. Each one makes the next batch easier.")}
           <div class="section-row"><h2 class="section-title">Smart shopping</h2><button class="flow-button" type="button" data-auto-buy-best ${bestAffordableUpgrade() ? "" : "disabled"}>Auto-buy all affordable</button></div>
           <p class="intro">Keep buying the best value helper you can afford until no more purchases fit your cookie jar. Free-market mode buys one of each helper per activation.</p>
+          <section class="market-batch" aria-labelledby="market-batch-title">
+            <div class="market-batch-copy"><span class="market-batch-kicker">GALAXY BATCH PLANNER</span><h2 id="market-batch-title">Build a smarter crew</h2><p>Preview up to five purchases and spend only what your jar can cover. Your role's market rules still apply.</p></div>
+            <div class="market-batch-controls"><label for="market-strategy">Choose a baking focus</label><select id="market-strategy" class="market-strategy"><option value="balanced" ${marketStrategy === "balanced" ? "selected" : ""}>${strategyLabels.balanced}</option><option value="passive" ${marketStrategy === "passive" ? "selected" : ""}>${strategyLabels.passive}</option><option value="tap" ${marketStrategy === "tap" ? "selected" : ""}>${strategyLabels.tap}</option></select></div>
+            <div class="market-batch-summary" aria-live="polite"><strong>${plan.length ? `${plan.length} helper${plan.length === 1 ? "" : "s"} ready` : "No helpers affordable yet"}</strong><span>${plan.length ? `${escapeHTML(plan.map(entry => entry.item.name).join(" · "))} · ${canBuyForFree() ? "FREE" : `${fmt(plan.reduce((total, entry) => total + entry.price, 0))} cookies`}` : `Keep baking to afford a ${strategyLabels[marketStrategy].toLowerCase()} pick.`}</span></div>
+            <button class="market-batch-button" type="button" data-buy-market-batch ${plan.length ? "" : "disabled"}>Buy planned batch · ${plan.length}</button>
+          </section>
           <div class="section-row" style="margin-top:0"><h2 class="section-title">Baking helpers</h2></div>
           <div class="shop-grid">${upgrades.map(item => {
             const price = canBuyForFree() ? 0 : costOf(item);
@@ -5880,6 +6538,11 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
           if (result) showToast(result);
           else showToast("No helper is affordable right now.");
         });
+        main.querySelector("#market-strategy")?.addEventListener("change", event => {
+          marketStrategy = event.target.value;
+          renderMarket();
+        });
+        main.querySelector("[data-buy-market-batch]")?.addEventListener("click", buyPlannedMarketBatch);
         main.querySelectorAll("[data-buy]").forEach(button => button.addEventListener("click", () => buyUpgrade(button.dataset.buy)));
       }
       function renderBoosts() {
@@ -6462,6 +7125,17 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             <div class="owner-kpi"><div id="owner-production-rate" class="owner-kpi-value">${fmt(cookiesPerSecond())}</div><div class="owner-kpi-label">cookies baked each second</div></div>
             <div class="owner-kpi"><div id="owner-helper-count" class="owner-kpi-value">${fmt(totalOwned)}</div><div class="owner-kpi-label">helpers on the counter</div></div>
           </section>
+          <h2 class="section-title">Chief Command Deck · quick launch</h2>
+          <section class="owner-tool-grid" aria-label="Chief Command Deck actions">
+            <article class="owner-tool-card"><h3>Smartest next hire</h3><p>Buy one best-value helper you can afford now—the same live recommendation shown on the Bake-page Command Deck.</p><button class="owner-tool-button" type="button" data-owner-action="flight-best-hire">Buy best-value helper</button></article>
+            <article class="owner-tool-card"><h3>Boost radar</h3><p>Jump to the Boost shelf to review active timers and discover the next boost.</p><button class="owner-tool-button" type="button" data-owner-action="flight-open-boosts">Review active boosts</button></article>
+            <article class="owner-tool-card"><h3>Achievement radar</h3><p>Open your Chief Awards constellation and see the next unclaimed milestone.</p><button class="owner-tool-button" type="button" data-owner-action="flight-open-achievements">Open next achievement</button></article>
+            <article class="owner-tool-card"><h3>Chief's daily signal</h3><p>Show today's rotating Owner operations tip from the Command Deck.</p><button class="owner-tool-button" type="button" data-owner-action="flight-chief-signal">Show today's signal</button></article>
+            <article class="owner-tool-card"><h3>Owner save snapshot</h3><p>Download a JSON snapshot of your game progress without account passwords or recovery answers.</p><button class="owner-tool-button" type="button" data-owner-action="export-save-vault">Download save snapshot</button></article>
+            <article class="owner-tool-card"><h3>Live bakery report</h3><p>Export a readable report of your current totals, helpers, achievements, and active boosts.</p><button class="owner-tool-button" type="button" data-owner-action="export-report">Export live report</button></article>
+            <article class="owner-tool-card"><h3>Chief production telemetry</h3><p data-owner-audit-result aria-live="polite">Run a read-only audit of helper output, auto-baking, tap strength, active boosts, and your next affordable hire.</p><button class="owner-tool-button" type="button" data-owner-action="production-audit">Run production audit</button></article>
+            <article class="owner-tool-card"><h3>Chief Command Deck</h3><p>Return to Bake and open the live Command Deck with its role-specific shortcuts.</p><button class="owner-tool-button" type="button" data-owner-action="flight-open-deck">Open Command Deck</button></article>
+          </section>
           <h2 class="section-title">Legendary controls</h2>
           <section class="owner-tool-grid" aria-label="Exclusive owner tools">
             <article class="owner-tool-card"><h3>Infinite cookie jar</h3><p>Keep the spendable cookie balance maxed while the tool is on. Turning it off caps the balance at one million.</p><div class="owner-tool-row"><button class="owner-tool-button" data-owner-toggle="infiniteCookies" aria-pressed="${tools.infiniteCookies}">${tools.infiniteCookies ? "Infinite jar: ON" : "Infinite jar: OFF"}</button></div></article>
@@ -6688,6 +7362,31 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
               actionNotice = actionNotice ? `${actionNotice} ${notice}` : notice;
             }
           };
+          if (action === "flight-best-hire") {
+            const choice = bestAffordableUpgrade();
+            if (!choice) {
+              showToast("No helper is affordable right now.");
+              return;
+            }
+            if (action === "production-audit") {
+              const result = button.closest(".owner-tool-card")?.querySelector("[data-owner-audit-result]");
+              if (result) result.textContent = ownerProductionAudit().report;
+              showToast("Read-only production audit complete.");
+              return;
+            }
+            buyUpgrade(choice.item.id);
+            return;
+          }
+          if (action === "flight-open-boosts" || action === "flight-open-achievements" || action === "flight-open-deck") {
+            const page = action === "flight-open-boosts" ? "boosts"
+              : action === "flight-open-achievements" ? "achievements" : "bake";
+            document.querySelector(`.dock-button[data-page="${page}"]`)?.click();
+            return;
+          }
+          if (action === "flight-chief-signal") {
+            showToast(flightDeckTip().copy);
+            return;
+          }
           if (action === "unlock-achievements") {
             if (!isOwner()) return;
             const result = awardAchievements(true);
@@ -7531,6 +8230,121 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         syncPageCounters();
         updateDockHighlight(animatePage);
       }
+      function closeUpdates() {
+        if (updatesDialog.hidden || updatesDialog.classList.contains("is-closing")) return;
+        void closeAnimatedOverlay(updatesDialog).then(() => {
+          updatesDialog.innerHTML = "";
+          updatesDialog.onclick = null;
+          updatesDialog.onkeydown = null;
+          updatesTrigger?.focus({ preventScroll: true });
+          updatesTrigger = null;
+        });
+      }
+      function openUpdates() {
+        if (!currentUser && !isDemo) return;
+        updatesTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : updatesOpenButton;
+        const role = isOwner() ? "owner" : isAdmin() ? "admin" : isDemo ? "demo" : "regular";
+        const activeCount = liveBoosts().length;
+        const packageDetails = {
+          regular: {
+            label: "Baker's starter package",
+            heading: "Fresh tools for your bakery",
+            intro: "A practical starter bundle for planning your next bake, finding upgrades, and tracking your progress.",
+            cards: [
+              { icon: "bake", title: "Live bakery snapshot", copy: `Your jar holds ${fmt(state.cookies)} cookies and your helpers are making ${fmt(cookiesPerSecond())} cookies each second. Head back to Bake to watch your bakery grow.`, action: "Open Bake", page: "bake" },
+              { icon: "market", title: "Smarter shopping", copy: "Compare helper prices and production in the Market before spending your cookies. Each product icon opens its complete guide.", action: "Browse Market", page: "market" },
+              { icon: "rush", title: "Boost shelf", copy: `${liveBoosts().length} timed boost${liveBoosts().length === 1 ? "" : "s"} currently active. Check the effect and remaining time before choosing another.`, action: "View Boosts", page: "boosts" },
+              { icon: "achievements", title: "Progress trail", copy: `You have baked ${fmt(state.baked)} cookies so far. Visit Awards to see your milestones and what to aim for next.`, action: "See Awards", page: "achievements" },
+              { icon: "cookie", title: "Golden-cookie tip", copy: "A golden cookie can appear during a baking session. Watch the Bake page and collect it while it is available to earn a temporary reward.", action: "Check Bake", page: "bake" },
+              { icon: "ledger", title: "Production check", copy: `Your helpers currently produce ${fmt(cookiesPerSecond())} cookies per second. Use the Ledger to review your bakery totals as production grows.`, action: "Open Ledger", page: "ledger" },
+              { icon: "profile", title: "Account and bakery profile", copy: "Visit Profile to review this bakery's account details and local progress. Your game saves in this browser, so keep using the same browser to continue.", action: "Open Profile", page: "profile" },
+              { icon: "oven", title: "Plan your next session", copy: "Pick one goal before you spend: save for a new helper, increase tap power, or activate a boost when you can make the most of its timer.", action: "Plan on Bake", page: "bake" }
+            ]
+          },
+          demo: {
+            label: "Demo baker starter package",
+            heading: "Try the galaxy's starter tools",
+            intro: "A friendly practice bundle: explore the bakery, try the shop, and see how boosts and milestones work.",
+            cards: [
+              { icon: "bake", title: "Practice baking", copy: `This demo jar has ${fmt(state.cookies)} cookies and ${fmt(cookiesPerSecond())} cookies per second. Try a few taps and watch the live counter.`, action: "Open Bake", page: "bake" },
+              { icon: "market", title: "Explore the Market", copy: "Preview helper costs and production, then open an item guide to learn what each product does.", action: "Browse Market", page: "market" },
+              { icon: "rush", title: "Test the boosts", copy: "See which boosts are available and how their timers work. Demo progress is practice progress, not a saved account.", action: "View Boosts", page: "boosts" },
+              { icon: "achievements", title: "Try a milestone", copy: "Bake cookies to unlock practice achievements and see how the progress tracker rewards a growing bakery.", action: "See Awards", page: "achievements" },
+              { icon: "cookie", title: "Spot a golden cookie", copy: "Keep an eye on the Bake page for a golden cookie. Collecting one shows how limited-time rewards work.", action: "Check Bake", page: "bake" },
+              { icon: "ledger", title: "Read the Ledger", copy: "See how cookie totals and production are presented, then compare them after you try another helper.", action: "Open Ledger", page: "ledger" },
+              { icon: "profile", title: "Try your profile", copy: "Explore the profile view and learn where bakery information is shown. Demo activity is temporary practice and is not saved as a registered account.", action: "Open Profile", page: "profile" },
+              { icon: "oven", title: "Choose a practice goal", copy: "Try a focused round: tap toward a milestone, compare a helper, then inspect one boost. Nothing in the demo purchases a real product.", action: "Start Baking", page: "bake" }
+            ]
+          },
+          admin: {
+            label: "Japhia · Admin toolkit",
+            heading: "Japhia's operations package",
+            intro: "A focused set of shortcuts for checking bakery operations, reviewing progress, and reaching Japhia's dedicated tools.",
+            cards: [
+              { icon: "comet", title: "Japhia Admin Studio", copy: "Open the Admin workspace for its role-specific bakery controls and live status overview.", action: "Open Admin Studio", page: "admin" },
+              { icon: "ledger", title: "Ledger review", copy: `Review bakery activity with ${fmt(state.cookies)} cookies in the jar and ${liveBoosts().length} active boost${liveBoosts().length === 1 ? "" : "s"}.`, action: "Open Ledger", page: "ledger" },
+              { icon: "rush", title: "Boost operations", copy: "Review current timed effects and inspect the available boost guides before planning a baking session.", action: "Open Boosts", page: "boosts" },
+              { icon: "achievements", title: "Japhia's milestones", copy: "Track bakery achievements and milestones from the shared awards view.", action: "Review Awards", page: "achievements" },
+              { icon: "bake", title: "Live operations pulse", copy: `The bakery has ${fmt(state.cookies)} cookies and is producing ${fmt(cookiesPerSecond())} per second. Use this as a quick check before reviewing controls.`, action: "Check Bake", page: "bake" },
+              { icon: "market", title: "Helper review", copy: "Compare helper costs, owned counts, and production in the Market. Open product guides for details before making a purchase.", action: "Review Market", page: "market" },
+              { icon: "profile", title: "Account context", copy: "Open Profile to review the active bakery context. Admin access is role-specific; it does not grant Owner-only controls.", action: "Open Profile", page: "profile" },
+              { icon: "hour", title: "Timer awareness", copy: "Timed boosts keep their own remaining-time information. Check the Boosts page before coordinating another effect.", action: "Check Timers", page: "boosts" }
+            ]
+          },
+          owner: {
+            label: "Chief Jancsi · Owner expansion",
+            heading: "The Chief's galaxy command pack",
+            intro: "A deeper Owner toolkit for monitoring production, coordinating boosters, and jumping straight into the controls that shape this bakery.",
+            cards: [
+              { icon: "comet", title: "Owner command deck", copy: `The jar holds ${fmt(state.cookies)} cookies, production is ${fmt(cookiesPerSecond())} per second, and ${Object.values(state.bought).reduce((sum, count) => sum + count, 0)} helpers are on the counter.`, action: "Open Owner Studio", page: "owner" },
+              { icon: "rush", title: "Booster control room", copy: `${liveBoosts().length} timed booster${liveBoosts().length === 1 ? "" : "s"} active right now. Check timers, compare effects, and visit the Owner armory when you want to launch one.`, action: "Coordinate Boosts", page: "boosts" },
+              { icon: "oven", title: "Production tuning", copy: "Review helpers in the Market, then use Owner Studio's production tools to shape the pace of your galaxy.", action: "Tune Production", page: "owner" },
+              { icon: "cookie", title: "Golden-cookie lab", copy: "Open the Owner controls for golden-cookie scheduling and guaranteed Owner reward tools, then return to Bake to collect a waiting cookie.", action: "Open Owner Tools", page: "owner" },
+              { icon: "ledger", title: "Galaxy ledger", copy: "Inspect the bakery's balances, helper growth, and progress records in one place before your next big upgrade.", action: "Review Ledger", page: "ledger" },
+              { icon: "achievements", title: "Chief Awards", copy: "Track Owner milestones alongside the rest of your bakery achievements and plan the next unlock.", action: "View Chief Awards", page: "achievements" },
+              { icon: "market", title: "Upgrade return check", copy: "Compare an item's displayed production with its current price before buying. Helper costs rise with each purchase, so reassess the next price each time.", action: "Compare Upgrades", page: "market" },
+              { icon: "hour", title: "Boost stack monitor", copy: `There are ${activeCount} active timed effects. Check their scopes and remaining time together before launching another Owner multiplier.`, action: "Inspect Effects", page: "boosts" },
+              { icon: "rain", title: "Offline reward review", copy: "Review offline-earnings settings and the current reward limit in Owner Studio. Changes apply to this browser's local bakery save.", action: "Review Offline Tools", page: "owner" },
+              { icon: "mixer", title: "Auto-bake controls", copy: "Use Owner Studio to inspect auto-baking options and their current state. Check the control before leaving a session running.", action: "Open Auto-bake Tools", page: "owner" },
+              { icon: "ledger", title: "Save and recovery tools", copy: "Find the Owner Studio backup/export controls and keep a bakery backup before making major changes. This standalone page stores account data locally in the browser.", action: "Open Backup Tools", page: "owner" },
+              { icon: "profile", title: "Session and account check", copy: "Review the profile and account context before switching devices. This local prototype does not sync its browser save to a remote server.", action: "Review Profile", page: "profile" }
+            ]
+          }
+        }[role];
+        updatesDialog.className = `updates-dialog updates-${role}`;
+        updatesDialog.innerHTML = `<section class="updates-panel" role="dialog" aria-modal="true" aria-labelledby="updates-title" aria-describedby="updates-intro">
+          <header class="updates-panel-head">
+            <div class="updates-heading-mark" aria-hidden="true">${iconArt("achievements")}</div>
+            <div class="updates-heading-copy"><div class="updates-kicker">GALAXY UPDATE CENTER · ${role === "admin" ? "JAPHIA" : role === "owner" ? "CHIEF" : role === "demo" ? "DEMO BAKER" : "BAKER"}</div><h2 class="updates-title" id="updates-title">${escapeHTML(packageDetails.heading)}</h2><p class="updates-intro" id="updates-intro">${escapeHTML(packageDetails.intro)}</p></div>
+            <button class="updates-close" type="button" aria-label="Close updates" data-updates-close>×</button>
+          </header>
+          <div class="updates-package-banner">${iconArt("comet")}<span>${escapeHTML(packageDetails.label)}</span><span>${role === "owner" ? `${activeCount} active boost${activeCount === 1 ? "" : "s"}` : role === "admin" ? "Admin-only package" : role === "demo" ? "Practice mode" : "Baking essentials"}</span></div>
+          <div class="updates-grid">${packageDetails.cards.map(card => `<article class="updates-card"><div class="updates-card-top"><span class="updates-card-icon" aria-hidden="true">${iconArt(card.icon)}</span><h3>${escapeHTML(card.title)}</h3></div><p>${escapeHTML(card.copy)}</p><button class="updates-card-action" type="button" data-update-page="${escapeHTML(card.page)}">${escapeHTML(card.action)}</button></article>`).join("")}</div>
+          <footer class="updates-footer"><span>Each package is tailored to the signed-in role. Owner and Admin tools remain role-gated.</span><span>Opening a shortcut won't buy or activate anything.</span></footer>
+        </section>`;
+        updatesDialog.hidden = false;
+        updatesDialog.classList.remove("is-closing");
+        updatesDialog.onclick = event => {
+          if (event.target === updatesDialog || event.target.closest("[data-updates-close]")) closeUpdates();
+          const destination = event.target.closest("[data-update-page]");
+          if (!destination) return;
+          const page = destination.dataset.updatePage;
+          void closeAnimatedOverlay(updatesDialog).then(() => {
+            updatesDialog.innerHTML = "";
+            updatesDialog.onclick = null;
+            updatesDialog.onkeydown = null;
+            updatesTrigger = null;
+            document.querySelector(`.dock-button[data-page="${page}"]`)?.click();
+          });
+        };
+        updatesDialog.onkeydown = event => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            closeUpdates();
+          }
+        };
+        updatesDialog.querySelector("[data-updates-close]").focus({ preventScroll: true });
+      }
       function writeAppPageHistory(page) {
         const currentState = history.state && typeof history.state === "object" && !Array.isArray(history.state) ? history.state : {};
         history.pushState({ ...currentState, [appHistoryStateKey]: { page, sentinel: false, guard: false } }, "", location.href);
@@ -7897,6 +8711,50 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
       function bestAffordableUpgrade() {
         return affordableUpgradeChoices()[0] || null;
       }
+      function planMarketOrder(strategy, limit) {
+        const candidates = strategy === "passive" || strategy === "tap"
+          ? upgrades.filter(item => item.kind === strategy)
+          : upgrades;
+        const simulatedOwned = new Map();
+        let remaining = Math.max(0, state.cookies);
+        const chosen = [];
+        while (chosen.length < limit) {
+          const choices = candidates
+            .filter(item => (simulatedOwned.get(item.id) || owned(item.id)) < Number.MAX_SAFE_INTEGER)
+            .filter(item => !canBuyForFree() || !simulatedOwned.has(item.id))
+            .map(item => {
+              const nextOwned = simulatedOwned.has(item.id) ? simulatedOwned.get(item.id) : owned(item.id);
+              const price = canBuyForFree() ? 0 : Math.ceil(item.base * Math.pow(1.16, nextOwned));
+              return { item, price, valuePerCookie: item.value / Math.max(1, price), index: upgrades.indexOf(item) };
+            })
+            .filter(candidate => Number.isFinite(candidate.price) && (canBuyForFree() || remaining >= candidate.price))
+            .sort((left, right) => right.valuePerCookie - left.valuePerCookie || left.price - right.price || left.index - right.index);
+          const choice = choices[0];
+          if (!choice) break;
+          chosen.push(choice);
+          remaining -= choice.price;
+          simulatedOwned.set(choice.item.id, (simulatedOwned.get(choice.item.id) || owned(choice.item.id)) + 1);
+        }
+        return chosen;
+      }
+      function buyPlannedMarketBatch() {
+        const order = planMarketOrder(marketStrategy, 5);
+        if (!order.length) {
+          showToast("No helper in that focus is affordable right now.");
+          return;
+        }
+        let spent = 0;
+        order.forEach(({ item, price }) => {
+          state.cookies -= price;
+          state.bought[item.id] = addSafeCounter(owned(item.id), 1);
+          spent += price;
+        });
+        const earned = awardAchievements();
+        save();
+        render();
+        updateLiveNumbers();
+        showToast(`Galaxy batch complete: ${order.map(entry => entry.item.name).join(", ")}. ${canBuyForFree() ? "Free-market rules applied." : `${fmt(spent)} cookies spent.`}${earned.count ? ` +${fmt(earned.reward)} achievement cookies earned.` : ""}`);
+      }
       function autoBuyBestAffordableUpgrade(showNotification = true) {
         const freeMarket = canBuyForFree();
         const purchasedCounts = new Map();
@@ -7990,6 +8848,8 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             const id = key.replace("featured-owned-", "");
             setCounter(counter, key, owned(id));
           });
+          refreshDailyMissionProgress();
+          refreshBakeryFlightDeck();
         }
         if (currentPage === "owner" && isOwner()) {
           document.getElementById("owner-cookie-count").textContent = fmt(state.cookies);
@@ -8027,6 +8887,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
       facebookGalaxyOpenButton.addEventListener("click", event => openFacebookNotice("galaxy", event.currentTarget));
       vipOpenButton.addEventListener("click", () => openVipShop());
       bakeryAiOpenButton.addEventListener("click", openBakeryAi);
+      updatesOpenButton.addEventListener("click", openUpdates);
       spinWheelOpenButton.addEventListener("click", openPrizeWheel);
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
