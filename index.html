@@ -77,6 +77,7 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       column-gap: 2px;
@@ -97,8 +98,8 @@
     .brand-name::after { position:absolute; right:0; bottom:-4px; left:0; height:1px; background:linear-gradient(90deg,rgba(255,202,112,0),rgba(255,215,139,.66) 32%,rgba(255,202,112,.12) 86%,transparent); content:""; }
     .brand-sub { max-width:100%; overflow:visible; margin-top: 5px; color: #c5ad88; font-size: 9px; font-weight:700; letter-spacing: .19em; overflow-wrap:anywhere; text-overflow:clip; text-transform: uppercase; white-space:normal; }
     .top-status { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
-    .top-actions { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
-    .top-quick-actions { display:flex; min-width:0; align-items:center; justify-content:flex-end; gap:6px; }
+    .top-actions { display:flex; min-width:0; flex:1 1 auto; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:10px; }
+    .top-quick-actions { display:flex; min-width:0; flex:1 1 auto; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:6px; }
     .galaxy-launcher { position:relative; z-index:60; flex:0 0 auto; }
     .galaxy-launcher-toggle { display:flex; min-width:42px; min-height:42px; padding:9px 12px; align-items:center; justify-content:center; gap:7px; border:1px solid rgba(255,202,112,.35); border-radius:999px; color:#ffe2a0; background:linear-gradient(130deg,rgba(255,202,112,.12),rgba(147,111,255,.08)); font-size:11px; font-weight:900; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
     .galaxy-launcher-toggle:hover,.galaxy-launcher-toggle[aria-expanded="true"] { transform:translateY(-1px); border-color:rgba(255,224,138,.65); box-shadow:0 8px 22px rgba(255,202,112,.15); }
@@ -146,7 +147,7 @@
     body.owner-mode .galaxy-launcher-action { border-color:rgba(255,224,138,.24); color:#fff0bd; }
     body.owner-mode .galaxy-launcher-action:not(:disabled):hover { transform:translateY(-2px) scale(1.015); border-color:rgba(255,224,138,.52); box-shadow:0 9px 24px rgba(255,202,112,.16); }
     @keyframes galaxy-launcher-owner-arrive { 0% { opacity:0; transform:translateY(-7px) scale(.96); filter:blur(4px); } 72% { opacity:1; transform:translateY(1px) scale(1.008); filter:blur(0); } 100% { opacity:1; transform:translateY(0) scale(1); } }
-    @media(max-width:1273px) {
+    @media(max-width:1500px) {
       .top-quick-actions :is(.galaxy-launcher-toggle) { width:30px; min-width:30px; min-height:30px; padding:5px; gap:0; }
       .galaxy-launcher-toggle-label { display:none; }
       .galaxy-launcher-glyph { width:18px; height:18px; flex-basis:18px; }
@@ -2092,12 +2093,12 @@
     body.owner-mode .golden-cookie-panel .golden-cookie-reward,
     body.owner-mode .active-boost-info-panel .active-boost-list li { border-radius:26px; }
     body.owner-mode .product-info-tab-panel { padding:18px; border-radius:24px; }
-    @media (max-width:1273px) {
+    @media (max-width:1500px) {
       .topbar { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto auto; align-items:center; gap:5px; padding:6px 10px; border-radius:22px; }
       body.owner-mode .topbar { padding:6px 10px; border-radius:25px; }
       .topbar > .brand { grid-column:1; grid-row:1; min-width:0; flex:none; }
       .top-actions { display:contents; }
-      .top-quick-actions { grid-column:1; grid-row:2; flex-wrap:nowrap; justify-content:flex-start; gap:4px; }
+      .top-quick-actions { grid-column:1; grid-row:2; flex-wrap:wrap; justify-content:flex-start; gap:4px; }
       #account-area { grid-column:1; grid-row:3; width:100%; min-width:0; max-width:100%; margin:0; }
       .topbar .brand { gap:7px; }
       .topbar .brand-mark { width:34px; height:34px; flex-basis:34px; border-radius:12px; }
@@ -2112,7 +2113,7 @@
       .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:20px; flex:0 0 auto; padding:3px 5px; font-size:8px; letter-spacing:.04em; }
       .account-chip .logout-button { min-height:26px; flex:0 0 auto; padding:4px 6px; }
     }
-    @media (min-width:521px) and (max-width:1273px) {
+    @media (min-width:521px) and (max-width:1500px) {
       .account-chip .account-name .account-description { display:block; }
     }
     @media (max-width:520px) {
