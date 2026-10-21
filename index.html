@@ -83,6 +83,7 @@
       column-gap: 2px;
       max-width: 1240px;
       margin: 0 auto;
+      container:galaxy-header / inline-size;
     }
     .brand { display: flex; min-width: 0; gap: 12px; align-items: center; }
     .brand > div:last-child { min-width: 0; }
@@ -92,6 +93,10 @@
       background:radial-gradient(circle at 28% 16%,rgba(255,255,255,.2),transparent 27%),radial-gradient(circle at 74% 82%,rgba(141,101,213,.44),transparent 55%),linear-gradient(150deg,#513868 0%,#291d39 56%,#15111d 100%);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 0 18px rgba(255,202,112,.16),0 6px 20px rgba(0,0,0,.3),0 0 25px rgba(255,202,112,.16);
     }
+    button.brand-mark { padding:0; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none; }
+    button.brand-mark:focus-visible { outline:2px solid #ffe1ec; outline-offset:4px; }
+    .brand-mark.is-birthday-holding { animation:birthday-logo-spin var(--birthday-spin-speed,1.1s) linear infinite; }
+    .brand-mark.is-birthday-holding::after { position:absolute; inset:-3px; border:2px solid transparent; border-top-color:#fff4f8; border-right-color:#ffb8d0; border-radius:inherit; content:""; animation:birthday-hold-ring var(--birthday-spin-speed,1.1s) linear infinite reverse; pointer-events:none; }
     .brand-mark svg { display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 0 5px rgba(255,202,112,.3)); }
     .brand-mark .brand-cookie-glow { fill:rgba(255,213,130,.12); }
     .brand-name { position:relative; display:inline-block; max-width:100%; overflow:visible; color:#fff0c9; font-family:"Sora","Trebuchet MS",system-ui,sans-serif; font-size:16px; font-weight:800; letter-spacing:-.055em; line-height:1.18; overflow-wrap:anywhere; text-overflow:clip; white-space:normal; text-shadow:0 1px 0 rgba(255,255,255,.14),0 0 19px rgba(255,202,112,.2); }
@@ -100,6 +105,12 @@
     .top-status { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
     .top-actions { display:flex; min-width:0; flex:1 1 auto; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:10px; }
     .top-quick-actions { display:flex; min-width:0; flex:1 1 auto; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:6px; }
+    @container galaxy-header (max-width:1240px) {
+      .topbar > .brand { flex:1 1 100%; }
+      .topbar > .top-actions { width:100%; flex:1 1 100%; justify-content:flex-start; }
+      .top-quick-actions { flex:1 1 100%; justify-content:flex-start; }
+      #account-area { width:100%; min-width:0; max-width:100%; flex:1 1 100%; margin-left:0; }
+    }
     .galaxy-launcher { position:relative; z-index:60; flex:0 0 auto; }
     .galaxy-launcher-toggle { display:flex; min-width:42px; min-height:42px; padding:9px 12px; align-items:center; justify-content:center; gap:7px; border:1px solid rgba(255,202,112,.35); border-radius:999px; color:#ffe2a0; background:linear-gradient(130deg,rgba(255,202,112,.12),rgba(147,111,255,.08)); font-size:11px; font-weight:900; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
     .galaxy-launcher-toggle:hover,.galaxy-launcher-toggle[aria-expanded="true"] { transform:translateY(-1px); border-color:rgba(255,224,138,.65); box-shadow:0 8px 22px rgba(255,202,112,.15); }
@@ -1223,6 +1234,16 @@
     .dock-icon svg { width: 17px; height: 17px; }
     .toast { position: fixed; z-index: 30; top: 25px; left: 50%; padding: 12px 17px; border: 1px solid rgba(255,202,112,.2); border-radius: 14px; color: var(--gold); background: #292019; box-shadow: var(--shadow); font-size: 12px; opacity: 0; pointer-events: none; transform: translate(-50%, -10px); transition: .2s; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast.theme-success { border-color:rgba(255,224,138,.55); color:#fff4d2; background:linear-gradient(135deg,#755521,#382719 82%); box-shadow:0 14px 38px rgba(45,29,11,.28),inset 0 1px rgba(255,255,255,.22); font-weight:750; }
+    body[data-basic-theme]:not(.birthday-mode) .toast.theme-success { border-color:color-mix(in srgb,var(--basic-end) 55%,white); color:#fff; background:linear-gradient(125deg,var(--basic-action-start),var(--basic-action-end)); box-shadow:0 14px 38px color-mix(in srgb,var(--basic-end) 24%,transparent),inset 0 1px rgba(255,255,255,.3); }
+    body.birthday-mode .toast.theme-success { border-color:rgba(255,255,255,.64); color:#fff; background:linear-gradient(125deg,#b54a7c,#ad4778 58%,#873253); box-shadow:0 14px 38px rgba(139,48,91,.26),inset 0 1px rgba(255,255,255,.32); }
+    .toast.theme-success.show { animation:theme-toast-standard .52s cubic-bezier(.16,1,.3,1) both; }
+    body.owner-mode .toast.theme-success.show { animation:theme-toast-owner .72s cubic-bezier(.16,1,.3,1) both; }
+    body.admin-mode .toast.theme-success.show { animation:theme-toast-admin .58s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes theme-toast-standard { 0% { transform:translate(-50%,-16px) scale(.92); filter:blur(3px); } 72% { transform:translate(-50%,2px) scale(1.025); filter:none; } 100% { transform:translate(-50%,0) scale(1); } }
+    @keyframes theme-toast-owner { 0% { transform:translate(-50%,-25px) scale(.72) rotateX(20deg); filter:blur(8px) saturate(.5); } 62% { transform:translate(-50%,3px) scale(1.06) rotateX(-2deg); filter:none; } 82% { transform:translate(-50%,-1px) scale(.99); } 100% { transform:translate(-50%,0) scale(1); } }
+    @keyframes theme-toast-admin { 0% { transform:translate(-50%,-12px) translateX(28px) scale(.88); filter:blur(5px); } 70% { transform:translate(-50%,1px) translateX(-3px) scale(1.025); filter:none; } 100% { transform:translate(-50%,0) translateX(0) scale(1); } }
+    @media(prefers-reduced-motion:reduce) { .toast.theme-success.show { animation:none; } }
     .owner-mode {
       --gold: #ffe08a;
       --orange: #ffbf68;
@@ -1890,6 +1911,12 @@
     .auth-shell { width: min(460px,100%); animation: auth-rise .64s cubic-bezier(.2,.85,.25,1) both; }
     .auth-brand { display: flex; margin: 0 auto 24px; align-items: center; justify-content: center; gap: 12px; }
     .auth-brand .brand-mark { width:58px; height:58px; flex-basis:58px; border-radius:20px; }
+    .birthday-auth-guide { margin:-8px 0 19px; padding:17px 18px; border:1px solid rgba(244,137,177,.34); border-radius:22px; color:#5c3044; background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,227,238,.88)); box-shadow:0 12px 36px rgba(148,66,104,.1); }
+    .birthday-auth-guide h2 { margin:0 0 8px; color:#a34470; font-family:"Sora","Trebuchet MS",system-ui,sans-serif; font-size:clamp(17px,4vw,21px); line-height:1.25; }
+    .birthday-auth-guide ol { display:grid; gap:5px; margin:0; padding-left:22px; font-size:11px; line-height:1.55; }
+    .birthday-auth-guide-note { margin:10px 0 0; color:#7e3657; font-size:11px; font-weight:850; line-height:1.5; }
+    .birthday-price-banner { display:flex; gap:11px; align-items:center; margin:0 0 18px; padding:12px 15px; border:1px solid rgba(190,95,138,.3); border-radius:19px; color:#7b3c5c; background:linear-gradient(110deg,rgba(255,255,255,.88),rgba(255,219,234,.94)); box-shadow:0 8px 24px rgba(153,68,106,.08); font-size:11px; line-height:1.5; }
+    .birthday-price-banner svg { width:22px; height:22px; flex:0 0 22px; }
     .auth-card { padding: 30px; border: 1px solid rgba(255,238,207,.13); border-radius: 28px; background: linear-gradient(145deg,rgba(255,255,255,.045),transparent 70%),rgba(33,26,22,.96); box-shadow: 0 28px 100px rgba(0,0,0,.46),0 0 65px rgba(241,145,88,.055); backdrop-filter: blur(12px); }
     .auth-eyebrow { color: var(--orange); font-size: 10px; font-weight: 850; letter-spacing: .19em; text-transform: uppercase; }
     .auth-card h1 { margin: 9px 0 8px; font-size: 31px; }
@@ -2081,7 +2108,7 @@
     @media (max-width:430px) {
       .topbar { padding:10px 12px; }
       body.owner-mode .topbar { padding:10px 12px; border-radius:26px; }
-      .account-name .owner-badge, .account-name .vip-tag { min-height:22px; padding:4px 6px; font-size:8px; letter-spacing:.06em; }
+      .account-name .owner-badge, .account-name .vip-tag { min-height:22px; padding:4px 6px; font-size:9px; letter-spacing:.06em; }
       .logout-button { width:36px; min-width:36px; justify-content:center; padding:7px; }
       .logout-button span { display:none; }
     }
@@ -2103,14 +2130,14 @@
       .topbar .brand { gap:7px; }
       .topbar .brand-mark { width:34px; height:34px; flex-basis:34px; border-radius:12px; }
       .topbar .brand-name { font-size:13px; }
-      .topbar .brand-sub { margin-top:2px; font-size:7px; letter-spacing:.12em; }
+      .topbar .brand-sub { margin-top:2px; font-size:8px; letter-spacing:.12em; }
       .top-quick-actions :is(.bakery-ai-open,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button) { width:30px; min-width:30px; min-height:30px; padding:5px; justify-content:center; gap:0; }
       .top-quick-actions :is(.bakery-ai-logo,.facebook-open-button svg,.facebook-galaxy-open-button svg,.spin-open-button svg,.updates-open-button svg) { width:17px; height:17px; flex-basis:17px; }
       .top-quick-actions :is(.bakery-ai-label,.facebook-open-button span,.facebook-galaxy-open-button span,.spin-open-button span,.updates-open-button span) { display:none; }
       .account-chip { display:flex; width:100%; min-width:0; max-width:100%; align-items:center; justify-content:space-between; gap:6px; padding:3px 5px; border:1px solid rgba(255,238,207,.1); border-radius:14px; background:rgba(255,255,255,.025); }
       .account-name { display:flex; min-width:0; max-width:none; flex:1 1 auto; flex-wrap:nowrap; align-items:center; gap:4px; overflow:hidden; }
       .account-description { min-width:0; flex:1 1 auto; overflow:hidden; overflow-wrap:normal; text-overflow:ellipsis; white-space:nowrap; font-size:10px; }
-      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:20px; flex:0 0 auto; padding:3px 5px; font-size:8px; letter-spacing:.04em; }
+      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:20px; flex:0 0 auto; padding:3px 5px; font-size:9px; letter-spacing:.04em; }
       .account-chip .logout-button { min-height:26px; flex:0 0 auto; padding:4px 6px; }
     }
     @media (min-width:521px) and (max-width:1500px) {
@@ -2123,7 +2150,7 @@
       .top-quick-actions { grid-column:1; grid-row:2; justify-content:flex-start; }
       #account-area { grid-column:1; grid-row:3; }
       .account-chip { gap:4px; padding:2px 4px; }
-      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:18px; padding:2px 4px; font-size:7px; }
+      .account-chip .account-name button.owner-badge,.account-chip .account-name button.admin-badge,.account-chip .account-name .vip-tag { min-height:18px; padding:2px 4px; font-size:8px; }
       .account-chip .logout-button { min-height:24px; }
       .account-chip .account-description { display:block; }
       .account-chip .logout-button { width:24px; min-width:24px; justify-content:center; padding:4px; }
@@ -2136,11 +2163,15 @@
       body.owner-mode .topbar { padding:5px 8px; }
       .topbar > .brand { gap:8px; }
       .brand-name { font-size:12px; }
-      .brand-sub { font-size:6px; letter-spacing:.1em; }
+      .brand-sub { font-size:7px; letter-spacing:.1em; }
       .top-quick-actions { gap:3px; }
       .top-quick-actions :is(.bakery-ai-open,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button) { width:26px; min-width:26px; min-height:26px; padding:3px; }
       .top-quick-actions :is(.bakery-ai-logo,.facebook-open-button svg,.facebook-galaxy-open-button svg,.spin-open-button svg,.updates-open-button svg) { width:15px; height:15px; flex-basis:15px; }
       .account-chip .logout-button { width:22px; min-width:22px; min-height:22px; }
+    }
+    @media (max-width:520px) {
+      .top-quick-actions .themes-open-button { width:auto; min-width:74px; min-height:38px; padding:7px 10px; }
+      .themes-open-button .galaxy-launcher-toggle-label { display:inline; }
     }
     @keyframes owner-button-light-sweep {
       from { background-position:145% 50%; }
@@ -2364,18 +2395,566 @@
       }
       body.owner-mode .galaxy-launcher-panel.is-closing { animation:none !important; }
     }
+    @keyframes birthday-logo-spin { to { transform:rotate(360deg); } }
+    @keyframes birthday-hold-ring { to { transform:rotate(360deg); } }
+    @keyframes birthday-cover { from { opacity:0; clip-path:circle(0 at 50% 50%); } to { opacity:1; clip-path:circle(150% at 50% 50%); } }
+    @keyframes birthday-reveal { from { opacity:1; clip-path:circle(150% at 50% 50%); } to { opacity:0; clip-path:circle(0 at 50% 50%); } }
+    @keyframes birthday-card-arrive { from { opacity:0; transform:translateY(20px) scale(.96); filter:blur(6px); } to { opacity:1; transform:translateY(0) scale(1); filter:none; } }
+    @keyframes birthday-header-exit { to { opacity:0; transform:translateY(-120%) scale(.94); } }
+    @keyframes birthday-dock-exit { to { opacity:0; transform:translateY(130%) scale(.94); } }
+    @keyframes birthday-header-enter { from { opacity:0; transform:translateY(-50%); } to { opacity:1; transform:translateY(0); } }
+    @keyframes birthday-dock-enter { from { opacity:0; transform:translateY(70%); } to { opacity:1; transform:translateY(0); } }
+    @keyframes birthday-tour-pulse { 0%,100% { box-shadow:0 0 0 1px rgba(197,89,137,.22),0 12px 34px rgba(139,48,91,.1); } 50% { box-shadow:0 0 0 5px rgba(197,89,137,.1),0 15px 44px rgba(139,48,91,.18); } }
+    @keyframes birthday-owner-card-arrive { 0% { opacity:0; transform:translateY(34px) scale(.88) rotateX(9deg); filter:blur(9px); } 66% { opacity:1; transform:translateY(-5px) scale(1.025) rotateX(-1deg); filter:none; } 100% { opacity:1; transform:translateY(0) scale(1) rotateX(0); } }
+    @keyframes birthday-admin-card-arrive { 0% { opacity:0; transform:translateX(32px) scale(.92); filter:blur(7px); } 72% { opacity:1; transform:translateX(-4px) scale(1.015); filter:none; } 100% { opacity:1; transform:translateX(0) scale(1); } }
+    @keyframes birthday-confetti-fall { 0% { opacity:0; transform:translate3d(0,-6vh,0) rotate(0) scale(.7); } 12% { opacity:1; } 100% { opacity:0; transform:translate3d(var(--birthday-drift),108vh,0) rotate(var(--birthday-spin)) scale(1); } }
+    @keyframes birthday-tour-progress { from { transform:scaleX(1); } to { transform:scaleX(0); } }
+    body.birthday-mode {
+      --ink:#512d40; --muted:#654457; --bg:#fff0f6; --panel:#fff9fc; --panel-light:#ffe4ef;
+      --line:rgba(180,88,127,.2); --gold:#963b63; --orange:#963b63; --mint:#286b55;
+      --shadow:0 24px 70px rgba(156,69,108,.15),0 10px 32px rgba(95,48,75,.08);
+      color:var(--ink);
+      background:radial-gradient(ellipse at 14% 12%,rgba(255,255,255,.96),transparent 35%),radial-gradient(ellipse at 86% 28%,rgba(255,208,228,.72),transparent 38%),linear-gradient(145deg,#fff6fa,#f8dce9 58%,#fff0f6);
+      background-attachment:fixed;
+    }
+    body.birthday-mode .app { background:radial-gradient(ellipse at 50% 0,rgba(255,255,255,.46),transparent 58%); }
+    body.birthday-mode .topbar,body.birthday-mode .dock {
+      border-color:rgba(190,95,138,.28); color:var(--ink);
+      background:linear-gradient(120deg,rgba(255,251,253,.96),rgba(255,235,244,.94));
+      box-shadow:0 12px 34px rgba(156,69,108,.12),inset 0 1px rgba(255,255,255,.95);
+      backdrop-filter:blur(18px) saturate(1.12); -webkit-backdrop-filter:blur(18px) saturate(1.12);
+    }
+    body.birthday-mode .topbar .brand-name,body.birthday-mode .page-heading h1,body.birthday-mode .section-title,
+    body.birthday-mode .shop-name,body.birthday-mode .profile-name,body.birthday-mode .owner-heading {
+      color:#8f3e65; text-shadow:0 2px 14px rgba(206,113,154,.14);
+    }
+    body.birthday-mode .brand-sub,body.birthday-mode .account-description { color:#654457; }
+    body.birthday-mode :is(.owner-badge,.admin-badge,.vip-tag) { border-color:rgba(129,59,91,.34) !important; color:#573548 !important; background:#fffafd !important; }
+    body.birthday-mode .card,body.birthday-mode .shop-item,body.birthday-mode .owner-tool-card,
+    body.birthday-mode .owner-kpi,body.birthday-mode .profile-detail,body.birthday-mode .owner-hero,
+    body.birthday-mode .market-batch,body.birthday-mode .flight-deck,body.birthday-mode .mission-board,
+    body.birthday-mode .galaxy-observatory,body.birthday-mode .observatory-card {
+      border-color:rgba(190,95,138,.22); color:var(--ink);
+      background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,235,244,.88));
+      box-shadow:0 12px 32px rgba(133,55,94,.09),inset 0 1px rgba(255,255,255,.88);
+      backdrop-filter:blur(14px) saturate(1.04); -webkit-backdrop-filter:blur(14px) saturate(1.04);
+    }
+    body.birthday-mode :is(.intro,.shop-desc,.daily-copy,.owner-copy,.profile-note,.market-batch-copy p,.flight-deck-copy,.observatory-copy,.oven-label,.click-hint,.progress-label,.rate-label,.balance-caption,.cookie-total-label,.stat-label,.mission-board-meta) { color:#654457; }
+    body.birthday-mode :is(.shop-buy,.flow-button.primary,.auth-submit,.market-batch-button,.mission-claim,.owner-tool-button) {
+      border-color:rgba(179,69,119,.28); color:#fffafd;
+      background:linear-gradient(115deg,#a94472,#873253 58%,#71304f);
+      box-shadow:0 7px 20px rgba(169,67,117,.2),inset 0 1px rgba(255,255,255,.28);
+    }
+    body.birthday-mode .birthday-next-button { border-color:#783253; color:#fff; background:linear-gradient(115deg,#a94472,#873253 58%,#71304f); }
+    body[data-basic-theme="berry"]:not(.birthday-mode) { --ink:#492638; --muted:#674456; --bg:#fff1f7; --panel:#fff9fc; --panel-light:#f9dfeb; --line:rgba(151,65,106,.2); --gold:#963b63; --orange:#963b63; --mint:#286b55; --basic-start:#d36a9d; --basic-end:#9e3f72; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#fff7fa,#f1d7e4); --basic-surface:linear-gradient(145deg,#fffafd,#f9e8f0); }
+    body[data-basic-theme="ocean"]:not(.birthday-mode) { --ink:#183344; --muted:#3f6070; --bg:#edf8fc; --panel:#f8fdff; --panel-light:#d9edf5; --line:rgba(48,112,139,.2); --gold:#176b8a; --orange:#176b8a; --mint:#286b55; --basic-start:#4b9db9; --basic-end:#216783; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#f3fbff,#d9edf5); --basic-surface:linear-gradient(145deg,#fbfeff,#e7f4f9); }
+    body[data-basic-theme="mint"]:not(.birthday-mode) { --ink:#244235; --muted:#4d6c5d; --bg:#eff9f2; --panel:#fbfffc; --panel-light:#dceddf; --line:rgba(69,131,94,.2); --gold:#357b51; --orange:#357b51; --mint:#286b55; --basic-start:#65a77a; --basic-end:#34764d; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#f5fcf6,#dfefe3); --basic-surface:linear-gradient(145deg,#fcfffc,#eaf5ec); }
+    body[data-basic-theme="lavender"]:not(.birthday-mode) { --ink:#3d3152; --muted:#625477; --bg:#f5f0fc; --panel:#fcfaff; --panel-light:#e9e0f5; --line:rgba(118,91,157,.2); --gold:#71539d; --orange:#71539d; --mint:#286b55; --basic-start:#9b7bc4; --basic-end:#69508f; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#faf7ff,#e9e0f5); --basic-surface:linear-gradient(145deg,#fefcff,#f0eafa); }
+    body[data-basic-theme="rose"]:not(.birthday-mode) { --ink:#512f40; --muted:#715166; --bg:#fff0f1; --panel:#fffafb; --panel-light:#f8dfe3; --line:rgba(164,83,105,.2); --gold:#a34761; --orange:#a34761; --mint:#286b55; --basic-start:#d77e91; --basic-end:#a34761; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#fff8f8,#f3dfe2); --basic-surface:linear-gradient(145deg,#fffdfd,#fae9eb); }
+    body[data-basic-theme="sunset"]:not(.birthday-mode) { --ink:#513328; --muted:#745744; --bg:#fff3e8; --panel:#fffaf5; --panel-light:#f7e2d0; --line:rgba(161,100,59,.2); --gold:#a85b2a; --orange:#a85b2a; --mint:#286b55; --basic-start:#e39b62; --basic-end:#aa6036; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#fff9f2,#f3dfce); --basic-surface:linear-gradient(145deg,#fffdf9,#faecdf); }
+    body[data-basic-theme="sky"]:not(.birthday-mode) { --ink:#26394e; --muted:#50677e; --bg:#eff5ff; --panel:#fbfdff; --panel-light:#dfe9f8; --line:rgba(77,112,164,.2); --gold:#496f9e; --orange:#496f9e; --mint:#286b55; --basic-start:#7e9fc9; --basic-end:#4c6f9b; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#f7faff,#e1eafa); --basic-surface:linear-gradient(145deg,#fcfdff,#ebf1fa); }
+    body[data-basic-theme="slate"]:not(.birthday-mode) { --ink:#303944; --muted:#596675; --bg:#f1f3f5; --panel:#fcfcfd; --panel-light:#e1e5e9; --line:rgba(77,92,109,.2); --gold:#4c6278; --orange:#4c6278; --mint:#286b55; --basic-start:#76899d; --basic-end:#495e73; --basic-page:radial-gradient(ellipse at 14% 12%,#fff 0,transparent 38%),linear-gradient(145deg,#fafbfc,#e5e9ed); --basic-surface:linear-gradient(145deg,#fff,#edf0f3); }
+    body[data-basic-theme]:not(.birthday-mode) { --basic-action-start:color-mix(in srgb,var(--basic-end) 90%,#17120f); --basic-action-end:color-mix(in srgb,var(--basic-end) 76%,#17120f); color:var(--ink); background:var(--basic-page); background-attachment:fixed; }
+    body[data-basic-theme]:not(.birthday-mode) .topbar,body[data-basic-theme]:not(.birthday-mode) .dock { border-color:var(--line); color:var(--ink); background:var(--basic-surface); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.brand-name,.galaxy-launcher-toggle,.spin-open-button,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button) { border-color:var(--line); color:var(--gold); }
+    body[data-basic-theme]:not(.birthday-mode) .brand-name::after { background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--gold) 65%,transparent) 32%,color-mix(in srgb,var(--gold) 12%,transparent) 86%,transparent); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-toggle,.spin-open-button,.updates-open-button,.facebook-open-button,.facebook-galaxy-open-button) { background:linear-gradient(130deg,color-mix(in srgb,var(--basic-start) 18%,white),color-mix(in srgb,var(--basic-end) 10%,white)); box-shadow:0 5px 18px color-mix(in srgb,var(--basic-end) 14%,transparent); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.bakery-whisper,.community-notice) { border-color:var(--line); color:var(--ink); background:var(--basic-surface); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.card,.shop-item,.owner-tool-card,.owner-kpi,.profile-detail,.owner-hero,.market-batch,.flight-deck,.mission-board,.galaxy-observatory,.observatory-card) { border-color:var(--line); color:var(--ink); background:var(--basic-surface); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.page-heading h1,.section-title,.shop-name,.profile-name,.owner-heading,.mission-board-title,.daily-title) { color:var(--ink); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.intro,.shop-desc,.daily-copy,.owner-copy,.profile-note,.market-batch-copy p,.flight-deck-copy,.observatory-copy,.oven-label,.click-hint,.progress-label,.rate-label,.balance-caption,.cookie-total-label,.stat-label,.mission-board-meta,.top-status,.brand-sub,.account-description) { color:var(--muted); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.eyebrow,.oven-label svg,.daily-icon,.auth-link,.shop-icon,.market-batch-title,.mission-board-title svg) { color:var(--gold); }
+    body[data-basic-theme]:not(.birthday-mode) :is(.owner-badge,.admin-badge,.vip-tag) { border-color:var(--line) !important; color:var(--ink) !important; background:var(--basic-surface) !important; }
+    body[data-basic-theme]:not(.birthday-mode) :is(.shop-buy,.flow-button.primary,.auth-submit,.market-batch-button,.mission-claim,.owner-tool-button) { border-color:var(--line); color:#fff; background:linear-gradient(115deg,var(--basic-action-start),var(--basic-action-end)); }
+    body[data-basic-theme]:not(.birthday-mode) .dock-highlight { background:linear-gradient(120deg,var(--basic-action-start),var(--basic-action-end)); }
+    body[data-basic-theme]:not(.birthday-mode) .dock-button.active { color:#fff; }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) {
+      border-color:var(--line) !important;
+      color:var(--ink) !important;
+      background:var(--basic-surface) !important;
+      box-shadow:0 24px 76px color-mix(in srgb,var(--ink) 18%,transparent),inset 0 1px rgba(255,255,255,.94) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) :is(h1,h2,h3,h4,h5,strong,span,label,small,li,dt,dd,.wheel-copy,.wheel-result,.role-info-tag,.vip-kicker,.vip-intro-copy,.product-info-copy,.updates-intro,.updates-kicker,.updates-footer,.owner-notice-help,.galaxy-launcher-label,.galaxy-launcher-metric span,.galaxy-launcher-metric strong,.galaxy-launcher-action) {
+      color:var(--ink) !important;
+      text-shadow:none !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) :is(p,.flow-copy,.terms-copy,.updates-card p,.product-info-summary,.product-info-tab-panel p,.galaxy-launcher-scan p) {
+      color:var(--muted) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-head h2,.wheel-panel h2,.role-info-panel h2,.golden-cookie-panel h2,.golden-cookie-info-panel h2,.active-boost-info-panel h2,.product-info-panel h2,.bakery-ai-panel h2,.updates-title,.vip-panel h2,.signout-confirm-panel h2,.demo-card h2,.flow-title,.welcome-card h1,.welcome-page-card h1,.tutorial-card h2,.prize-reveal-card h2,.theme-picker-card h2,.birthday-tour-card h2,.birthday-equip-card h2,.birthday-transition-card h2,.birthday-dialog-card h2) {
+      color:var(--gold) !important;
+      text-shadow:none !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.wheel-dialog,.role-info-dialog,.facebook-dialog,.offline-cookie-dialog,.golden-cookie-dialog,.product-info-dialog,.bakery-ai-dialog,.updates-dialog,.vip-dialog,.signout-confirm,.demo-dialog,.screen-flow,.welcome-confetti,.tutorial-screen,.prize-reveal,.birthday-dialog,.theme-picker-dialog) {
+      background:color-mix(in srgb,var(--ink) 58%,transparent) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-metric,.galaxy-launcher-scan,.galaxy-launcher-action,.wheel-control,.product-info-stat,.product-info-spec,.product-info-tabs,.product-info-tab-panel,.updates-package-banner,.updates-card,.updates-heading-mark,.terms-scroll,.tutorial-footer,.flow-footer,.golden-cookie-info-stat,.active-boost-info-card) {
+      border-color:var(--line) !important;
+      color:var(--ink) !important;
+      background:var(--basic-surface) !important;
+      box-shadow:none !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) button {
+      border-color:var(--line) !important;
+      color:var(--gold) !important;
+      background:var(--basic-surface) !important;
+      box-shadow:none;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) :is(button.shop-buy,button.auth-submit,button.flow-button.primary,button.birthday-next-button,button.birthday-equip-button,button.product-info-close,button.mission-claim,button.owner-tool-button,button.market-batch-button) {
+      border-color:var(--basic-end) !important;
+      color:#fff !important;
+      background:linear-gradient(115deg,var(--basic-action-start),var(--basic-action-end)) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) button:disabled {
+      color:var(--muted) !important;
+      background:var(--panel-light) !important;
+      opacity:.78;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card,.theme-picker-card,.birthday-tour-card,.birthday-equip-card,.birthday-transition-card,.birthday-dialog-card) :focus-visible {
+      outline-color:var(--basic-start) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-toggle,.spin-open-button,.wheel-control button,.updates-card-action,.product-info-tab,.product-info-tab[aria-selected="true"],.role-info-tag,.modal-close,.updates-close,.galaxy-launcher-close,.product-info-close) {
+      border-color:var(--line) !important;
+      color:var(--gold) !important;
+      background:var(--basic-surface) !important;
+      box-shadow:none;
+    }
+    body[data-basic-theme]:not(.birthday-mode) :is(.galaxy-launcher-metric strong,.galaxy-launcher-action-icon,.updates-kicker,.updates-package-banner svg,.updates-card-icon,.product-info-icon,.product-info-stat strong,.product-info-spec dd,.product-info-tab[aria-selected="true"],.wheel-segment-label,.wheel-center-label) {
+      color:var(--gold) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) .wheel-segment-label { fill:var(--gold); stroke:color-mix(in srgb,var(--ink) 72%,transparent); }
+    body[data-basic-theme]:not(.birthday-mode) .wheel-center-label { fill:var(--gold); }
+    body.birthday-mode .dock-highlight { background:linear-gradient(120deg,#f7b5d0,#df79a7 58%,#c95f91); box-shadow:0 0 24px rgba(197,89,137,.3),inset 0 1px rgba(255,255,255,.76); }
+    body.birthday-mode .dock-button { color:#8a6075; }
+    body.birthday-mode .dock-button.active { color:#572b40; }
+    body.birthday-mode .brand-mark { border-color:rgba(255,243,249,.94); box-shadow:0 5px 20px rgba(176,77,122,.24),0 0 26px rgba(227,137,174,.3); }
+    body.birthday-mode .birthday-confetti-bg { display:block; }
+    .birthday-confetti-bg { display:none; position:fixed; z-index:0; inset:0; overflow:hidden; pointer-events:none; opacity:.64; background-image:radial-gradient(ellipse 4px 7px at 9% 22%,rgba(219,116,158,.46) 0 90%,transparent 100%),radial-gradient(ellipse 3px 6px at 22% 68%,rgba(183,137,206,.43) 0 90%,transparent 100%),radial-gradient(ellipse 4px 7px at 77% 19%,rgba(237,174,99,.42) 0 90%,transparent 100%),radial-gradient(ellipse 3px 6px at 92% 61%,rgba(219,116,158,.43) 0 90%,transparent 100%),radial-gradient(circle at 42% 14%,rgba(255,255,255,.88) 0 2px,transparent 3px),radial-gradient(circle at 68% 76%,rgba(255,255,255,.8) 0 2px,transparent 3px); }
+    body.birthday-mode main .page { position:relative; isolation:isolate; padding-top:20px; }
+    body.birthday-mode main .page::before { position:absolute; z-index:-1; top:4px; right:5px; left:5px; height:9px; border-radius:999px; background:radial-gradient(circle,rgba(194,76,125,.58) 0 2px,transparent 2.8px) 0 50%/22px 9px repeat-x,linear-gradient(90deg,transparent,rgba(255,255,255,.88) 12%,rgba(231,144,179,.38) 50%,rgba(255,255,255,.88) 88%,transparent); content:""; opacity:.82; pointer-events:none; }
+    body.birthday-mode main .page::after { position:absolute; z-index:-1; top:3px; right:9px; width:30px; height:13px; border-top:2px solid rgba(196,91,135,.44); border-right:2px solid rgba(196,91,135,.44); border-radius:0 11px 0 0; background:radial-gradient(circle at 72% 32%,rgba(218,115,157,.72) 0 2px,transparent 2.8px),radial-gradient(circle at 30% 75%,rgba(238,177,112,.76) 0 2px,transparent 2.8px); content:""; pointer-events:none; }
+    body.birthday-mode .topbar,body.birthday-mode .dock { border-color:rgba(181,83,128,.28); background:linear-gradient(120deg,#fffafd,#f9e6ef); box-shadow:0 12px 34px rgba(156,69,108,.12),inset 0 1px rgba(255,255,255,.95); }
+    body.birthday-mode :is(.shop-icon,.shop-icon-button,.mini-icon,.daily-icon,.mission-shortcut-icon,.owner-tool-icon,.profile-avatar,.owner-tool-card-icon) { border-color:rgba(180,73,123,.25); color:#963b63; background:linear-gradient(145deg,#fff5f9,#f3d6e4); box-shadow:inset 0 1px rgba(255,255,255,.85); }
+    body.birthday-mode .shop-icon-button:hover { border-color:rgba(165,53,106,.52); background:linear-gradient(145deg,#ffeaf3,#edc1d5); box-shadow:0 0 20px rgba(197,89,137,.18); }
+    body.birthday-mode :is(.mini-upgrade,.shop-item,.profile-detail,.owner-kpi,.owner-hero,.owner-tool-card,.achievement-card,.mission-owner,.mission-tile,.mission-shortcut,.flight-deck,.flight-card,.market-batch,.galaxy-observatory,.observatory-card,.flight-owner-audit,.observatory-diagnostics,.boost-banner) { border-color:rgba(180,73,123,.22); color:#512d40; background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(250,229,239,.96)); box-shadow:0 12px 32px rgba(133,55,94,.09),inset 0 1px rgba(255,255,255,.9); }
+    body.birthday-mode .achievement-card.is-unlocked { border-color:rgba(180,73,123,.32); background:linear-gradient(135deg,#fff5f9,#f3dce8); }
+    body.birthday-mode :is(.mission-owner,.mission-admin,.mission-demo,.mission-tile.is-ready,.mission-tile.is-claimed,.flight-owner-audit,.observatory-diagnostics,.flight-owner-tools,.boost-banner) { border-color:rgba(180,73,123,.22); color:#512d40; background:linear-gradient(145deg,#fffafd,#f8e4ee); }
+    body.birthday-mode :is(.market-batch-summary,.market-strategy,.mission-tile,.flight-card,.observatory-card,.flight-owner-audit,.observatory-diagnostics) { border-color:rgba(180,73,123,.2); color:#512d40; background:rgba(250,231,240,.92); }
+    body.birthday-mode :is(.mission-board-title,.mission-owner .mission-board-title,.mission-admin .mission-board-title,.mission-demo .mission-board-title,.mission-reward,.mission-progress-label,.flight-deck-title,.flight-card-value,.flight-card-label,.flight-owner-tools strong,.flight-owner-audit h3,.flight-owner-audit .flight-owner-audit-result,.observatory-title,.observatory-value,.observatory-badge,.observatory-diagnostics h3,.observatory-diagnostics p[data-observatory-diagnostic-result],.market-batch-kicker,.market-batch-summary strong,.boost-banner-title,.profile-badge,.owner-kpi-value,.owner-kpi-label,.owner-tool-card h3,.owner-tool-card strong) { color:#873858; text-shadow:none; }
+    body.birthday-mode :is(.mission-board-copy,.mission-tile-copy,.mission-board-meta,.mission-progress-label,.flight-card p,.flight-tip,.flight-owner-audit p,.observatory-copy,.observatory-detail,.observatory-diagnostics p,.market-batch-summary span,.boost-banner-copy,.empty-note,.profile-detail-label,.owner-kpi-label,.owner-tool-card p,.owner-copy,.owner-notice-help) { color:#604354; }
+    body.birthday-mode :is(.mission-board-meta span,.flight-deck-role,.observatory-badge) { border-color:rgba(180,73,123,.23); color:#873858; background:#f7e2ec; }
+    body.birthday-mode .mission-progress-track { background:#ead4df; }
+    body.birthday-mode .mission-board-meta span { border-color:rgba(180,73,123,.23); color:#694057; background:#f7e2ec; }
+    body.owner-mode.birthday-mode .market-batch::after,body.owner-mode.birthday-mode .flight-deck::after,body.owner-mode.birthday-mode .mission-board::after,body.owner-mode.birthday-mode .galaxy-observatory::after { background:linear-gradient(105deg,transparent,rgba(255,255,255,.32),rgba(221,121,166,.15),transparent); }
+    body.birthday-mode :is(.market-strategy,.owner-tool-button,.flight-action,.observatory-action,.profile-action,.mission-shortcut,.mission-claim:not(:disabled),.reset-button) { border-color:rgba(180,73,123,.28); color:#873858; background:linear-gradient(145deg,#fffafd,#f6e0eb); }
+    body.birthday-mode :is(.market-batch-button:not(:disabled),.owner-tool-button.primary,.flight-action.primary,.observatory-action.primary,.mission-claim:not(:disabled)) { border-color:#783253; color:#fffafd; background:linear-gradient(115deg,#a94472,#873253 58%,#71304f); }
+    body.birthday-mode :is(.market-batch-button:disabled,.mission-claim:disabled,.shop-buy:disabled,.owner-tool-button:disabled,.flight-action:disabled,.observatory-action:disabled) { border-color:rgba(137,74,101,.24); color:#604354; background:#f1dce6; opacity:1; }
+    body.birthday-mode :is(.mission-tile.is-claimed .mission-reward,.status-dot,.rate-value) { color:#286b55; }
+    body.birthday-mode main :is(p,small,label,.rate-label,.balance-caption,.cookie-total-label,.stat-label,.profile-detail-label,.mission-progress-label,.mission-tile-copy,.flight-tip,.flight-owner-audit p,.observatory-detail,.observatory-diagnostics p,.market-batch-summary span,.boost-banner-copy,.owner-kpi-label,.owner-tool-card p,.empty-note) { color:#604354; }
+    body.birthday-mode main :is(h1,h2,h3,h4,.page-heading h1,.section-title,.owner-heading,.shop-name,.profile-name,.daily-title,.mission-board-title,.mission-tile h3,.flight-deck-title,.observatory-title,.owner-kpi-value,.owner-tool-card strong) { color:#713552; text-shadow:none; }
+    body.owner-mode.birthday-mode::before { background:radial-gradient(circle at 12% 22%,rgba(255,255,255,.9) 0 1.5px,rgba(220,121,166,.2) 2px,transparent 4px),radial-gradient(circle at 24% 73%,rgba(255,239,247,.86) 0 1.5px,rgba(201,91,145,.2) 2px,transparent 4px),radial-gradient(circle at 52% 84%,rgba(255,255,255,.9) 0 1.5px,rgba(220,121,166,.2) 2px,transparent 4px),radial-gradient(circle at 78% 18%,transparent 0 115px,rgba(201,91,145,.12) 116px,transparent 119px),radial-gradient(ellipse at 24% 34%,rgba(226,142,181,.18),transparent 38%),radial-gradient(ellipse at 78% 68%,rgba(221,151,186,.16),transparent 36%); }
+    body.owner-mode.birthday-mode::after { opacity:.45; background:radial-gradient(circle at 18% 48%,rgba(255,255,255,.9) 0 1.5px,rgba(220,121,166,.2) 2px,transparent 4px),radial-gradient(circle at 61% 68%,rgba(255,239,247,.86) 0 1.5px,rgba(201,91,145,.2) 2px,transparent 4px),radial-gradient(circle at 88% 72%,transparent 0 82px,rgba(201,91,145,.11) 83px,transparent 86px),radial-gradient(ellipse at 78% 25%,rgba(226,142,181,.15),transparent 34%),radial-gradient(ellipse at 28% 78%,rgba(221,151,186,.13),transparent 38%); }
+    body.birthday-mode .float-text { color:#963b63; text-shadow:0 1px 3px #fff,0 2px 12px rgba(255,255,255,.8); }
+    body.birthday-mode :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card) {
+      border-color:rgba(174,69,117,.32) !important;
+      color:#512d40 !important;
+      background:linear-gradient(145deg,#fffafd 0%,#fae6f0 55%,#f3d7e5 100%) !important;
+      box-shadow:0 24px 76px rgba(92,35,64,.22),inset 0 1px rgba(255,255,255,.94) !important;
+      backdrop-filter:blur(18px) saturate(1.08);
+      -webkit-backdrop-filter:blur(18px) saturate(1.08);
+    }
+    body.birthday-mode :is(.wheel-dialog,.role-info-dialog,.facebook-dialog,.offline-cookie-dialog,.golden-cookie-dialog,.product-info-dialog,.bakery-ai-dialog,.updates-dialog,.vip-dialog,.signout-confirm,.demo-dialog,.screen-flow,.welcome-confetti,.tutorial-screen,.prize-reveal) {
+      background-color:rgba(79,31,56,.56) !important;
+      background-image:radial-gradient(ellipse at 50% 15%,rgba(246,190,215,.25),transparent 56%) !important;
+    }
+    body.birthday-mode :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card) :is(h1,h2,h3,h4,p,span,label,strong,small,li,dt,dd,.galaxy-launcher-label,.galaxy-launcher-metric span,.galaxy-launcher-metric strong,.galaxy-launcher-action,.wheel-copy,.wheel-result,.role-info-tag,.vip-kicker,.vip-intro-copy,.product-info-copy,.updates-intro,.updates-kicker,.updates-card p,.updates-footer,.owner-notice-help) {
+      color:#573548 !important;
+      text-shadow:none !important;
+    }
+    body.birthday-mode :is(.galaxy-launcher-head h2,.wheel-panel h2,.role-info-panel h2,.golden-cookie-panel h2,.golden-cookie-info-panel h2,.active-boost-info-panel h2,.product-info-panel h2,.bakery-ai-panel h2,.updates-panel h2,.vip-panel h2,.signout-confirm-panel h2,.demo-card h2,.flow-panel h1,.welcome-card h1,.welcome-page-card h1,.tutorial-card h1,.prize-reveal-card h2) { color:#7d3456 !important; }
+    body.birthday-mode .galaxy-launcher-panel :is(.galaxy-launcher-metric,.galaxy-launcher-scan,.galaxy-launcher-action) {
+      border-color:rgba(159,64,108,.22) !important;
+      color:#573548 !important;
+      background:linear-gradient(135deg,#fffafd,#f4dce8) !important;
+    }
+    body.birthday-mode :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card) :is(button:not(.shop-buy):not(.auth-submit):not(.flow-button.primary):not(.birthday-next-button):not(.birthday-equip-button)) {
+      border-color:rgba(157,63,106,.3);
+      color:#713552;
+      background:linear-gradient(135deg,#fffafd,#f2dce7);
+    }
+    body.birthday-mode :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card) :is(button.shop-buy,button.auth-submit,button.flow-button.primary,button.birthday-next-button,button.birthday-equip-button) {
+      border-color:#783253 !important;
+      color:#fff !important;
+      background:linear-gradient(115deg,#a94472,#873253 58%,#71304f) !important;
+    }
+    body.birthday-mode :is(.galaxy-launcher-panel,.wheel-panel,.role-info-panel,.facebook-panel,.offline-cookie-panel,.golden-cookie-panel,.golden-cookie-info-panel,.active-boost-info-panel,.product-info-panel,.bakery-ai-panel,.updates-panel,.vip-panel,.signout-confirm-panel,.demo-card,.flow-panel,.welcome-card,.welcome-page-card,.tutorial-card,.prize-reveal-card) button:disabled { color:#70465a; background:#f0dce6; opacity:.78; }
+    body.birthday-mode .bakery-ai-panel :is(.bakery-ai-title,.bakery-ai-subtitle,.bakery-ai-note,.bakery-ai-recommended-title,.bakery-ai-quick-count,.bakery-ai-quick-empty,.bakery-ai-not-found-label,.bakery-ai-not-found-hint) { color:#573548 !important; text-shadow:none !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-message.assistant { border-color:rgba(129,59,91,.24) !important; color:#492638 !important; background:linear-gradient(135deg,#fffafd,#f7e6ef) !important; box-shadow:0 4px 14px rgba(92,35,64,.08),inset 0 1px rgba(255,255,255,.92); }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-message.assistant strong { color:#713552 !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-message.user { border-color:#a94472 !important; color:#fff !important; background:linear-gradient(120deg,#ad4778,#873253) !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-message.user strong { color:#fff !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-quick-search { border-color:rgba(129,59,91,.34) !important; color:#492638 !important; background:#fffafd !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-quick-search::placeholder { color:#74566a !important; opacity:1; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-input { border-color:rgba(129,59,91,.34) !important; color:#492638 !important; background:#fffafd !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-input::placeholder { color:#74566a !important; opacity:1; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-note { font-size:10px; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-quick button { border-color:rgba(129,59,91,.3) !important; color:#573548 !important; background:linear-gradient(135deg,#fffafd,#f4e1eb) !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-quick button:hover { border-color:#a94472 !important; background:#f2d7e5 !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-send { border-color:#783253 !important; color:#fff !important; background:linear-gradient(115deg,#a94472,#873253 58%,#71304f) !important; }
+    body.birthday-mode .bakery-ai-panel .bakery-ai-close { border-color:rgba(129,59,91,.34) !important; color:#573548 !important; background:rgba(255,255,255,.8) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel :is(.bakery-ai-subtitle,.bakery-ai-note,.bakery-ai-recommended-title,.bakery-ai-quick-count,.bakery-ai-quick-empty,.bakery-ai-not-found-label,.bakery-ai-not-found-hint) { color:var(--muted) !important; text-shadow:none !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-message.assistant { border-color:var(--line) !important; color:var(--ink) !important; background:var(--panel) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-message.assistant strong { color:var(--basic-end) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-message.user { border-color:var(--basic-end) !important; color:#fff !important; background:linear-gradient(120deg,var(--basic-end),color-mix(in srgb,var(--basic-end) 76%,#17120f)) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-message.user strong { color:#fff !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-quick-search { border-color:var(--line) !important; color:var(--ink) !important; background:var(--panel) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-quick-search::placeholder { color:var(--muted) !important; opacity:1; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-input { border-color:var(--line) !important; color:var(--ink) !important; background:var(--panel) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-input::placeholder { color:var(--muted) !important; opacity:1; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-quick button { border-color:var(--line) !important; color:var(--ink) !important; background:var(--panel) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-quick button:hover { border-color:var(--basic-end) !important; background:var(--panel-light) !important; }
+    body[data-basic-theme]:not(.birthday-mode) .bakery-ai-panel .bakery-ai-close { border-color:var(--line) !important; color:var(--ink) !important; background:var(--panel) !important; }
+    body.birthday-mode .product-info-panel :is(.product-info-stat,.product-info-spec,.product-info-tabs,.product-info-tab-panel) { border-color:rgba(159,64,108,.2); background:rgba(255,250,253,.58); }
+    body.birthday-mode .updates-panel :is(.updates-package-banner,.updates-card,.updates-heading-mark) { border-color:rgba(159,64,108,.2); color:#573548; background:rgba(255,250,253,.68); box-shadow:none; }
+    body.birthday-mode .updates-panel :is(.updates-package-banner span:last-child,.updates-card h3,.updates-kicker,.updates-heading-mark,.updates-card-icon) { color:#713552 !important; }
+    body.birthday-mode .wheel-segment-label { fill:#fff; stroke:rgba(49,25,40,.88); }
+    body.birthday-mode .wheel-center-label { fill:#713552; }
+    .birthday-achievement-confetti { position:fixed; z-index:1200; inset:0; overflow:hidden; pointer-events:none; }
+    .birthday-achievement-confetti i { position:absolute; top:-18px; left:var(--birthday-left); width:var(--birthday-size); height:var(--birthday-height); border-radius:3px 3px 6px 2px; background:var(--birthday-color); box-shadow:0 0 8px rgba(255,255,255,.45); animation:birthday-confetti-fall var(--birthday-duration) cubic-bezier(.24,.64,.52,1) var(--birthday-delay) both; }
+    .birthday-tour-card { overflow:hidden; }
+    .birthday-event-screen.is-equip { background:rgba(255,239,247,.28); backdrop-filter:blur(13px) saturate(1.08); -webkit-backdrop-filter:blur(13px) saturate(1.08); }
+    .birthday-event-screen.is-applying,.birthday-event-screen.is-applying.is-revealing { background:rgba(255,239,247,.34); backdrop-filter:blur(15px) saturate(1.12); -webkit-backdrop-filter:blur(15px) saturate(1.12); }
+    .birthday-event-screen.is-applying.is-applying-gold { background:rgba(24,17,11,.68); backdrop-filter:blur(15px) saturate(.9); -webkit-backdrop-filter:blur(15px) saturate(.9); }
+    .birthday-event-screen.is-applying-gold .birthday-transition-card { border-color:rgba(255,223,155,.55); color:#fff1c9; background:radial-gradient(ellipse at 50% 0%,rgba(236,180,78,.3),transparent 56%),linear-gradient(145deg,#352514,#1e1711 68%,#49321b); box-shadow:0 28px 90px rgba(10,7,4,.58),0 0 54px rgba(229,173,72,.2),inset 0 1px rgba(255,230,174,.36); }
+    .birthday-event-screen.is-applying-gold .birthday-event-kicker { color:#f3cf84; }
+    .birthday-event-screen.is-applying-gold .birthday-event-title { color:#fff0c3; }
+    .birthday-event-screen.is-applying-gold .birthday-event-copy { color:#e6d3ac; }
+    .birthday-event-screen.is-applying-gold .birthday-equip-logo { border-color:rgba(255,234,187,.75); background:radial-gradient(circle at 30% 18%,rgba(255,255,255,.95),transparent 40%),linear-gradient(145deg,#f6d88d,#c78c3e 65%,#855324); box-shadow:0 12px 34px rgba(225,172,83,.25),inset 0 1px #fff7dd; }
+    .birthday-event-screen.is-applying-gold .birthday-apply-progress { background:rgba(255,255,255,.14); }
+    .birthday-event-screen.is-applying-gold .birthday-apply-progress::after { background:linear-gradient(90deg,#f3d58e,#fff0bc,#b87c30); }
+    .birthday-equip-card { display:flex; flex-direction:column; width:min(650px,100%); max-height:min(86vh,780px); max-height:min(86dvh,780px); overflow:hidden; padding:0; }
+    .birthday-equip-content { overflow:auto; padding:clamp(24px,5vw,42px); text-align:center; overscroll-behavior:contain; scrollbar-color:rgba(192,82,132,.45) rgba(197,89,137,.08); }
+    .birthday-equip-logo { display:grid; width:96px; height:96px; margin:0 auto 20px; place-items:center; border:1px solid rgba(255,255,255,.88); border-radius:30px; background:radial-gradient(circle at 30% 18%,rgba(255,255,255,.95),transparent 40%),linear-gradient(145deg,#f5bbd0,#d876a4 65%,#b95989); box-shadow:0 12px 34px rgba(170,72,119,.22),inset 0 1px rgba(255,255,255,.96); animation:birthday-logo-ascend .9s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-equip-logo svg { width:72px; height:72px; filter:drop-shadow(0 4px 12px rgba(142,60,99,.24)); }
+    @keyframes birthday-logo-ascend { from { opacity:0; transform:translateY(58px) scale(.68) rotate(-16deg); filter:blur(7px); } 68% { opacity:1; transform:translateY(-6px) scale(1.07) rotate(3deg); filter:none; } to { transform:translateY(0) scale(1) rotate(0); } }
+    .birthday-equip-copy { max-width:540px; margin:0 auto; color:#704b61; font-size:13px; line-height:1.8; text-align:left; }
+    .birthday-equip-copy p { margin:0 0 14px; }
+    .birthday-equip-list { display:grid; gap:8px; margin:18px 0; padding:0; list-style:none; }
+    .birthday-equip-list li { padding:11px 14px; border:1px solid rgba(190,95,138,.18); border-radius:16px; background:rgba(255,255,255,.58); }
+    .birthday-equip-footer { display:flex; justify-content:center; padding:14px 22px 22px; border-top:1px solid rgba(163,79,116,.14); background:rgba(255,247,251,.84); }
+    .birthday-equip-button { min-height:50px; padding:13px 28px; font-size:14px; box-shadow:0 10px 26px rgba(169,67,117,.28); }
+    .birthday-event-screen.is-theme-picker { background:rgba(17,12,19,.58); backdrop-filter:blur(16px) saturate(1.08); -webkit-backdrop-filter:blur(16px) saturate(1.08); }
+    .theme-picker-card { width:min(670px,100%); overflow:visible; }
+    .theme-picker-content { padding:clamp(24px,5vw,38px); }
+    .theme-picker-close { position:absolute; z-index:2; top:14px; right:14px; display:grid; width:44px; height:44px; padding:0; place-items:center; border:2px solid #b56b8a; border-radius:50%; color:#542c40; background:#fff; box-shadow:0 3px 12px rgba(55,25,40,.22),inset 0 0 0 2px rgba(255,255,255,.9); font:inherit; font-size:0; line-height:1; cursor:pointer; }
+    .theme-picker-close svg { display:block; width:20px; height:20px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; }
+    body.owner-mode button.theme-picker-close,body.admin-mode button.theme-picker-close { position:absolute; flex:0 0 44px; min-height:44px; border-radius:50%; isolation:isolate; }
+    body.owner-mode button:not(.cookie-button):not(.golden-cookie-button):not(.modal-close).theme-picker-close { position:absolute; top:14px; right:14px; }
+    body.owner-mode button.theme-picker-close::after,body.admin-mode button.theme-picker-close::after { content:none; }
+    .theme-picker-intro { margin:0 42px 22px 0; color:#704b61; font-size:13px; line-height:1.7; }
+    .theme-picker-section-title { margin:20px 0 11px; color:#873a60; font-size:12px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .theme-picker-options { display:grid; gap:12px; }
+    .theme-choice-button { display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:center; gap:13px; width:100%; min-width:0; padding:15px 17px; border:1px solid rgba(176,92,132,.22); border-radius:999px; color:#532f43; background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,246,250,.96)); text-align:left; cursor:pointer; transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
+    .theme-choice-button:hover:not(:disabled),.theme-choice-button:focus-visible { transform:translateY(-2px); border-color:rgba(187,75,125,.55); box-shadow:0 9px 24px rgba(169,67,117,.14); }
+    .theme-choice-button:disabled { cursor:not-allowed; opacity:.65; }
+    .theme-choice-swatch { display:block; width:42px; height:42px; border:2px solid rgba(255,255,255,.94); border-radius:50%; box-shadow:0 2px 9px rgba(45,28,38,.18),inset 0 1px rgba(255,255,255,.76); }
+    .theme-choice-swatch-default { background:linear-gradient(135deg,#fff0a9,#eeb34d 48%,#a95d27); }
+    .theme-choice-swatch-birthday { background:linear-gradient(135deg,#ffe8f1,#ed9fbe 48%,#b94d81); }
+    .theme-choice-copy { display:grid; gap:4px; min-width:0; }
+    .theme-choice-copy strong { color:#713552; font-size:14px; line-height:1.35; }
+    .theme-choice-copy > span { color:#765267; font-size:11px; line-height:1.55; }
+    .theme-choice-badge { align-self:start; justify-self:end; padding:5px 8px; border:1px solid rgba(156,47,59,.2); border-radius:999px; color:#8e2837; background:#fff0ef; font-size:9px; font-weight:900; letter-spacing:.08em; line-height:1; white-space:nowrap; }
+    .theme-choice-state { grid-column:2 / -1; justify-self:end; color:#92516d; font-size:10px; font-weight:800; }
+    .theme-choice-birthday .theme-choice-state { grid-column:2; }
+    .theme-choice-swatch-basic { background:var(--theme-swatch); }
+    .theme-picker-basic-options { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .theme-choice-basic { grid-template-columns:38px minmax(0,1fr) auto; padding:11px 13px; border-radius:999px; }
+    .theme-choice-basic .theme-choice-swatch { width:32px; height:32px; }
+    .theme-choice-basic .theme-choice-copy strong { font-size:12px; }
+    .theme-choice-basic .theme-choice-state { grid-column:3; grid-row:1; }
+    .theme-picker-note { margin:16px 0 0; color:#855f72; font-size:10px; line-height:1.55; }
+    body.owner-mode .theme-choice-button,body.admin-mode .theme-choice-button { border-radius:999px; }
+    .birthday-apply-progress { height:8px; margin:20px 0 12px; overflow:hidden; border-radius:999px; background:rgba(195,86,132,.16); }
+    .birthday-apply-progress::after { display:block; width:100%; height:100%; border-radius:inherit; background:linear-gradient(90deg,#f0b2cb,#c64e87 55%,#edb06d); content:""; transform:scaleX(0); transform-origin:left center; animation:birthday-apply-progress var(--birthday-apply-duration,10s) linear both; }
+    .birthday-apply-progress.is-complete::after { animation:none; transform:scaleX(1); }
+    @keyframes birthday-apply-progress { to { transform:scaleX(1); } }
+    .birthday-apply-sparkle { display:inline-block; margin-right:7px; animation:birthday-apply-twinkle .8s ease-in-out infinite alternate; }
+    @keyframes birthday-apply-twinkle { to { transform:scale(1.35) rotate(20deg); opacity:.58; } }
+    .birthday-tour-card::before { position:absolute; inset:8px; border:1px solid rgba(202,105,147,.2); border-radius:24px; content:""; pointer-events:none; }
+    .birthday-tour-progress { position:absolute; top:0; right:0; left:0; height:5px; overflow:hidden; background:rgba(195,86,132,.14); }
+    .birthday-tour-progress::after { position:absolute; inset:0; background:linear-gradient(90deg,#efb1cc,#c64e87 55%,#e8a4bd); content:""; transform-origin:left center; animation:birthday-tour-progress 8s linear both; }
+    body.birthday-tour-active .topbar { animation:birthday-header-exit 1s cubic-bezier(.55,0,.8,.25) both !important; pointer-events:none; }
+    body.birthday-tour-active .dock-wrap { animation:birthday-dock-exit 1s cubic-bezier(.55,0,.8,.25) both !important; pointer-events:none; }
+    body.birthday-tour-returning .topbar { animation:birthday-header-enter 1s cubic-bezier(.16,1,.3,1) both !important; }
+    body.birthday-tour-returning .dock-wrap { animation:birthday-dock-enter 1s cubic-bezier(.16,1,.3,1) both !important; }
+    .birthday-event-screen { position:fixed; z-index:500; inset:0; display:grid; overflow:auto; padding:22px; place-items:center; color:#512d40; background:rgba(33,15,28,.93); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+    .birthday-event-screen[hidden] { display:none; }
+    .birthday-event-screen.is-covering { animation:birthday-cover .85s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-event-screen.is-revealing { animation:birthday-reveal .9s cubic-bezier(.16,1,.3,1) both; pointer-events:none; }
+    .birthday-event-screen.is-demo-birthday.is-closing { animation:overlay-exit .24s ease-in both; pointer-events:none; }
+    .birthday-event-screen.is-demo-birthday.is-closing .demo-birthday-card { animation:dialog-exit .24s cubic-bezier(.4,0,.8,.3) both; }
+    .birthday-event-screen.is-theme-picker-closing { animation:theme-picker-overlay-out .34s cubic-bezier(.55,0,.8,.25) both; pointer-events:none; }
+    .birthday-event-screen.is-theme-picker-closing .theme-picker-card { animation:theme-picker-card-out .34s cubic-bezier(.55,0,.8,.25) both; }
+    @keyframes theme-picker-overlay-out { to { opacity:0; backdrop-filter:blur(0) saturate(.8); -webkit-backdrop-filter:blur(0) saturate(.8); } }
+    @keyframes theme-picker-card-out { to { opacity:0; transform:translateY(16px) scale(.96); filter:blur(4px); } }
+    .birthday-transition-card,.birthday-tour-card,.birthday-dialog-card { position:relative; width:min(590px,100%); max-height:min(84vh,760px); max-height:min(84dvh,760px); overflow:auto; padding:clamp(22px,5vw,38px); border:1px solid rgba(255,255,255,.82); border-radius:32px; color:#532f43; background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(255,227,239,.97)); box-shadow:0 28px 90px rgba(20,8,17,.32),0 0 70px rgba(245,168,198,.26),inset 0 1px #fff; animation:birthday-card-arrive .6s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-transition-card { width:min(400px,100%); text-align:center; }
+    .birthday-event-icon { display:block; width:72px; height:72px; margin:0 auto 16px; color:#bb4e81; filter:drop-shadow(0 8px 14px rgba(176,77,122,.2)); }
+    .birthday-event-kicker { color:#b54f7e; font-size:10px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; }
+    .birthday-event-title { margin:8px 0 12px; color:#873a60; font-family:"Sora","Trebuchet MS",system-ui,sans-serif; font-size:clamp(23px,5vw,34px); font-weight:800; line-height:1.2; letter-spacing:-.04em; text-wrap:balance; }
+    .birthday-event-copy { margin:0; color:#704b61; font-size:13px; line-height:1.75; white-space:pre-line; }
+    .birthday-event-copy p { margin:0 0 12px; }
+    .demo-birthday-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:22px; }
+    .demo-birthday-actions .birthday-next-button { min-width:min(220px,100%); }
+    .demo-birthday-actions .demo-birthday-dismiss { border-color:rgba(143,62,101,.32); color:#75465e; background:rgba(255,255,255,.76); box-shadow:none; }
+    .birthday-tour-card { width:min(520px,100%); text-align:center; animation:birthday-tour-pulse 2s ease-in-out infinite,birthday-card-arrive .6s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-tour-card.is-owner { border-color:rgba(255,224,163,.94); box-shadow:0 28px 90px rgba(20,8,17,.36),0 0 58px rgba(231,173,98,.32),inset 0 1px #fff; animation:birthday-tour-pulse 2s ease-in-out infinite,birthday-owner-card-arrive .82s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-tour-card.is-admin { border-color:rgba(255,196,225,.96); box-shadow:0 28px 90px rgba(20,8,17,.36),0 0 54px rgba(222,112,169,.3),inset 0 1px #fff; animation:birthday-tour-pulse 1.7s ease-in-out infinite,birthday-admin-card-arrive .68s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-tour-card.is-owner .birthday-event-kicker,.birthday-tour-card.is-owner .birthday-event-title { color:#8c5a19; }
+    .birthday-tour-card.is-admin .birthday-event-kicker,.birthday-tour-card.is-admin .birthday-event-title { color:#9a3d71; }
+    .birthday-tour-actions { display:flex; justify-content:center; gap:10px; margin-top:22px; }
+    .birthday-tour-actions .birthday-next-button { min-width:116px; }
+    .birthday-tour-actions .birthday-skip-button { border-color:rgba(143,62,101,.28); color:#75465e; background:rgba(255,255,255,.68); box-shadow:none; }
+    .birthday-event-screen.is-tour { overflow:hidden; background:rgba(255,237,245,.16); backdrop-filter:none; -webkit-backdrop-filter:none; pointer-events:none; }
+    .birthday-event-screen.is-tour .birthday-tour-card { pointer-events:auto; }
+    .birthday-dialog-card { display:flex; flex-direction:column; padding:0; }
+    .birthday-dialog-content { overflow:auto; padding:clamp(22px,5vw,36px); overscroll-behavior:contain; }
+    .birthday-dialog-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 22px 20px; border-top:1px solid rgba(163,79,116,.14); }
+    .birthday-read-hint { color:#8b6378; font-size:10px; line-height:1.4; }
+    .birthday-next-button { min-height:42px; padding:10px 18px; border:1px solid #b64b7b; border-radius:999px; color:#fff; background:linear-gradient(115deg,#d96599,#ad4778); font:inherit; font-size:12px; font-weight:850; cursor:pointer; box-shadow:0 6px 18px rgba(169,67,117,.2); transition:filter .2s,transform .2s,box-shadow .2s; }
+    .birthday-next-button:disabled { opacity:.42; cursor:wait; filter:grayscale(.2); box-shadow:none; }
+    .birthday-next-button:not(:disabled):hover { transform:translateY(-2px); filter:brightness(1.06); box-shadow:0 9px 24px rgba(169,67,117,.28); }
+    @media(max-width:560px) {
+      .birthday-event-screen { padding:12px; }
+      .birthday-transition-card,.birthday-tour-card,.birthday-dialog-card { border-radius:24px; }
+      .birthday-equip-card { border-radius:24px; }
+      .birthday-equip-footer { padding:12px 16px 16px; }
+      .theme-choice-button { grid-template-columns:38px minmax(0,1fr) auto; gap:10px; border-radius:24px; padding:13px; }
+      .theme-picker-basic-options { grid-template-columns:1fr; }
+      .theme-choice-basic { grid-template-columns:38px minmax(0,1fr) auto; border-radius:999px; padding:10px 12px; }
+      .theme-choice-basic .theme-choice-state { grid-column:3; grid-row:1; }
+      .theme-choice-swatch { width:36px; height:36px; }
+      .theme-choice-badge { grid-column:3; grid-row:1; align-self:start; }
+      .theme-choice-state,.theme-choice-birthday .theme-choice-state { grid-column:2 / -1; grid-row:2; justify-self:end; }
+      .birthday-dialog-footer { align-items:flex-end; padding:12px 16px 16px; }
+      .birthday-read-hint { max-width:52%; }
+      .birthday-tour-actions { flex-wrap:wrap; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .brand-mark.is-birthday-holding,.brand-mark.is-birthday-holding::after { animation:none !important; }
+      .birthday-achievement-confetti i,.birthday-tour-progress::after { animation:none !important; }
+      .birthday-equip-logo,.birthday-apply-sparkle { animation:none !important; }
+      .birthday-apply-progress::after { animation:none !important; transform:scaleX(1); }
+      .birthday-event-screen.is-theme-picker-closing,.birthday-event-screen.is-theme-picker-closing .theme-picker-card { animation:none !important; }
+      .birthday-event-screen.is-covering,.birthday-event-screen.is-revealing,.birthday-transition-card,
+      .birthday-tour-card,.birthday-dialog-card,.birthday-mode .topbar,.birthday-mode .dock-wrap {
+        animation-duration:.01ms !important; scroll-behavior:auto !important;
+      }
+      body.birthday-tour-active .topbar,body.birthday-tour-active .dock-wrap { opacity:0; }
+      body.birthday-tour-returning .topbar,body.birthday-tour-returning .dock-wrap { opacity:1; }
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions :is(.bakery-ai-open,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle) {
+      border-color:rgba(255,255,255,.34) !important;
+      color:#fff !important;
+      box-shadow:0 5px 16px rgba(35,20,12,.24),inset 0 1px rgba(255,255,255,.3) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]):not(.admin-mode):not(.demo-mode):not(.owner-mode) .top-quick-actions :is(.bakery-ai-open,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle) {
+      background:linear-gradient(135deg,#b97820,#805019) !important;
+    }
+    body.admin-mode:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions :is(.bakery-ai-open,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle) {
+      background:linear-gradient(135deg,#bb4d89,#77315f) !important;
+    }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions :is(.bakery-ai-open,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle) {
+      background:linear-gradient(135deg,#397fbd,#24537e) !important;
+    }
+    body.owner-mode:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions :is(.bakery-ai-open,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle) {
+      background:linear-gradient(135deg,#ae701b,#704516) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) .top-quick-actions button {
+      border-color:var(--basic-end) !important;
+      color:#fff !important;
+      background:linear-gradient(135deg,var(--basic-action-start),var(--basic-action-end)) !important;
+      box-shadow:0 5px 16px color-mix(in srgb,var(--basic-end) 28%,transparent),inset 0 1px rgba(255,255,255,.32) !important;
+    }
+    body.birthday-mode .top-quick-actions button {
+      border-color:#783253 !important;
+      color:#fff !important;
+      background:linear-gradient(135deg,#aa4d77,#74304f) !important;
+      box-shadow:0 5px 16px rgba(99,35,62,.24),inset 0 1px rgba(255,255,255,.3) !important;
+    }
+    body.birthday-mode .top-quick-actions .facebook-open-button {
+      border-color:#1455b8 !important;
+      background:linear-gradient(135deg,#2677e8,#1455b8) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions .facebook-open-button {
+      border-color:#1455b8 !important;
+      color:#fff !important;
+      background:linear-gradient(135deg,#2677e8,#1455b8) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .top-quick-actions .facebook-galaxy-open-button {
+      border-color:#a86b1d !important;
+      color:#fff !important;
+      background:linear-gradient(135deg,#bb8026,#865016) !important;
+    }
+    body.birthday-mode .top-quick-actions :is(.bakery-ai-open,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle):focus-visible {
+      outline:2px solid #fff !important;
+      outline-offset:3px;
+      box-shadow:0 0 0 5px rgba(120,50,83,.24),0 0 22px rgba(120,50,83,.24) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) .top-quick-actions :is(.bakery-ai-open,.facebook-open-button,.facebook-galaxy-open-button,.spin-open-button,.updates-open-button,.galaxy-launcher-toggle):focus-visible {
+      outline:2px solid var(--basic-end) !important;
+      outline-offset:3px;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) {
+      background:radial-gradient(circle at 50% 43%,rgba(241,169,198,.34),transparent 46%),rgba(83,39,61,.72) !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) .golden-cookie-panel {
+      border-color:rgba(176,76,120,.38) !important;
+      color:#512d40 !important;
+      background:linear-gradient(145deg,#fffafd 0%,#fbeaf2 54%,#f3dce8 100%) !important;
+      box-shadow:0 28px 90px rgba(99,35,62,.24),0 0 52px rgba(220,121,166,.2),inset 0 1px rgba(255,255,255,.96) !important;
+      text-shadow:none !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) .golden-cookie-panel::before {
+      background:linear-gradient(105deg,transparent 43%,rgba(255,255,255,.72) 50%,transparent 57%) !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-kicker,.golden-cookie-panel h2,.golden-cookie-rarity,.golden-cookie-reward strong,.golden-cookie-status strong,.golden-cookie-active-status strong,.golden-cookie-info-countdown strong,.active-boost-list strong,.active-boost-list span) {
+      color:#873858 !important;
+      text-shadow:none !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-art,.golden-cookie-art svg,.golden-cookie-info-countdown > span:first-child) {
+      color:#b34f7c !important;
+      filter:drop-shadow(0 5px 12px rgba(179,79,124,.2));
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-copy,.golden-cookie-reward span:last-child,.golden-cookie-panel p,.golden-cookie-info-panel p,.active-boost-info-panel p,.active-boost-list small) {
+      color:#604354 !important;
+      text-shadow:none !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-reward,.golden-cookie-status,.golden-cookie-active-status,.golden-cookie-info-countdown,.active-boost-list li) {
+      border-color:rgba(168,72,115,.24) !important;
+      color:#573548 !important;
+      background:linear-gradient(135deg,#fffafd,#f4dce8) !important;
+      box-shadow:inset 0 1px rgba(255,255,255,.88) !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-claim,.golden-cookie-info-close) {
+      border-color:#783253 !important;
+      color:#fff !important;
+      background:linear-gradient(115deg,#a94472,#873253 58%,#71304f) !important;
+      box-shadow:0 8px 24px rgba(120,50,83,.24),inset 0 1px rgba(255,255,255,.24) !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-claim,.golden-cookie-info-close):hover {
+      box-shadow:0 10px 28px rgba(120,50,83,.34),inset 0 1px rgba(255,255,255,.3) !important;
+    }
+    body.birthday-mode :is(#golden-cookie-dialog,#golden-cookie-info-dialog,#active-boost-info-dialog) :is(.golden-cookie-status,.golden-cookie-active-status):focus-visible {
+      outline:2px solid #a94472 !important;
+      outline-offset:3px;
+    }
+    body.birthday-mode .oven-card .golden-cookie-status,
+    body.birthday-mode .oven-card .golden-cookie-active-status {
+      position:absolute !important;
+      right:18px !important;
+      left:auto !important;
+      width:max-content;
+      max-width:calc(100% - 36px);
+      min-height:34px;
+      padding:8px 12px;
+      align-items:center;
+      justify-self:end;
+      border:1px solid rgba(157,63,106,.34) !important;
+      border-radius:999px;
+      color:#713552 !important;
+      background:linear-gradient(135deg,#fffafd,#f4dce8) !important;
+      box-shadow:0 5px 16px rgba(120,50,83,.13),inset 0 1px rgba(255,255,255,.92) !important;
+      font-size:10px;
+      font-weight:800;
+      line-height:1.35;
+      white-space:normal;
+      text-shadow:none !important;
+    }
+    body.birthday-mode .oven-card .golden-cookie-status { top:58px !important; bottom:auto !important; }
+    body.birthday-mode .oven-card .golden-cookie-active-status { top:101px !important; bottom:auto !important; }
+    body.birthday-mode .oven-card .golden-cookie-status.is-ready {
+      border-color:#a94472 !important;
+      color:#fff !important;
+      background:linear-gradient(125deg,#bb5684,#893657) !important;
+      box-shadow:0 6px 18px rgba(120,50,83,.24),inset 0 1px rgba(255,255,255,.3) !important;
+    }
+    body.birthday-mode .oven-card .golden-cookie-status > span:first-child,
+    body.birthday-mode .oven-card .golden-cookie-active-status > span:first-child { color:#a94472; }
+    body.birthday-mode .oven-card .golden-cookie-status.is-ready > span:first-child { color:#fff; }
+    body.birthday-mode .oven-card .golden-cookie-active-status strong { color:#873858 !important; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker { background:rgba(17,12,7,.72); }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-picker-card {
+      border-color:rgba(255,224,138,.38) !important;
+      color:#f8edcf !important;
+      background:radial-gradient(ellipse at 50% 0,rgba(255,202,112,.16),transparent 58%),linear-gradient(145deg,#302419,#211912 70%,#382919) !important;
+      box-shadow:0 28px 90px rgba(10,7,4,.62),0 0 55px rgba(229,173,72,.16),inset 0 1px rgba(255,230,174,.28) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker :is(.theme-picker-intro,.theme-picker-section-title) { color:#f1d99f !important; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker :is(.birthday-event-kicker,.birthday-event-title) { color:#ffe08a !important; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-picker-note { color:#d7c08e !important; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-choice-button {
+      border-color:rgba(255,224,138,.36) !important;
+      color:#352514 !important;
+      background:linear-gradient(135deg,#fff0bc,#e5b65f 72%,#c88a39) !important;
+      box-shadow:inset 0 1px rgba(255,255,255,.74) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-choice-button[aria-pressed="true"] {
+      border-color:#ffe39a !important;
+      background:linear-gradient(135deg,#ffe7a8,#e3ac4f 70%,#bd7a2c) !important;
+      box-shadow:0 0 0 2px rgba(255,224,138,.22),inset 0 1px rgba(255,255,255,.82) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-choice-copy :is(strong,span),
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-choice-state { color:#352514 !important; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-theme-picker .theme-picker-close {
+      border-color:#f0c76e !important;
+      color:#352514 !important;
+      background:linear-gradient(145deg,#fff0bc,#d9a348) !important;
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip { background:rgba(17,12,7,.72); }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip .birthday-equip-card {
+      border-color:rgba(255,224,138,.38);
+      color:#f8edcf;
+      background:radial-gradient(ellipse at 50% 0,rgba(255,202,112,.16),transparent 58%),linear-gradient(145deg,#302419,#211912 70%,#382919);
+      box-shadow:0 28px 90px rgba(10,7,4,.62),0 0 55px rgba(229,173,72,.16),inset 0 1px rgba(255,230,174,.28);
+    }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip :is(.birthday-event-kicker,.birthday-event-title) { color:#ffe08a; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip .birthday-equip-copy { color:#e6d3ac; }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip .birthday-equip-list li { border-color:rgba(255,224,138,.22); background:rgba(255,202,112,.08); }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip .birthday-equip-footer { border-color:rgba(255,224,138,.2); background:rgba(26,19,13,.8); }
+    body:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-equip .birthday-next-button {
+      border-color:#e5b65f !important;
+      color:#352514 !important;
+      background:linear-gradient(115deg,#ffe7a8,#d9a348) !important;
+    }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-demo-birthday { background:rgba(5,14,26,.78); }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-demo-birthday .demo-birthday-card {
+      border-color:rgba(139,201,255,.42);
+      color:#e6f4ff;
+      background:radial-gradient(ellipse at 50% 0,rgba(77,157,226,.2),transparent 58%),linear-gradient(145deg,#172b40,#101c2b 70%,#1d3650);
+      box-shadow:0 28px 90px rgba(3,9,17,.64),0 0 55px rgba(77,157,226,.18),inset 0 1px rgba(212,238,255,.24);
+    }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-demo-birthday :is(.birthday-event-kicker,.birthday-event-title) { color:#a8d7ff; }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-demo-birthday .birthday-event-copy { color:#c6ddf2; }
+    body.demo-mode:not(.birthday-mode):not([data-basic-theme]) .birthday-event-screen.is-demo-birthday .birthday-next-button {
+      border-color:#4b94cf !important;
+      color:#fff !important;
+      background:linear-gradient(115deg,#397fbd,#24537e) !important;
+    }
+    body[data-basic-theme]:not(.birthday-mode) .birthday-event-screen.is-theme-picker .birthday-event-kicker { color:var(--gold) !important; }
   </style>
 </head>
 <body>
   <div id="game-app" class="app auth-locked">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true"></div>
+        <button class="brand-mark" type="button" aria-label="Hold to activate the birthday theme for five seconds" title="Hold for 5 seconds to activate the birthday theme"></button>
         <div><div class="brand-name">Jancsi's Cookie Galaxy</div><div class="brand-sub">a little baking universe</div></div>
       </div>
       <div class="top-actions">
         <div class="top-quick-actions">
           <button id="bakery-ai-open" class="bakery-ai-open" type="button" aria-label="Open bakery AI helper"><svg class="bakery-ai-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true"><ellipse class="ai-orbit" cx="16" cy="16" rx="13" ry="5.5" transform="rotate(-35 16 16)"/><ellipse class="ai-orbit" cx="16" cy="16" rx="12" ry="5" transform="rotate(48 16 16)"/><path class="ai-core" d="m16 6 2.5 6.1L25 14.5l-6.5 2.4L16 23l-2.5-6.1L7 14.5l6.5-2.4z"/><circle class="ai-node" cx="5.5" cy="12" r="2"/><circle class="ai-node" cx="25.5" cy="23" r="2"/><path class="ai-spark" d="m25 5 .9 2.1L28 8l-2.1.9L25 11l-.9-2.1L22 8l2.1-.9z"/></svg><span class="bakery-ai-label">Bakery AI</span></button>
+          <button id="themes-open" class="galaxy-launcher-toggle themes-open-button" type="button" aria-label="Open themes and special themes" title="Themes" hidden><span class="galaxy-launcher-glyph" aria-hidden="true">✿</span><span class="galaxy-launcher-toggle-label">Themes</span></button>
           <button id="vip-open" class="vip-open-button" type="button" aria-label="Open VIP bakery plans" hidden>✦ VIP plans</button>
           <button id="facebook-open" class="facebook-open-button" type="button" aria-label="Open Facebook follow information" title="Visit Jancsi on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Facebook</span></button>
           <button id="facebook-galaxy-open" class="facebook-galaxy-open-button" type="button" aria-label="Open Jancsi's Cookie Galaxy Facebook page information" title="Visit Jancsi's Cookie Galaxy on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg><span>Galaxy Page</span></button>
@@ -2869,6 +3448,65 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       let state = freshState();
       let currentUser = null;
       let isDemo = false;
+      const birthdayThemeStorageKey = "crumbGalaxyBirthdayThemeUntil";
+      const birthdayExperienceStoragePrefix = "crumbGalaxyBirthdayExperienced:";
+      const basicThemeStorageKey = "crumbGalaxyBasicTheme";
+      const basicThemePalettes = [
+        { id: "berry", name: "Berry", swatch: "linear-gradient(135deg,#f4c7da,#c9538a 55%,#71304f)" },
+        { id: "ocean", name: "Ocean", swatch: "linear-gradient(135deg,#c4edf5,#4b9db9 55%,#216783)" },
+        { id: "mint", name: "Mint", swatch: "linear-gradient(135deg,#d5f0dc,#65a77a 55%,#34764d)" },
+        { id: "lavender", name: "Lavender", swatch: "linear-gradient(135deg,#e7dbf7,#9b7bc4 55%,#69508f)" },
+        { id: "rose", name: "Rose", swatch: "linear-gradient(135deg,#ffe0e4,#d77e91 55%,#a34761)" },
+        { id: "sunset", name: "Sunset", swatch: "linear-gradient(135deg,#ffe1ba,#e39b62 55%,#aa6036)" },
+        { id: "sky", name: "Sky", swatch: "linear-gradient(135deg,#dcecff,#7e9fc9 55%,#4c6f9b)" },
+        { id: "slate", name: "Slate", swatch: "linear-gradient(135deg,#e0e5ea,#8797a8 55%,#495e73)" }
+      ];
+      const birthdayThemeExpiresAt = new Date(2026, 10, 2).getTime();
+      let birthdayThemeActive = false;
+      let birthdayHoldTimer = 0;
+      let birthdaySpinTimer = 0;
+      let birthdayHoldStartedAt = 0;
+      let birthdayHoldTriggered = false;
+      let birthdayHoldButton = null;
+      let birthdayActivationRunning = false;
+      let birthdayTourTimer = 0;
+      let birthdayExpiryTimer = 0;
+      function birthdayExperienceStorageKey() {
+        return `${birthdayExperienceStoragePrefix}${encodeURIComponent(currentUser?.email || "")}`;
+      }
+      function hasExperiencedBirthdayTheme() {
+        try {
+          return Boolean(currentUser?.email && localStorage.getItem(birthdayExperienceStorageKey()) === "true");
+        } catch (error) {
+          console.error("Could not read the Birthday Theme experience preference.", error);
+          return false;
+        }
+      }
+      function markBirthdayThemeExperienced() {
+        try {
+          localStorage.setItem(birthdayExperienceStorageKey(), "true");
+        } catch (error) {
+          console.error("Could not save the Birthday Theme experience preference.", error);
+          throw new Error("Your Birthday Theme setup could not be saved. Please check browser storage settings.");
+        }
+      }
+      function restoreBasicThemePreference() {
+        try {
+          const storedTheme = localStorage.getItem(basicThemeStorageKey);
+          const palette = basicThemePalettes.find(item => item.id === storedTheme);
+          if (!palette) {
+            if (storedTheme !== null) localStorage.removeItem(basicThemeStorageKey);
+            document.body.removeAttribute("data-basic-theme");
+            return "";
+          }
+          document.body.dataset.basicTheme = palette.id;
+          return palette.id;
+        } catch (error) {
+          console.error("Could not restore the basic theme color preference.", error);
+          return "";
+        }
+      }
+      let activeBasicTheme = restoreBasicThemePreference();
       let communityNotice = "";
       let recoveryEmail = "";
       let recoveryRecord = null;
@@ -2906,6 +3544,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       const dockWrap = document.querySelector(".dock-wrap");
       const accountArea = document.getElementById("account-area");
       const spinWheelOpenButton = document.getElementById("spin-wheel-open");
+      const themesOpenButton = document.getElementById("themes-open");
       const wheelDialog = document.getElementById("wheel-dialog");
       const updatesDialog = document.getElementById("updates-dialog");
       const roleInfoDialog = document.getElementById("role-info-dialog");
@@ -2991,7 +3630,10 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
       let lastAmbientCookieBurst = 0;
       const ambientCookieParticles = new Set();
       const owned = id => safeCounter(state.bought?.[id]);
-      const costOf = item => Math.ceil(item.base * Math.pow(1.16, owned(item.id)));
+      const isBirthdayThemeActive = () => birthdayThemeActive && !!currentUser && !isDemo && Date.now() < birthdayThemeExpiresAt;
+      const birthdayPrice = price => isBirthdayThemeActive() ? Math.max(1, Math.ceil(price / 2)) : price;
+      const boostCostOf = boost => birthdayPrice(boost.cost);
+      const costOf = (item, ownedCount = owned(item.id)) => birthdayPrice(Math.ceil(item.base * Math.pow(1.16, ownedCount)));
       const liveBoosts = () => state.active.filter(boost => boost.endsAt > Date.now());
       const allTimedBoosts = () => [...boosts, ...(isOwner() ? ownerBoosts : []), ...goldenCookieBoosts];
       function processGoldenCookieSchedule(now = Date.now()) {
@@ -3165,7 +3807,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             ["Copies owned", fmt(ownedCount)],
             ["Current contribution", product.kind === "tap" ? `+${fmt(totalContribution)} per tap` : `+${fmt(totalContribution)} per second`],
             ["Next-copy price", nextPrice],
-            ["Starting price", `${fmt(product.base)} cookies`],
+            ["Starting price", `${fmt(birthdayPrice(product.base))} cookies`],
             ["Price scaling", "Next price = base price × 1.16 per owned copy"],
             ["Duration", "Permanent after purchase"]
           ];
@@ -3183,7 +3825,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             ? `Instantly adds ${fmt(product.amount)} cookies to your jar`
             : `${product.type === "tap" ? "Multiplies tap power" : "Multiplies all baking"} by ×${fmt(effectiveMultiplier)}`;
           const duration = isInstant ? "Instant" : formatOfflineDuration(effectiveDuration * 1000);
-          const price = type === "owner-boost" ? "Owner tool" : canBuyForFree() ? "Free" : `${fmt(product.cost)} cookies`;
+          const price = type === "owner-boost" ? "Owner tool" : canBuyForFree() ? "Free" : `${fmt(birthdayPrice(product.cost))} cookies`;
           const boostScope = isInstant
             ? "One-time cookie reward"
             : product.type === "tap"
@@ -3937,11 +4579,586 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           achievements: '<path d="M12 3 14.4 8.2 20 8.8 15.9 12.6 17 18.2 12 15.3 7 18.2 8.1 12.6 4 8.8 9.6 8.2 12 3z"/><path d="M9 20h6m-3-4v4"/>',
           profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/>'
         };
+        if (isBirthdayThemeActive()) {
+          const birthdayArt = {
+            whisk: '<path d="M8 3c-3 3-3 7 0 10m3-11c-2 4-2 7 0 10m3-9c-1 3-1 6 0 9M9 13l-3 8m6-8-1 8m3-8 1 8M6 21h8"/><path d="M16 5h.1m3 3h.1"/>',
+            oven: '<path d="M4 7h16v14H4zM4 11h16M8 15h8v4H8z"/><path d="M8 4v2m4-2v2m4-2v2"/>',
+            apron: '<path d="M9 4h6l1 4 4 3-2 10H6L4 11l4-3zM9 4c0 2 1.3 3 3 3s3-1 3-3M8 14h8"/><path d="m18 4 1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>',
+            mixer: '<path d="M5 4h14l-1 4H6L5 4zM8 8l2 9m6-9-2 9m-4 0h4m-6 4h8"/><path d="M18 2v2m-1-1h2"/>',
+            garden: '<path d="M12 20v-8m0 3c-5 0-8-3-8-8 5 0 8 3 8 8zm0-3c0-5 3-8 8-8 0 5-3 8-8 8zm-5 8h10"/><path d="M18 3v3m-1.5-1.5h3"/>',
+            comet: '<path d="M15 4l5 5-7 7-5-5 7-7zM11 13l-7 7m3-12L4 7m12 13-1-3"/><path d="m18 2 .8 2.2L21 5l-2.2.8L18 8l-.8-2.2L15 5l2.2-.8z"/>',
+            rush: '<path d="M13 2 5 13h6l-1 9 9-12h-6l1-8z"/><path d="M4 4v3m-1.5-1.5h3m14 10v3m-1.5-1.5h3"/>',
+            hour: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v3m0 11v3M3.5 12h3m11 0h3M12 8v4l3 2"/><path d="M17 2v3m-1.5-1.5h3"/>',
+            rain: '<path d="M7 14a4 4 0 1 1 .5-8 5.5 5.5 0 0 1 10.3 1.2A3.5 3.5 0 0 1 18 14H7zM8 17l-1 3m6-3-1 3m6-3-1 3"/><path d="M8 3V2m8 2V3"/>',
+            cookie: '<circle cx="12" cy="13" r="8.5"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="14" cy="9" r=".9" fill="currentColor"/><circle cx="15" cy="15" r="1.1" fill="currentColor"/><circle cx="9" cy="17" r=".8" fill="currentColor"/><path d="M12 2v3m-1.5-1.5h3"/>',
+            bake: '<rect x="3.5" y="6" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M7 8h.1m3-.1h.1"/><circle cx="12" cy="15.5" r="3.1"/><path d="M10.7 15h.1m2.4-.8h.1m.1 2.5h.1M12 3v1.5m-1.3-.8h2.6"/>',
+            market: '<path d="M4 9h16l-1 11H5L4 9zM3 9l2-5h14l2 5M9 9l1 11m4-11-1 11M4 13h16"/><path d="M12 4V2m-1.5 1.5h3"/>',
+            ledger: '<path d="M5 4h14v17H5zM8 8h8M8 12h8M8 16h5M3 7v14"/><path d="M12 2v3m-1.5-1.5h3"/>',
+            achievements: '<path d="M12 3 14.4 8.2 20 8.8 15.9 12.6 17 18.2 12 15.3 7 18.2 8.1 12.6 4 8.8 9.6 8.2 12 3z"/><path d="M9 20h6m-3-4v4m-6-5-2 2m14-2 2 2"/>',
+            profile: '<path d="M5 13h14v8H5zM3 13l2-5h14l2 5M12 8V4m0 0c-3 0-4-2-4-3 3 0 4 1 4 3zm0 0c3 0 4-2 4-3-3 0-4 1-4 3z"/><path d="M12 16v2"/>',
+            admin: '<path d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3z"/><path d="m8.5 12 2.2 2.2 4.8-5"/><path d="M12 1v2"/>',
+            owner: '<circle cx="12" cy="12" r="8.5"/><path d="m12 3 2.3 5.2 5.7.6-4.2 3.8 1.1 5.6-4.9-2.9-4.9 2.9 1.1-5.6L4 8.8l5.7-.6L12 3z"/><path d="M2 12h2m16 0h2"/>'
+          };
+          const birthdayFallback = '<path d="m12 2 2.4 7.1L22 12l-7.6 2.9L12 22l-2.4-7.1L2 12l7.6-2.9L12 2z"/><path d="M19 3v3m-1.5-1.5h3M5 17v3m-1.5-1.5h3"/>';
+          return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${birthdayArt[name] || birthdayFallback}</svg>`;
+        }
         return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${art[name] || art.cookie}</svg>`;
       };
       const brandArt = () => `<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="galaxy-cookie-fill" x1="18" y1="10" x2="48" y2="53" gradientUnits="userSpaceOnUse"><stop stop-color="#fff1b8"/><stop offset=".48" stop-color="#ffca67"/><stop offset="1" stop-color="#d8773e"/></linearGradient><radialGradient id="galaxy-cookie-shine" cx="0" cy="0" r="1" gradientTransform="matrix(18 0 0 13 24 18)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="32" cy="32" r="27" fill="#fff" fill-opacity=".035"/><ellipse cx="32" cy="33" rx="28" ry="12" transform="rotate(-28 32 33)" stroke="#d6c0ff" stroke-width="3" opacity=".94"/><path d="M12 43c9 7 21 10 33 5" stroke="#fff0c2" stroke-width="2" stroke-linecap="round" opacity=".9"/><circle cx="32" cy="32" r="19" fill="url(#galaxy-cookie-fill)" stroke="#fff3d2" stroke-width="1.8"/><path d="M20 20c4-4 9-5 14-4" stroke="url(#galaxy-cookie-shine)" stroke-width="5" stroke-linecap="round"/><circle cx="25" cy="27" r="2.5" fill="#59301e"/><circle cx="39" cy="24" r="2.3" fill="#59301e"/><circle cx="35" cy="39" r="3" fill="#59301e"/><circle cx="22" cy="40" r="1.7" fill="#59301e"/><circle cx="45" cy="34" r="1.6" fill="#59301e"/><path d="m13 12 1.6 4.4L19 18l-4.4 1.6L13 24l-1.6-4.4L7 18l4.4-1.6zM51 45l1 2.8 2.8 1-2.8 1-1 2.8-1-2.8-2.8-1 2.8-1z" fill="#fff4d7"/><circle cx="51" cy="12" r="1.8" fill="#9de7ff"/></svg>`;
       const headerBrandMark = document.querySelector(".topbar .brand-mark");
       if (headerBrandMark) headerBrandMark.innerHTML = brandArt();
+      function restoreBirthdayThemePreference() {
+        try {
+          const storedExpiry = Number(localStorage.getItem(birthdayThemeStorageKey));
+          if (storedExpiry === birthdayThemeExpiresAt && Date.now() < birthdayThemeExpiresAt) return true;
+          if (localStorage.getItem(birthdayThemeStorageKey) !== null) localStorage.removeItem(birthdayThemeStorageKey);
+          return false;
+        } catch (error) {
+          console.error("Could not restore the birthday theme preference.", error);
+          return false;
+        }
+      }
+      function scheduleBirthdayThemeExpiry() {
+        window.clearTimeout(birthdayExpiryTimer);
+        birthdayExpiryTimer = 0;
+        if (!isBirthdayThemeActive()) return;
+        birthdayExpiryTimer = window.setTimeout(() => {
+          birthdayExpiryTimer = 0;
+          if (!birthdayThemeActive || Date.now() < birthdayThemeExpiresAt) return;
+          birthdayThemeActive = false;
+          document.body.classList.remove("birthday-mode");
+          try {
+            localStorage.removeItem(birthdayThemeStorageKey);
+          } catch (error) {
+            console.error("Could not clear the expired birthday theme preference.", error);
+          }
+          refreshBirthdayDockIcons();
+          render();
+          showToast("The Galaxy Birthday Edition has ended. Regular prices and styling are back.");
+        }, Math.max(0, birthdayThemeExpiresAt - Date.now()));
+      }
+      function refreshBirthdayDockIcons() {
+        dock.querySelectorAll(".dock-button").forEach(button => {
+          const icon = button.querySelector(".dock-icon");
+          if (icon) icon.innerHTML = iconArt(button.dataset.page);
+        });
+      }
+      function getBirthdayEventScreen() {
+        let screen = document.getElementById("birthday-event-screen");
+        if (!screen) {
+          screen = document.createElement("div");
+          screen.id = "birthday-event-screen";
+          screen.className = "birthday-event-screen";
+          screen.hidden = true;
+          screen.setAttribute("aria-live", "polite");
+          document.body.appendChild(screen);
+        }
+        return screen;
+      }
+      function showDemoBirthdayInfo() {
+        const screen = getBirthdayEventScreen();
+        screen.className = "birthday-event-screen is-demo-birthday";
+        screen.hidden = false;
+        screen.innerHTML = `<section class="birthday-dialog-card demo-birthday-card" role="dialog" aria-modal="true" aria-labelledby="demo-birthday-title" aria-describedby="demo-birthday-copy"><div class="birthday-dialog-content"><svg class="birthday-event-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 31h40v23H12zM8 31h48v-8H8zM16 23v-6h8v6m8 0v-9h8v9m8 0v-6h8v6"/><path d="M20 40h.1m12 0h.1m12 0h.1M24 54v-7h16v7"/></svg><div class="birthday-event-kicker">A NOTE FOR DEMO BAKERS</div><h2 class="birthday-event-title" id="demo-birthday-title">Want the Birthday Theme?</h2><div class="birthday-event-copy" id="demo-birthday-copy"><p>Thanks for celebrating with us! Demo mode is a temporary preview, so it can’t equip or save the Birthday Theme.</p><p>The Birthday Edition is available after signing in to a regular bakery account, Japhia’s Admin account, or Chief Jancsi’s Owner account. To enjoy the theme, leave Demo and sign in or create an account. Your Demo progress won’t be saved.</p></div><div class="demo-birthday-actions"><button class="birthday-next-button" type="button" data-demo-birthday-login>Back to sign-in</button><button class="birthday-next-button demo-birthday-dismiss" type="button" data-demo-birthday-dismiss>Nevermind</button></div></section>`;
+        const removeListeners = () => {
+          screen.removeEventListener("click", onClick);
+          screen.removeEventListener("keydown", onKeydown);
+        };
+        const dismiss = () => {
+          removeListeners();
+          void closeAnimatedOverlay(screen).then(() => {
+            screen.innerHTML = "";
+            screen.className = "birthday-event-screen";
+            headerBrandMark?.focus({ preventScroll: true });
+          });
+        };
+        const onClick = async event => {
+          const target = event.target instanceof Element ? event.target : null;
+          if (event.target === screen || target?.closest("[data-demo-birthday-dismiss]")) {
+            dismiss();
+            return;
+          }
+          if (!target?.closest("[data-demo-birthday-login]") || accountClosing) return;
+          removeListeners();
+          await closeAnimatedOverlay(screen);
+          screen.innerHTML = "";
+          screen.className = "birthday-event-screen";
+          screen.hidden = true;
+          await exitDemoToAuth();
+        };
+        const onKeydown = event => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            dismiss();
+          } else if (event.key === "Tab") {
+            event.preventDefault();
+            const buttons = screen.querySelectorAll("[data-demo-birthday-login], [data-demo-birthday-dismiss]");
+            (document.activeElement === buttons[0] ? buttons[1] : buttons[0]).focus();
+          }
+        };
+        screen.addEventListener("click", onClick);
+        screen.addEventListener("keydown", onKeydown);
+        screen.querySelector("[data-demo-birthday-login]").focus({ preventScroll: true });
+      }
+      function waitForBirthdayAnimation(milliseconds) {
+        return new Promise(resolve => window.setTimeout(resolve, milliseconds));
+      }
+      function completeBirthdayApplyProgress(screen) {
+        screen.querySelector(".birthday-apply-progress")?.classList.add("is-complete");
+        return new Promise(resolve => window.requestAnimationFrame(resolve));
+      }
+      function updateBirthdayReadingGate(content, button, hint, unlockAt) {
+        const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 8;
+        const enoughTime = Date.now() >= unlockAt;
+        button.disabled = !atBottom || !enoughTime;
+        hint.textContent = button.disabled
+          ? !atBottom ? "Scroll through the full message to continue." : "Take a moment to read, then continue."
+          : "You’re all caught up.";
+      }
+      function showBirthdayReadingStage(stage) {
+        const screen = getBirthdayEventScreen();
+        const stages = [
+          {
+            kicker: "A GALAXY-WIDE CELEBRATION",
+            title: "Celebrate Chief Jancsi’s birthday",
+            icon: '<path d="M5 13h14v8H5zM3 13l2-5h18l-2 5"/><path d="M8 8V5m4 3V4m4 4V5m-8 11h.1m4 0h.1m4 0h.1"/>',
+            paragraphs: [
+              "Let’s celebrate Chief Jancsi’s birthday this Thursday, October 22, 2026. Today is all about a little extra joy, a fresh pink glow, and a bakery full of birthday cheer.",
+              "Every account can enjoy the event after signing in. Your existing bakery, cookie jar, helpers, and achievements stay yours—the birthday theme decorates the experience without resetting your progress."
+            ]
+          },
+          {
+            kicker: "WHAT’S NEW IN THE BIRTHDAY EDITION",
+            title: "A sweeter way to celebrate",
+            icon: '<path d="m12 2 2.2 6.1L20 10l-5.8 1.9L12 18l-2.2-6.1L4 10l5.8-1.9L12 2z"/><path d="m19 16 .9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9zM4 16l.7 1.3L6 18l-1.3.7L4 20l-.7-1.3L2 18l1.3-.7z"/>',
+            paragraphs: [
+              "The Galaxy now has a light-pink celebration look, original vector birthday icons, and subtle confetti details. The short guided tour has shown the updated interface, while the familiar layout and game controls remain in place.",
+              "Eligible Market helpers and regular timed boosts are half price for the event. Prices are rounded up to a whole cookie when needed, and free-market settings continue to work as before. Your displayed price, affordability checks, batch planner, and purchase charge all use the same discounted amount.",
+              "The event is saved in this browser and applies after you sign in to a local account. Demo remains temporary and cannot activate or receive the birthday discounts. When the event ends, the normal theme and standard prices return automatically."
+            ]
+          },
+          {
+            kicker: "THE CELEBRATION CONTINUES",
+            title: "Happy birthday, Chief Jancsi!",
+            icon: '<path d="M8 4a4 4 0 0 1 8 0c0 2.3-2 4-4 6-2-2-4-3.7-4-6zM12 10v11m-4 0h8"/><path d="M7 5 5 4m12 1 2-1M5 10l-2 1m16-1 2 1"/>',
+            paragraphs: [
+              "Celebrate Chief Jancsi’s birthday with the Galaxy Birthday Edition. Enjoy the pink theme and half-price treats for a limited time."
+            ],
+            note: "For anyone wondering when it ends: the birthday theme ends November 1, 2026."
+          }
+        ];
+        const contentData = stages[stage];
+        const paragraphs = contentData.paragraphs.map(paragraph => `<p>${escapeHTML(paragraph)}</p>`).join("");
+        screen.className = "birthday-event-screen is-reading";
+        screen.hidden = false;
+        screen.innerHTML = `<section class="birthday-dialog-card" role="dialog" aria-modal="true" aria-labelledby="birthday-dialog-title" aria-describedby="birthday-dialog-copy"><div id="birthday-dialog-copy" class="birthday-dialog-content" tabindex="0"><svg class="birthday-event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${contentData.icon}</svg><div class="birthday-event-kicker">${contentData.kicker}</div><h2 id="birthday-dialog-title" class="birthday-event-title">${contentData.title}</h2><div class="birthday-event-copy">${paragraphs}${contentData.note ? `<p class="birthday-auth-guide-note">${contentData.note}</p>` : ""}</div></div><footer class="birthday-dialog-footer"><span class="birthday-read-hint" data-birthday-read-hint>Take a moment to read, then continue.</span><button class="birthday-next-button" type="button" data-birthday-next disabled>${stage === stages.length - 1 ? "Okay" : "Continue"}</button></footer></section>`;
+        const content = screen.querySelector(".birthday-dialog-content");
+        const button = screen.querySelector("[data-birthday-next]");
+        const hint = screen.querySelector("[data-birthday-read-hint]");
+        const unlockAt = Date.now() + 3500;
+        const updateGate = () => updateBirthdayReadingGate(content, button, hint, unlockAt);
+        content.addEventListener("scroll", updateGate, { passive: true });
+        window.setTimeout(updateGate, 3510);
+        requestAnimationFrame(updateGate);
+        content.focus({ preventScroll: true });
+        return new Promise(resolve => button.addEventListener("click", () => {
+          if (!button.disabled) resolve();
+        }, { once: true }));
+      }
+      function showBirthdayEquipPrompt() {
+        const screen = getBirthdayEventScreen();
+        screen.className = "birthday-event-screen is-equip";
+        screen.hidden = false;
+        screen.innerHTML = `<section class="birthday-dialog-card birthday-equip-card" role="dialog" aria-modal="true" aria-labelledby="birthday-equip-title" aria-describedby="birthday-equip-copy"><button class="theme-picker-close" type="button" aria-label="Close birthday theme details" data-birthday-equip-close>&times;</button><div class="birthday-dialog-content birthday-equip-content" id="birthday-equip-copy" tabindex="0"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">A LITTLE GALAXY-WIDE SURPRISE</div><h2 class="birthday-event-title" id="birthday-equip-title">Equip the Birthday Theme</h2><div class="birthday-equip-copy"><p>Honor Chief Jancsi’s birthday with a special celebration across your bakery. The familiar Galaxy you know will be dressed in a soft pink palette, sparkling birthday details, and original illustrated icons made for this event.</p><p>Your bakery, cookie jar, helpers, and achievements stay just as you left them. The birthday theme changes the look and adds a guided tour; it does not reset your progress or replace your everyday game controls.</p><ul class="birthday-equip-list"><li><strong>Explore the celebration:</strong> a guided page-by-page tour introduces Bake, Market, Boosts, Ledger, Profile, Achievements, and the tools available for your account role.</li><li><strong>Enjoy birthday prices:</strong> eligible Market helpers and regular timed boosts are 50% off while the event is active. Prices shown, planning, affordability checks, and purchases stay in sync.</li><li><strong>Keep your bakery yours:</strong> your theme preference is remembered in this browser. Demo remains temporary and cannot equip the event.</li></ul><p>When you choose to equip it, the Galaxy will prepare the colors, page decorations, and celebration details in a short animated transition. The Birthday Edition is a limited event and ends November 1, 2026.</p></div></div><footer class="birthday-equip-footer"><button class="birthday-next-button birthday-equip-button" type="button" data-birthday-equip>Equip the Birthday Theme</button></footer></section>`;
+        const close = () => {
+          screen.hidden = true;
+          screen.className = "birthday-event-screen";
+          screen.replaceChildren();
+          headerBrandMark?.focus({ preventScroll: true });
+        };
+        screen.querySelector("[data-birthday-equip-close]").addEventListener("click", close);
+        screen.onkeydown = event => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            close();
+          }
+        };
+        screen.querySelector("[data-birthday-equip]").addEventListener("click", () => {
+          void activateBirthdayTheme();
+        }, { once: true });
+        screen.querySelector(".birthday-equip-content").focus({ preventScroll: true });
+      }
+      function showThemePicker() {
+        if (!currentUser || isDemo || birthdayActivationRunning) return;
+        const screen = getBirthdayEventScreen();
+        const birthdayAvailable = Date.now() < birthdayThemeExpiresAt;
+        const basicOptions = basicThemePalettes.map(palette => {
+          const selected = !isBirthdayThemeActive() && activeBasicTheme === palette.id;
+          const state = isBirthdayThemeActive() ? "Color only" : selected ? "Selected" : "Apply";
+          return `<button class="theme-choice-button theme-choice-basic" type="button" data-basic-theme-choice="${palette.id}" aria-pressed="${selected}"><span class="theme-choice-swatch theme-choice-swatch-basic" style="--theme-swatch:${palette.swatch}" aria-hidden="true"></span><span class="theme-choice-copy"><strong>${palette.name}</strong><span>Color palette only</span></span><span class="theme-choice-state">${state}</span></button>`;
+        }).join("");
+        const defaultSelected = !isBirthdayThemeActive() && !activeBasicTheme;
+        screen.className = "birthday-event-screen is-theme-picker";
+        screen.hidden = false;
+        screen.innerHTML = `<section class="birthday-dialog-card theme-picker-card" role="dialog" aria-modal="true" aria-labelledby="theme-picker-title"><button class="theme-picker-close" type="button" aria-label="Close themes" data-theme-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><div class="birthday-dialog-content theme-picker-content"><div class="birthday-event-kicker">MAKE THE GALAXY YOURS</div><h2 class="birthday-event-title" id="theme-picker-title">Themes</h2><p class="theme-picker-intro">Choose a look for your bakery. The color swatch makes each theme easy to spot, and changing themes never resets your progress.</p><h3 class="theme-picker-section-title">Special themes</h3><div class="theme-picker-options"><button class="theme-choice-button" type="button" data-theme-choice="default" aria-pressed="${defaultSelected}"><span class="theme-choice-swatch theme-choice-swatch-default" aria-hidden="true"></span><span class="theme-choice-copy"><strong>Default Gold Theme</strong><span>Return to the Galaxy’s familiar warm gold colors and original page styling.</span></span><span class="theme-choice-state">${defaultSelected ? "Selected" : "Choose theme"}</span></button><button class="theme-choice-button theme-choice-birthday" type="button" data-theme-choice="birthday" aria-pressed="${isBirthdayThemeActive()}" ${birthdayAvailable ? "" : "disabled"}><span class="theme-choice-swatch theme-choice-swatch-birthday" aria-hidden="true"></span><span class="theme-choice-copy"><strong>Birthday Theme</strong><span>${birthdayAvailable ? "A limited-time pink celebration with birthday decorations, a guided page tour, and eligible half-price treats." : "This limited-time theme ended November 1, 2026."}</span></span><span class="theme-choice-badge">LIMITED</span><span class="theme-choice-state">${isBirthdayThemeActive() ? "Selected" : "Choose theme"}</span></button></div><h3 class="theme-picker-section-title">Basic theme colors</h3><p class="theme-picker-note">Simple color-only palettes. They do not add special decorations, tours, or event discounts.</p><div class="theme-picker-options theme-picker-basic-options">${basicOptions}</div><p class="theme-picker-note">The Birthday Theme is available through November 1, 2026. Demo cannot equip special themes.</p></div></section>`;
+        let closingPromise = null;
+        const close = () => {
+          if (screen.hidden) return;
+          if (closingPromise) return closingPromise;
+          closingPromise = new Promise(resolve => {
+            const finish = () => {
+              screen.removeEventListener("animationend", onAnimationEnd);
+              window.clearTimeout(fallbackTimer);
+              screen.hidden = true;
+              screen.className = "birthday-event-screen";
+              screen.replaceChildren();
+              headerBrandMark?.focus({ preventScroll: true });
+              resolve();
+            };
+            const onAnimationEnd = event => {
+              if (event.target === screen && event.animationName === "theme-picker-overlay-out") finish();
+            };
+            screen.addEventListener("animationend", onAnimationEnd);
+            screen.classList.add("is-theme-picker-closing");
+            const fallbackTimer = window.setTimeout(finish, 420);
+          });
+          return closingPromise;
+        };
+        screen.querySelector("[data-theme-close]").addEventListener("click", close);
+        screen.querySelector("[data-theme-choice='default']").addEventListener("click", () => {
+          void close().then(applyDefaultGoldTheme);
+        });
+        screen.querySelector("[data-theme-choice='birthday']").addEventListener("click", () => {
+          if (!birthdayAvailable) return;
+          if (isBirthdayThemeActive()) {
+            void close();
+            return;
+          }
+          const experienced = hasExperiencedBirthdayTheme();
+          void close().then(() => experienced ? activateBirthdayTheme() : showBirthdayEquipPrompt());
+        });
+        screen.querySelectorAll("[data-basic-theme-choice]").forEach(button => {
+          button.addEventListener("click", () => {
+            const themeId = button.dataset.basicThemeChoice;
+            if (!basicThemePalettes.some(palette => palette.id === themeId)) return;
+            try {
+              localStorage.setItem(basicThemeStorageKey, themeId);
+              localStorage.removeItem(birthdayThemeStorageKey);
+            } catch (error) {
+              console.error("Could not save the basic theme color selection.", error);
+              showToast("This color theme could not be saved. Please check browser storage settings.");
+              return;
+            }
+            const wasBirthdayActive = isBirthdayThemeActive();
+            activeBasicTheme = themeId;
+            birthdayThemeActive = false;
+            window.clearTimeout(birthdayExpiryTimer);
+            birthdayExpiryTimer = 0;
+            document.body.classList.remove("birthday-mode");
+            document.body.dataset.basicTheme = themeId;
+            if (wasBirthdayActive) refreshBirthdayDockIcons();
+            render();
+            void close();
+            showToast(`${basicThemePalettes.find(palette => palette.id === themeId).name} Theme successfully applied.`, { themeSuccess: true });
+          });
+        });
+        screen.onclick = event => {
+          if (event.target === screen) close();
+        };
+        screen.onkeydown = event => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            close();
+          }
+        };
+        screen.querySelector("[data-theme-close]").focus({ preventScroll: true });
+      }
+      async function runBirthdayCelebrationReadthrough() {
+        const stages = 3;
+        for (let stage = 0; stage < stages; stage++) await showBirthdayReadingStage(stage);
+        const screen = getBirthdayEventScreen();
+        screen.classList.add("is-revealing");
+        await waitForBirthdayAnimation(920);
+        screen.hidden = true;
+        screen.className = "birthday-event-screen";
+        screen.replaceChildren();
+        headerBrandMark?.focus({ preventScroll: true });
+      }
+      async function runBirthdayTour() {
+        const screen = getBirthdayEventScreen();
+        const commonPages = [
+          { page: "bake", kicker: "THE HEART OF YOUR BAKERY", title: "Welcome to Birthday Bake", icon: "bake", paragraphs: ["This is your home page: tap the illustrated cookie to bake by hand, and watch each fresh batch rise into your spendable cookie jar. Your tap power, automatic production, and baking milestones give you a quick picture of how your bakery is growing.", "The birthday decorations add a rosy celebration around your familiar controls without changing your save. Bake a few batches here whenever you want, then follow the tour to see how each other part of the Galaxy can help."] },
+          { page: "market", kicker: "YOUR BIRTHDAY BAKING TOOLKIT", title: "Welcome to the Birthday Market", icon: "market", paragraphs: ["The Market is your shelf of permanent helpers. Pocket Whisks strengthen hand-baked batches, while ovens and other automatic helpers keep making cookies as you explore. Each card shows what a helper does, how many you already own, and the price of the next one.", "For the Birthday Edition, eligible helpers are half price. The batch planner, affordability checks, auto-buy choices, and purchase charge all use the same discounted price, so the amount shown is the amount taken from your jar. Free-market role settings continue to work as usual."] },
+          { page: "boosts", kicker: "A LITTLE BIRTHDAY MAGIC", title: "Welcome to Birthday Boosts", icon: "rush", paragraphs: ["Boosts are short-lived treats for a quick burst of baking: some multiply your tap power or overall production, while an instant boost adds a one-time batch. Each listing describes its effect; active timed boosts also show how long they have left.", "Regular cookie-priced boosts are half price during the birthday event. A boost is temporary, unlike a Market helper, so choose one that fits what you want to do and keep baking while its timer runs."] },
+          { page: "ledger", kicker: "YOUR GALAXY BAKING STORY", title: "Welcome to the Birthday Ledger", icon: "ledger", paragraphs: ["The Ledger gathers the longer story behind your bakery: cookies baked, taps made, helpers hired, and the production your kitchen can sustain. These totals make it easy to notice how far a small first batch has traveled.", "Use the numbers as a friendly progress snapshot, not a score you need to chase. Your birthday theme decorates this record, while the underlying account progress remains yours."] },
+          { page: "profile", kicker: "YOUR CORNER OF THE GALAXY", title: "Welcome to your Birthday Profile", icon: "profile", paragraphs: ["Your Profile is a quick identity card for this bakery. It brings together your baker and bakery names, favorite bake when one is set, and a snapshot of your progress and helpers.", "You can also find account actions here, including sign-out. This standalone game stores a local account and its save in this browser; it does not sync your bakery to a server or another device."] },
+          { page: "achievements", kicker: "LITTLE MILESTONES, BIG CELEBRATION", title: "Welcome to Birthday Achievements", icon: "achievements", paragraphs: ["Achievements celebrate goals reached while you bake, hire helpers, and try boosts. Each milestone tracks its own progress and shows a reward when it is ready to collect.", "Explore the page to see what your bakery has already accomplished and what comes next. Owner accounts may also see their separate owner-only milestones; those are available only to the owner role."] }
+        ];
+        const rolePages = isOwner()
+          ? [{ page: "owner", kicker: "CHIEF JANCSI · OWNER STUDIO", title: "Welcome to Birthday Owner Studio", icon: "owner", paragraphs: ["Owner Studio brings the Chief’s additional bakery controls together with a live snapshot of the Galaxy. Explore its owner-only tools, production panels, helper controls, and special milestones at your own pace.", "These controls affect the local bakery in this browser. The celebration adds its pink event styling without changing the owner tools’ role restrictions or replacing your saved progress."] }]
+          : isAdmin()
+            ? [{ page: "admin", kicker: "JAPHIA · LIMITED ADMIN", title: "Welcome to Japhia’s Birthday Bakery", icon: "admin", paragraphs: ["This is Japhia’s limited admin space. It contains the small set of controls assigned to the admin role, while the regular bakery pages remain available from the dock.", "The Birthday Edition adds the same celebration styling and event pricing here, but it does not grant Owner Studio access or expand admin permissions."] }]
+            : [];
+        const steps = [...commonPages, ...rolePages];
+        const startingPage = currentPage;
+        let skipRemaining = false;
+        const switchPageForTour = async page => {
+          if (currentPage === page) return;
+          const oldIndex = pageOrder.indexOf(currentPage);
+          const newIndex = pageOrder.indexOf(page);
+          slideDirection = newIndex > oldIndex ? "left" : "right";
+          document.body.classList.add("birthday-tour-active");
+          await waitForBirthdayAnimation(1000);
+          currentPage = page;
+          render(true);
+          document.body.classList.remove("birthday-tour-active");
+          document.body.classList.add("birthday-tour-returning");
+          await waitForBirthdayAnimation(1000);
+          document.body.classList.remove("birthday-tour-returning");
+        };
+        screen.className = "birthday-event-screen is-tour";
+        screen.hidden = false;
+        for (let index = 0; index < steps.length; index++) {
+          const step = steps[index];
+          await switchPageForTour(step.page);
+          const roleClass = isOwner() ? "is-owner" : isAdmin() ? "is-admin" : "is-baker";
+          const stepIcon = iconArt(step.icon).replace("<svg ", '<svg class="birthday-event-icon" ');
+          screen.innerHTML = `<section class="birthday-tour-card ${roleClass}" role="dialog" aria-modal="true" aria-labelledby="birthday-tour-title"><div class="birthday-tour-progress" aria-hidden="true"></div>${stepIcon}<div class="birthday-event-kicker">${step.kicker} · ${index + 1} OF ${steps.length}</div><h2 class="birthday-event-title" id="birthday-tour-title">${step.title}</h2><div class="birthday-event-copy">${step.paragraphs.map(paragraph => `<p>${escapeHTML(paragraph)}</p>`).join("")}</div><div class="birthday-tour-actions"><button class="birthday-next-button birthday-skip-button" type="button" data-birthday-skip>Skip tour</button><button class="birthday-next-button" type="button" data-birthday-next>${index === steps.length - 1 ? "Finish tour" : "Next page"}</button></div></section>`;
+          await new Promise(resolve => {
+            birthdayTourTimer = window.setTimeout(resolve, 8000);
+            screen.querySelector("[data-birthday-next]").addEventListener("click", () => {
+              window.clearTimeout(birthdayTourTimer);
+              resolve();
+            }, { once: true });
+            screen.querySelector("[data-birthday-skip]").addEventListener("click", () => {
+              window.clearTimeout(birthdayTourTimer);
+              skipRemaining = true;
+              resolve();
+            }, { once: true });
+          });
+          if (skipRemaining) break;
+        }
+        window.clearTimeout(birthdayTourTimer);
+        birthdayTourTimer = 0;
+        await switchPageForTour(startingPage);
+        screen.className = "birthday-event-screen";
+        screen.hidden = true;
+        screen.replaceChildren();
+        document.body.classList.remove("birthday-tour-active", "birthday-tour-returning");
+      }
+      async function applyDefaultGoldTheme() {
+        const shouldAnimate = isBirthdayThemeActive() || Boolean(activeBasicTheme);
+        try {
+          localStorage.removeItem(birthdayThemeStorageKey);
+          localStorage.removeItem(basicThemeStorageKey);
+        } catch (error) {
+          console.error("Could not save the Default Gold Theme selection.", error);
+          showToast("The Default Gold Theme could not be saved. Please check browser storage settings.");
+          return;
+        }
+        if (shouldAnimate) {
+          const screen = getBirthdayEventScreen();
+          screen.className = "birthday-event-screen is-applying is-applying-gold";
+          screen.hidden = false;
+          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">RETURNING TO YOUR CLASSIC GALAXY</div><h2 class="birthday-event-title"><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy">Restoring the familiar warm gold colors and classic Galaxy styling.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:2000ms" aria-hidden="true"></div><p class="birthday-event-copy">Bringing your original look back…</p></section>`;
+          await waitForBirthdayAnimation(2000);
+          await completeBirthdayApplyProgress(screen);
+        }
+        if (isBirthdayThemeActive()) {
+          birthdayThemeActive = false;
+          window.clearTimeout(birthdayExpiryTimer);
+          birthdayExpiryTimer = 0;
+          document.body.classList.remove("birthday-mode");
+          refreshBirthdayDockIcons();
+        }
+        activeBasicTheme = "";
+        document.body.removeAttribute("data-basic-theme");
+        render();
+        const screen = document.getElementById("birthday-event-screen");
+        if (screen && !screen.hidden) {
+          screen.hidden = true;
+          screen.className = "birthday-event-screen";
+          screen.replaceChildren();
+        }
+        showToast("You have successfully changed to the Default Gold Theme.", { themeSuccess: true });
+      }
+      async function activateBirthdayTheme() {
+        if (!currentUser || isDemo || birthdayActivationRunning) return;
+        if (Date.now() >= birthdayThemeExpiresAt) {
+          showToast("The Galaxy Birthday Edition ended on November 1, 2026.");
+          return;
+        }
+        const firstApplication = !hasExperiencedBirthdayTheme();
+        const applicationDuration = firstApplication ? 10000 : 2000;
+        birthdayActivationRunning = true;
+        try {
+          const screen = getBirthdayEventScreen();
+          screen.className = "birthday-event-screen is-applying";
+          screen.hidden = false;
+          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">PREPARING YOUR CELEBRATION</div><h2 class="birthday-event-title" data-birthday-transition-title><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy" data-birthday-transition-copy>Setting the birthday colors, page decorations, and special event details in place.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:${applicationDuration}ms" aria-hidden="true"></div><p class="birthday-event-copy" data-birthday-apply-status>Preparing the celebration…</p></section>`;
+          const status = screen.querySelector("[data-birthday-apply-status]");
+          const preparationSteps = firstApplication
+            ? [
+              "Gathering a little birthday stardust…",
+              "Dressing the Galaxy in its pink celebration palette…",
+              "Adding original birthday artwork and page details…",
+              "Checking your bakery pages and event prices…",
+              "Your Birthday Edition is almost ready…"
+            ]
+            : ["Restoring your Birthday Theme and its celebration details…"];
+          for (let index = 0; index < preparationSteps.length; index++) {
+            status.textContent = preparationSteps[index];
+            await waitForBirthdayAnimation(applicationDuration / preparationSteps.length);
+          }
+          await completeBirthdayApplyProgress(screen);
+          try {
+            localStorage.setItem(birthdayThemeStorageKey, String(birthdayThemeExpiresAt));
+            markBirthdayThemeExperienced();
+          } catch (error) {
+            try {
+              localStorage.removeItem(birthdayThemeStorageKey);
+            } catch (cleanupError) {
+              console.error("Could not roll back an incomplete Birthday Theme preference.", cleanupError);
+            }
+            throw error;
+          }
+          birthdayThemeActive = true;
+          document.body.classList.add("birthday-mode");
+          scheduleBirthdayThemeExpiry();
+          let decoration = document.querySelector(".birthday-confetti-bg");
+          if (!decoration) {
+            decoration = document.createElement("div");
+            decoration.className = "birthday-confetti-bg";
+            decoration.setAttribute("aria-hidden", "true");
+            document.body.appendChild(decoration);
+          }
+          refreshBirthdayDockIcons();
+          render();
+          screen.className = "birthday-event-screen is-revealing";
+          await waitForBirthdayAnimation(920);
+          screen.hidden = true;
+          screen.className = "birthday-event-screen";
+          screen.replaceChildren();
+          if (firstApplication) {
+            await runBirthdayTour();
+            await runBirthdayCelebrationReadthrough();
+          }
+          showToast(firstApplication
+            ? "Birthday Theme successfully applied. It is active through November 1, 2026."
+            : "Birthday Theme successfully applied.", { themeSuccess: true });
+        } catch (error) {
+          console.error("Could not activate the Galaxy Birthday Edition.", error);
+          document.body.classList.remove("birthday-tour-active", "birthday-tour-returning");
+          const screen = document.getElementById("birthday-event-screen");
+          if (screen) {
+            screen.hidden = true;
+            screen.className = "birthday-event-screen";
+            screen.replaceChildren();
+          }
+          showToast(error instanceof Error ? `Birthday theme could not finish: ${error.message}` : "Birthday theme could not finish. Please try again.");
+        } finally {
+          birthdayActivationRunning = false;
+        }
+      }
+      function cancelBirthdayHold() {
+        if (birthdayHoldTimer) window.clearTimeout(birthdayHoldTimer);
+        if (birthdaySpinTimer) window.clearInterval(birthdaySpinTimer);
+        birthdayHoldTimer = 0;
+        birthdaySpinTimer = 0;
+        birthdayHoldStartedAt = 0;
+        birthdayHoldButton?.classList.remove("is-birthday-holding");
+        birthdayHoldButton?.style.removeProperty("--birthday-spin-speed");
+        birthdayHoldButton = null;
+      }
+      function finishBirthdayHold(event) {
+        if (birthdayHoldTriggered) {
+          birthdayHoldTriggered = false;
+          return;
+        }
+        const releasedOnLogo = event.target instanceof Element && event.target.closest(".brand-mark") === headerBrandMark;
+        if (!birthdayHoldTimer || !releasedOnLogo) return;
+        cancelBirthdayHold();
+        showThemePicker();
+      }
+      function syncBirthdayHoldAccessibility() {
+        if (!headerBrandMark) return;
+        const label = isDemo
+          ? "Hold to learn why the Birthday Edition is unavailable in Demo"
+          : isBirthdayThemeActive()
+          ? "Hold to replay the automatic Birthday Edition page tour for five seconds"
+          : "Hold to activate the birthday theme for five seconds";
+        headerBrandMark.setAttribute("aria-label", label);
+        headerBrandMark.title = label;
+      }
+      function beginBirthdayHold(event) {
+        if (!headerBrandMark || !currentUser || birthdayActivationRunning || birthdayHoldTimer) return;
+        if (event.type === "pointerdown" && event.button !== 0) return;
+        event.preventDefault();
+        const replayingTour = isBirthdayThemeActive();
+        birthdayHoldButton = headerBrandMark;
+        birthdayHoldStartedAt = performance.now();
+        birthdayHoldButton.style.setProperty("--birthday-spin-speed", "1.1s");
+        birthdayHoldButton.classList.add("is-birthday-holding");
+        birthdaySpinTimer = window.setInterval(() => {
+          if (!birthdayHoldButton || !birthdayHoldStartedAt) return;
+          const progress = Math.min(1, (performance.now() - birthdayHoldStartedAt) / 5000);
+          const duration = 1.1 - progress * .94;
+          birthdayHoldButton.style.setProperty("--birthday-spin-speed", `${duration.toFixed(2)}s`);
+        }, 100);
+        birthdayHoldTimer = window.setTimeout(() => {
+          birthdayHoldTimer = 0;
+          birthdayHoldTriggered = true;
+          if (birthdaySpinTimer) window.clearInterval(birthdaySpinTimer);
+          birthdaySpinTimer = 0;
+          birthdayHoldButton?.classList.remove("is-birthday-holding");
+          birthdayHoldButton?.style.removeProperty("--birthday-spin-speed");
+          birthdayHoldStartedAt = 0;
+          birthdayHoldButton = null;
+          if (isDemo) {
+            showDemoBirthdayInfo();
+            return;
+          }
+          if (!replayingTour) {
+            if (hasExperiencedBirthdayTheme()) void activateBirthdayTheme();
+            else showBirthdayEquipPrompt();
+            return;
+          }
+          birthdayActivationRunning = true;
+          void runBirthdayTour().then(() => {
+            showToast("Birthday page tour complete. Your bakery is right where you left it.");
+          }).catch(error => {
+            console.error("Could not replay the Galaxy Birthday Edition tour.", error);
+            showToast(error instanceof Error ? `Birthday tour could not finish: ${error.message}` : "Birthday tour could not finish. Please try again.");
+          }).finally(() => {
+            birthdayActivationRunning = false;
+          });
+        }, 5000);
+      }
+      if (headerBrandMark) {
+        headerBrandMark.addEventListener("pointerdown", beginBirthdayHold);
+        headerBrandMark.addEventListener("pointerup", finishBirthdayHold);
+        headerBrandMark.addEventListener("keydown", event => {
+          if ((event.key === " " || event.key === "Enter") && !event.repeat) beginBirthdayHold(event);
+        });
+        headerBrandMark.addEventListener("keyup", event => {
+          if (event.key !== " " && event.key !== "Enter") return;
+          if (birthdayHoldTriggered) {
+            birthdayHoldTriggered = false;
+            return;
+          }
+          if (birthdayHoldTimer) {
+            cancelBirthdayHold();
+            showThemePicker();
+          }
+        });
+        window.addEventListener("pointerup", cancelBirthdayHold);
+        window.addEventListener("pointercancel", cancelBirthdayHold);
+        window.addEventListener("blur", cancelBirthdayHold);
+        headerBrandMark.addEventListener("contextmenu", event => {
+          if (birthdayHoldTimer) event.preventDefault();
+        });
+      }
+      themesOpenButton.addEventListener("click", showThemePicker);
       function updateDockHighlight(animate = false) {
         const activeButton = dock.querySelector(`[data-page="${currentPage}"]`);
         if (!activeButton) return;
@@ -4030,9 +5247,13 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         if (mode === "login" || mode === "register") {
           links += `<div class="auth-facebook-actions"><button class="auth-facebook-button facebook-profile-button" type="button" data-facebook-profile-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Facebook profile</button><button class="auth-facebook-button" type="button" data-facebook-galaxy-open><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4z"/></svg>Visit Jancsi's Cookie Galaxy on Facebook</button></div>`;
         }
+        const birthdayAuthGuide = (mode === "login" || mode === "register") && Date.now() < birthdayThemeExpiresAt
+          ? `<aside class="birthday-auth-guide" aria-label="Birthday theme instructions"><h2>Happy birthday to Chief Jancsi!</h2><ol><li>Sign in to any bakery account (the theme is not available in Demo).</li><li>In the game header, press and hold the galaxy-cookie logo for five seconds. The logo spins while you hold it; releasing early cancels.</li><li>Enjoy the birthday tour, decorations, and half-price shop while the event is active.</li></ol><p class="birthday-auth-guide-note">Limited-time event: the birthday theme ends November 1, 2026.</p></aside>`
+          : "";
         authScreen.hidden = false;
         authScreen.innerHTML = `<div class="auth-shell">
           <div class="auth-brand"><span class="brand-mark" aria-hidden="true">${brandArt()}</span><div><div class="brand-name">${APP_NAME}</div><div class="brand-sub">a little baking universe</div></div></div>
+          ${birthdayAuthGuide}
           <section class="auth-card">
             <div class="auth-eyebrow">${kicker}</div><h1>${title}</h1><p class="auth-copy">${copy}</p>
             <form id="auth-form" data-mode="${mode}" novalidate><div class="auth-fields">${fields}</div><button class="auth-submit" type="submit">${button}</button></form>
@@ -5260,6 +6481,41 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         };
         dialog.querySelector(".modal-close").focus({ preventScroll: true });
       }
+      async function exitDemoToAuth() {
+        if (accountClosing) return;
+        accountClosing = true;
+        try {
+          save();
+          stopBakeryWhispers();
+          await animatePlatformSignOut();
+          isDemo = false;
+          currentUser = null;
+          vipOpenButton.hidden = true;
+          state = freshState();
+          productionCookieRemainder = 0;
+          productionTapRemainder = 0;
+          lastProductionUpdate = performance.now();
+          lastAmbientCookieBurst = 0;
+          ambientCookieParticles.forEach(particle => particle.remove());
+          ambientCookieParticles.clear();
+          animatedValues.clear();
+          counterFrames.forEach(frame => cancelAnimationFrame(frame));
+          counterFrames.clear();
+          document.body.classList.remove("owner-mode", "admin-mode", "birthday-mode");
+          birthdayThemeActive = false;
+          ownerDockButton.hidden = true;
+          adminDockButton.hidden = true;
+          spinWheelOpenButton.hidden = true;
+          gameApp.classList.add("auth-locked");
+          dockWrap.classList.add("auth-locked");
+          renderAuth(demoReturnMode);
+        } catch (error) {
+          console.error("Could not return from Demo to account access.", error);
+          showToast(error instanceof Error ? `Could not return to sign-in: ${error.message}` : "Could not return to sign-in. Please try again.");
+        } finally {
+          accountClosing = false;
+        }
+      }
       function startDemo() {
         stopBakeryWhispers();
         stopRepeatedOwnerAutoBuy();
@@ -5273,8 +6529,13 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         ambientCookieParticles.forEach(particle => particle.remove());
         ambientCookieParticles.clear();
         isDemo = true;
+        themesOpenButton.hidden = true;
+        window.clearTimeout(birthdayExpiryTimer);
+        birthdayExpiryTimer = 0;
         document.body.classList.remove("owner-mode");
         document.body.classList.remove("admin-mode");
+        birthdayThemeActive = false;
+        document.body.classList.remove("birthday-mode");
         ownerDockButton.hidden = true;
         adminDockButton.hidden = true;
         spinWheelOpenButton.hidden = false;
@@ -5293,33 +6554,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         accountArea.querySelector("#logout").addEventListener("click", async () => {
           if (accountClosing) return;
           if (!await confirmAccountExit()) return;
-          accountClosing = true;
-          save();
-          stopBakeryWhispers();
-          await animatePlatformSignOut();
-          isDemo = false;
-          currentUser = null;
-          vipOpenButton.hidden = true;
-          state = freshState();
-          productionCookieRemainder = 0;
-          productionTapRemainder = 0;
-          lastProductionUpdate = performance.now();
-          lastAmbientCookieBurst = 0;
-          ambientCookieParticles.forEach(particle => particle.remove());
-          ambientCookieParticles.clear();
-          animatedValues.clear();
-          counterFrames.forEach(frame => cancelAnimationFrame(frame));
-          counterFrames.clear();
-          document.body.classList.remove("owner-mode");
-          document.body.classList.remove("admin-mode");
-          ownerDockButton.hidden = true;
-          adminDockButton.hidden = true;
-          spinWheelOpenButton.hidden = true;
-          stopBakeryWhispers();
-          gameApp.classList.add("auth-locked");
-          dockWrap.classList.add("auth-locked");
-          renderAuth(demoReturnMode);
-          accountClosing = false;
+          await exitDemoToAuth();
         });
         currentPage = "bake";
         render(true);
@@ -5639,8 +6874,15 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           isAdmin: email === ADMIN_EMAIL && account.admin === true && account.owner !== true
         };
         isDemo = false;
+        themesOpenButton.hidden = false;
+        birthdayThemeActive = restoreBirthdayThemePreference();
         document.body.classList.toggle("owner-mode", currentUser.isOwner);
         document.body.classList.toggle("admin-mode", currentUser.isAdmin);
+        document.body.classList.toggle("birthday-mode", birthdayThemeActive);
+        if (birthdayThemeActive) {
+          refreshBirthdayDockIcons();
+          scheduleBirthdayThemeExpiry();
+        }
         ownerDockButton.hidden = !currentUser.isOwner;
         adminDockButton.hidden = !currentUser.isAdmin;
         spinWheelOpenButton.hidden = false;
@@ -5731,6 +6973,11 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         await animatePlatformSignOut();
         currentUser = null;
         isDemo = false;
+        themesOpenButton.hidden = true;
+        window.clearTimeout(birthdayExpiryTimer);
+        birthdayExpiryTimer = 0;
+        birthdayThemeActive = false;
+        document.body.classList.remove("birthday-mode", "birthday-tour-active", "birthday-tour-returning");
         vipOpenButton.hidden = true;
         hiddenSince = 0;
         state = freshState();
@@ -5898,8 +7145,13 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           updateLiveNumbers();
         });
       }
-      function showToast(message) {
+      function showToast(message, options = {}) {
         toast.textContent = message;
+        toast.classList.remove("theme-success");
+        if (options.themeSuccess) {
+          void toast.offsetWidth;
+          toast.classList.add("theme-success");
+        }
         toast.classList.add("show");
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove("show"), 2100);
@@ -6980,6 +8232,27 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         if (metric === "helpers") return Object.values(state.bought).reduce((sum, count) => sum + (Number(count) || 0), 0);
         return 0;
       }
+      function celebrateBirthdayAchievement() {
+        if (!isBirthdayThemeActive() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const burst = document.createElement("div");
+        burst.className = "birthday-achievement-confetti";
+        burst.setAttribute("aria-hidden", "true");
+        const colors = ["#d85e91", "#f2b45f", "#9d7bc1", "#65a88e", "#f08db5", "#fff4cc"];
+        for (let index = 0; index < 34; index++) {
+          const piece = document.createElement("i");
+          piece.style.setProperty("--birthday-left", `${Math.random() * 100}%`);
+          piece.style.setProperty("--birthday-size", `${5 + Math.random() * 6}px`);
+          piece.style.setProperty("--birthday-height", `${9 + Math.random() * 10}px`);
+          piece.style.setProperty("--birthday-color", colors[index % colors.length]);
+          piece.style.setProperty("--birthday-drift", `${Math.round(Math.random() * 150 - 75)}px`);
+          piece.style.setProperty("--birthday-spin", `${Math.round(Math.random() * 720 - 360)}deg`);
+          piece.style.setProperty("--birthday-duration", `${1.6 + Math.random() * .8}s`);
+          piece.style.setProperty("--birthday-delay", `${Math.random() * .34}s`);
+          burst.appendChild(piece);
+        }
+        document.body.appendChild(burst);
+        window.setTimeout(() => burst.remove(), 2800);
+      }
       function awardAchievements(unlockAll = false) {
         const unlocked = new Set(Array.isArray(state.achievements) ? state.achievements : []);
         const newlyUnlocked = [];
@@ -7005,6 +8278,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const hasInfiniteJar = (isOwner() && state.ownerTools.infiniteCookies) || (isAdmin() && state.adminTools.infiniteCookies);
         const safeReward = reward > BigInt(Number.MAX_SAFE_INTEGER) ? Number.MAX_SAFE_INTEGER : Number(reward);
         state.cookies = hasInfiniteJar ? Number.MAX_SAFE_INTEGER : addSafeCounter(state.cookies, safeReward);
+        celebrateBirthdayAchievement();
         return { count: newlyUnlocked.length, reward };
       }
       function checkAchievements() {
@@ -7177,6 +8451,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         const plan = planMarketOrder(marketStrategy, 5);
         main.innerHTML = `<section class="page">${pageTitle("THE LITTLE MARKET", "Good things for your oven.", "Spend your cookies on clever helpers. Each one makes the next batch easier.")}
           <div class="section-row"><h2 class="section-title">Smart shopping</h2><button class="flow-button" type="button" data-auto-buy-best ${bestAffordableUpgrade() ? "" : "disabled"}>Auto-buy all affordable</button></div>
+          ${isBirthdayThemeActive() ? `<div class="birthday-price-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13h14v8H5zM3 13l2-5h14l2 5M12 8V4m0 0c-3 0-4-2-4-3 3 0 4 1 4 3zm0 0c3 0 4-2 4-3-3 0-4 1-4 3z"/><path d="M12 16v2"/></svg><span><strong>Birthday Market:</strong> eligible helpers are 50% off through November 1, 2026. Batch planning and purchases use the discounted prices.</span></div>` : ""}
           <p class="intro">Keep buying the best value helper you can afford until no more purchases fit your cookie jar. Free-market mode buys one of each helper per activation.</p>
           <section class="market-batch" aria-labelledby="market-batch-title">
             <div class="market-batch-copy"><span class="market-batch-kicker">GALAXY BATCH PLANNER</span><h2 id="market-batch-title">Build a smarter crew</h2><p>Preview up to five purchases and spend only what your jar can cover. Your role's market rules still apply.</p></div>
@@ -7207,10 +8482,11 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
       function renderBoosts() {
         const active = liveBoosts();
         main.innerHTML = `<section class="page">${pageTitle("A PINCH OF MAGIC", "Little boosts, big joy.", "Pick a short-lived treat to give your baking a lovely burst.")}
+          ${isBirthdayThemeActive() ? `<div class="birthday-price-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13h14v8H5zM3 13l2-5h14l2 5M12 8V4m0 0c-3 0-4-2-4-3 3 0 4 1 4 3zm0 0c3 0 4-2 4-3-3 0-4 1-4 3z"/><path d="M12 16v2"/></svg><span><strong>Birthday Boosts:</strong> regular timed boosts are 50% off through November 1, 2026.</span></div>` : ""}
           ${active.length ? active.map(boost => `<div class="boost-banner"><div class="boost-banner-icon">${iconArt(boost.icon)}</div><div><div class="boost-banner-title">${boost.name} is active</div><div class="boost-banner-copy">Enjoy the extra sparkle while it lasts.</div></div><div class="boost-timer" data-boost-timer="${boost.endsAt}">${Math.max(0, Math.ceil((boost.endsAt - Date.now()) / 1000))}s left</div></div>`).join("") : `<div class="boost-banner"><div class="boost-banner-icon">${iconArt("cookie")}</div><div><div class="boost-banner-title">Your magic shelf is quiet</div><div class="boost-banner-copy">Buy a boost when you’re ready for a little extra sparkle.</div></div></div>`}
           <div class="section-row" style="margin-top:26px"><h2 class="section-title">Today's specials</h2></div>
           <div class="shop-grid">${boosts.map(boost => {
-            const price = canBuyForFree() ? 0 : boost.cost;
+            const price = canBuyForFree() ? 0 : boostCostOf(boost);
             return `<article class="shop-item"><button class="shop-icon-button" type="button" data-product-info="boost" data-product-id="${boost.id}" aria-label="More information about ${escapeHTML(boost.name)}" aria-haspopup="dialog" title="More about ${escapeHTML(boost.name)}">${iconArt(boost.icon)}</button><div class="shop-details"><div class="shop-name">${boost.name}</div><div class="shop-desc">${boost.description}</div></div><button class="shop-buy" data-boost="${boost.id}" data-cost="${price}" ${state.cookies < price && !canBuyForFree() ? "disabled" : ""}>${canBuyForFree() ? "FREE" : fmt(price)}<span>ADD TO JAR</span></button></article>`;
           }).join("")}</div>
         </section>`;
@@ -8863,6 +10139,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
         bindWheelToolButtons();
       }
       function render(animatePage = false) {
+        syncBirthdayHoldAccessibility();
         if (currentPage === "bake") renderBake();
         else if (currentPage === "market") renderMarket();
         else if (currentPage === "boosts") renderBoosts();
@@ -9390,7 +10667,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
             .filter(item => !canBuyForFree() || !simulatedOwned.has(item.id))
             .map(item => {
               const nextOwned = simulatedOwned.has(item.id) ? simulatedOwned.get(item.id) : owned(item.id);
-              const price = canBuyForFree() ? 0 : Math.ceil(item.base * Math.pow(1.16, nextOwned));
+              const price = canBuyForFree() ? 0 : costOf(item, nextOwned);
               return { item, price, valuePerCookie: item.value / Math.max(1, price), index: upgrades.indexOf(item) };
             })
             .filter(candidate => Number.isFinite(candidate.price) && (canBuyForFree() || remaining >= candidate.price))
@@ -9451,7 +10728,7 @@ Want to keep going? Tell me your next goal or what you see on the screen, and I'
       }
       function buyBoost(id) {
         const item = boosts.find(boost => boost.id === id);
-        const price = canBuyForFree() ? 0 : item?.cost;
+        const price = canBuyForFree() ? 0 : item ? boostCostOf(item) : undefined;
         if (!item || state.cookies < price && !canBuyForFree()) return;
         state.cookies -= price;
         state.boostsUsed = addSafeCounter(state.boostsUsed, 1);
