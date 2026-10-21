@@ -1,4 +1,4 @@
-Go to this link to play my website i have been creating.
+Go to this link to play my website that i have been creating.
 
 https://jancsiocta.github.io/Jancsi-s-Cookie-Galaxy/
 
