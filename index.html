@@ -99,6 +99,8 @@
     .brand-mark.is-birthday-holding::after { position:absolute; inset:-3px; border:2px solid transparent; border-top-color:#fff4f8; border-right-color:#ffb8d0; border-radius:inherit; content:""; animation:birthday-hold-ring var(--birthday-spin-speed,1.1s) linear infinite reverse; pointer-events:none; }
     .brand-mark svg { display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 0 5px rgba(255,202,112,.3)); }
     .brand-mark .brand-cookie-glow { fill:rgba(255,213,130,.12); }
+    .brand-mark .birthday-brand-orbit { stroke:#de76a1; }
+    .brand-mark .birthday-brand-ribbon { stroke:#fff5fa; }
     .brand-name { position:relative; display:inline-block; max-width:100%; overflow:visible; color:#fff0c9; font-family:"Sora","Trebuchet MS",system-ui,sans-serif; font-size:16px; font-weight:800; letter-spacing:-.055em; line-height:1.18; overflow-wrap:anywhere; text-overflow:clip; white-space:normal; text-shadow:0 1px 0 rgba(255,255,255,.14),0 0 19px rgba(255,202,112,.2); }
     .brand-name::after { position:absolute; right:0; bottom:-4px; left:0; height:1px; background:linear-gradient(90deg,rgba(255,202,112,0),rgba(255,215,139,.66) 32%,rgba(255,202,112,.12) 86%,transparent); content:""; }
     .brand-sub { max-width:100%; overflow:visible; margin-top: 5px; color: #c5ad88; font-size: 9px; font-weight:700; letter-spacing: .19em; overflow-wrap:anywhere; text-overflow:clip; text-transform: uppercase; white-space:normal; }
@@ -2527,7 +2529,9 @@
     body.birthday-mode .dock-highlight { background:linear-gradient(120deg,#f7b5d0,#df79a7 58%,#c95f91); box-shadow:0 0 24px rgba(197,89,137,.3),inset 0 1px rgba(255,255,255,.76); }
     body.birthday-mode .dock-button { color:#8a6075; }
     body.birthday-mode .dock-button.active { color:#572b40; }
-    body.birthday-mode .brand-mark { border-color:rgba(255,243,249,.94); box-shadow:0 5px 20px rgba(176,77,122,.24),0 0 26px rgba(227,137,174,.3); }
+    body.birthday-mode .brand-mark { border-color:rgba(255,243,249,.98); background:linear-gradient(145deg,#fffdfd,#fdebf2 62%,#f8dce8); box-shadow:0 5px 20px rgba(176,77,122,.24),0 0 26px rgba(227,137,174,.3); }
+    body.birthday-mode .brand-mark svg { filter:drop-shadow(0 0 5px rgba(197,89,137,.36)); }
+    body.birthday-mode .brand-mark .birthday-brand-orbit { stroke:#c95f91; }
     body.birthday-mode .birthday-confetti-bg { display:block; }
     .birthday-confetti-bg { display:none; position:fixed; z-index:0; inset:0; overflow:hidden; pointer-events:none; opacity:.64; background-image:radial-gradient(ellipse 4px 7px at 9% 22%,rgba(219,116,158,.46) 0 90%,transparent 100%),radial-gradient(ellipse 3px 6px at 22% 68%,rgba(183,137,206,.43) 0 90%,transparent 100%),radial-gradient(ellipse 4px 7px at 77% 19%,rgba(237,174,99,.42) 0 90%,transparent 100%),radial-gradient(ellipse 3px 6px at 92% 61%,rgba(219,116,158,.43) 0 90%,transparent 100%),radial-gradient(circle at 42% 14%,rgba(255,255,255,.88) 0 2px,transparent 3px),radial-gradient(circle at 68% 76%,rgba(255,255,255,.8) 0 2px,transparent 3px); }
     body.birthday-mode main .page { position:relative; isolation:isolate; padding-top:20px; }
@@ -2634,7 +2638,7 @@
     .birthday-event-screen.is-applying-gold .birthday-apply-progress::after { background:linear-gradient(90deg,#f3d58e,#fff0bc,#b87c30); }
     .birthday-equip-card { display:flex; flex-direction:column; width:min(650px,100%); max-height:min(86vh,780px); max-height:min(86dvh,780px); overflow:hidden; padding:0; }
     .birthday-equip-content { overflow:auto; padding:clamp(24px,5vw,42px); text-align:center; overscroll-behavior:contain; scrollbar-color:rgba(192,82,132,.45) rgba(197,89,137,.08); }
-    .birthday-equip-logo { display:grid; width:96px; height:96px; margin:0 auto 20px; place-items:center; border:1px solid rgba(255,255,255,.88); border-radius:30px; background:radial-gradient(circle at 30% 18%,rgba(255,255,255,.95),transparent 40%),linear-gradient(145deg,#f5bbd0,#d876a4 65%,#b95989); box-shadow:0 12px 34px rgba(170,72,119,.22),inset 0 1px rgba(255,255,255,.96); animation:birthday-logo-ascend .9s cubic-bezier(.16,1,.3,1) both; }
+    .birthday-equip-logo { display:grid; width:96px; height:96px; margin:0 auto 20px; place-items:center; border:1px solid rgba(255,255,255,.96); border-radius:30px; background:linear-gradient(145deg,#fffdfd,#fdebf2 62%,#f5d8e5); box-shadow:0 12px 34px rgba(170,72,119,.16),inset 0 1px rgba(255,255,255,.98); animation:birthday-logo-ascend .9s cubic-bezier(.16,1,.3,1) both; }
     .birthday-equip-logo svg { width:72px; height:72px; filter:drop-shadow(0 4px 12px rgba(142,60,99,.24)); }
     @keyframes birthday-logo-ascend { from { opacity:0; transform:translateY(58px) scale(.68) rotate(-16deg); filter:blur(7px); } 68% { opacity:1; transform:translateY(-6px) scale(1.07) rotate(3deg); filter:none; } to { transform:translateY(0) scale(1) rotate(0); } }
     .birthday-equip-copy { max-width:540px; margin:0 auto; color:#704b61; font-size:13px; line-height:1.8; text-align:left; }
@@ -4604,9 +4608,23 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         }
         return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${art[name] || art.cookie}</svg>`;
       };
-      const brandArt = () => `<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="galaxy-cookie-fill" x1="18" y1="10" x2="48" y2="53" gradientUnits="userSpaceOnUse"><stop stop-color="#fff1b8"/><stop offset=".48" stop-color="#ffca67"/><stop offset="1" stop-color="#d8773e"/></linearGradient><radialGradient id="galaxy-cookie-shine" cx="0" cy="0" r="1" gradientTransform="matrix(18 0 0 13 24 18)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="32" cy="32" r="27" fill="#fff" fill-opacity=".035"/><ellipse cx="32" cy="33" rx="28" ry="12" transform="rotate(-28 32 33)" stroke="#d6c0ff" stroke-width="3" opacity=".94"/><path d="M12 43c9 7 21 10 33 5" stroke="#fff0c2" stroke-width="2" stroke-linecap="round" opacity=".9"/><circle cx="32" cy="32" r="19" fill="url(#galaxy-cookie-fill)" stroke="#fff3d2" stroke-width="1.8"/><path d="M20 20c4-4 9-5 14-4" stroke="url(#galaxy-cookie-shine)" stroke-width="5" stroke-linecap="round"/><circle cx="25" cy="27" r="2.5" fill="#59301e"/><circle cx="39" cy="24" r="2.3" fill="#59301e"/><circle cx="35" cy="39" r="3" fill="#59301e"/><circle cx="22" cy="40" r="1.7" fill="#59301e"/><circle cx="45" cy="34" r="1.6" fill="#59301e"/><path d="m13 12 1.6 4.4L19 18l-4.4 1.6L13 24l-1.6-4.4L7 18l4.4-1.6zM51 45l1 2.8 2.8 1-2.8 1-1 2.8-1-2.8-2.8-1 2.8-1z" fill="#fff4d7"/><circle cx="51" cy="12" r="1.8" fill="#9de7ff"/></svg>`;
+      const classicBrandArt = (birthday = isBirthdayThemeActive()) => birthday
+        ? `<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="birthday-logo-cookie" x1="18" y1="22" x2="47" y2="55" gradientUnits="userSpaceOnUse"><stop stop-color="#fff3c4"/><stop offset=".52" stop-color="#f3bd68"/><stop offset="1" stop-color="#d87845"/></linearGradient><linearGradient id="birthday-logo-hat" x1="19" y1="6" x2="39" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#ffdce9"/><stop offset=".55" stop-color="#e986b0"/><stop offset="1" stop-color="#c34c83"/></linearGradient></defs><circle cx="32" cy="32" r="27" fill="#fff" fill-opacity=".035"/><ellipse class="birthday-brand-orbit" cx="32" cy="34" rx="28" ry="12" transform="rotate(-28 32 34)" stroke-width="3" opacity=".92"/><path class="birthday-brand-ribbon" d="M12 45c9 7 21 9 33 4" stroke-width="2" stroke-linecap="round" opacity=".92"/><circle cx="32" cy="38" r="18" fill="url(#birthday-logo-cookie)" stroke="#fff3d2" stroke-width="1.8"/><path d="M20 30c4-4 9-5 14-4" stroke="#fff" stroke-opacity=".72" stroke-width="4" stroke-linecap="round"/><circle cx="26" cy="37" r="2.1" fill="#67351f"/><circle cx="38" cy="34" r="2.2" fill="#67351f"/><circle cx="35" cy="45" r="2.6" fill="#67351f"/><circle cx="23" cy="45" r="1.5" fill="#67351f"/><path d="m18 24 11-18 10 18c-6 3-14 3-21 0Z" fill="url(#birthday-logo-hat)" stroke="#fff4f8" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 23c6 4 14 4 21 0" stroke="#fff4f8" stroke-width="2.5" stroke-linecap="round"/><circle cx="29" cy="6" r="2.5" fill="#ffe28c" stroke="#fff8d8" stroke-width="1"/><rect x="43" y="24" width="4.5" height="11" rx="1.2" fill="#fff4c9" stroke="#a94472" stroke-width="1"/><path d="M43 28h4.5m-4.5 3h4.5" stroke="#d45b91" stroke-width="1.2"/><path d="M45.2 22c-3-2.4.8-4.5.8-6.5 3.5 2.7 2.3 5.1-.8 6.5Z" fill="#ffba57" stroke="#fff0b5" stroke-width=".8" stroke-linejoin="round"/><path d="m10 27 1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1zM53 42l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#fff2c7"/><circle cx="51" cy="17" r="1.6" fill="#e879a7"/><circle cx="14" cy="43" r="1.5" fill="#e879a7"/></svg>`
+        : `<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="galaxy-cookie-fill" x1="18" y1="10" x2="48" y2="53" gradientUnits="userSpaceOnUse"><stop stop-color="#fff1b8"/><stop offset=".48" stop-color="#ffca67"/><stop offset="1" stop-color="#d8773e"/></linearGradient><radialGradient id="galaxy-cookie-shine" cx="0" cy="0" r="1" gradientTransform="matrix(18 0 0 13 24 18)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="32" cy="32" r="27" fill="#fff" fill-opacity=".035"/><ellipse cx="32" cy="33" rx="28" ry="12" transform="rotate(-28 32 33)" stroke="#d6c0ff" stroke-width="3" opacity=".94"/><path d="M12 43c9 7 21 10 33 5" stroke="#fff0c2" stroke-width="2" stroke-linecap="round" opacity=".9"/><circle cx="32" cy="32" r="19" fill="url(#galaxy-cookie-fill)" stroke="#fff3d2" stroke-width="1.8"/><path d="M20 20c4-4 9-5 14-4" stroke="url(#galaxy-cookie-shine)" stroke-width="5" stroke-linecap="round"/><circle cx="25" cy="27" r="2.5" fill="#59301e"/><circle cx="39" cy="24" r="2.3" fill="#59301e"/><circle cx="35" cy="39" r="3" fill="#59301e"/><circle cx="22" cy="40" r="1.7" fill="#59301e"/><circle cx="45" cy="34" r="1.6" fill="#59301e"/><path d="m13 12 1.6 4.4L19 18l-4.4 1.6L13 24l-1.6-4.4L7 18l4.4-1.6zM51 45l1 2.8 2.8 1-2.8 1-1 2.8-1-2.8-2.8-1 2.8-1z" fill="#fff4d7"/><circle cx="51" cy="12" r="1.8" fill="#9de7ff"/></svg>`;
+      const brandArt = (birthday = isBirthdayThemeActive()) => {
+        const artwork = classicBrandArt(birthday);
+        if (!birthday) return artwork;
+        const backdrop = `<defs><linearGradient id="birthday-logo-backdrop" x1="5" y1="3" x2="58" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#fffefe"/><stop offset=".58" stop-color="#fff5f9"/><stop offset="1" stop-color="#f6dce8"/></linearGradient><linearGradient id="birthday-logo-cookie-large" x1="17" y1="15" x2="49" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#fff2c3"/><stop offset=".5" stop-color="#f2bc66"/><stop offset="1" stop-color="#d47743"/></linearGradient><linearGradient id="birthday-logo-cake" x1="20" y1="46" x2="47" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#fffafd"/><stop offset=".48" stop-color="#f4bfd4"/><stop offset="1" stop-color="#d96d9d"/></linearGradient></defs><rect x="1" y="1" width="62" height="62" rx="17" fill="url(#birthday-logo-backdrop)"/>`;
+        const foreground = `<circle cx="32" cy="34" r="23" fill="url(#birthday-logo-cookie-large)" stroke="#fff7df" stroke-width="2"/><path d="M17 28c4-7 11-10 18-9" stroke="#fff" stroke-opacity=".78" stroke-width="4" stroke-linecap="round"/><circle cx="23" cy="34" r="2.2" fill="#63351f"/><circle cx="37" cy="30" r="2.3" fill="#63351f"/><circle cx="40" cy="41" r="2.6" fill="#63351f"/><circle cx="28" cy="44" r="2" fill="#63351f"/><circle cx="19" cy="42" r="1.4" fill="#63351f"/><circle cx="33" cy="37" r="1.3" fill="#63351f"/><path d="M18 20 29 3 39 22c-7 3-14 2-21-2Z" fill="url(#birthday-logo-hat)" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 19c6 4 14 5 22 2" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="29" cy="3.5" r="3" fill="#ffe48d" stroke="#fff" stroke-width="1"/><path d="m12 20 1.2 2.9 2.9 1.2-2.9 1.2-1.2 2.9-1.2-2.9L8 24.1l2.8-1.2zM51 25l1.1 2.4 2.4 1.1-2.4 1.1-1.1 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" fill="#e879a7"/><path d="M43 41v-8" stroke="#9b4869" stroke-width="2" stroke-linecap="round"/><path d="M43 34c-3-2.2.8-4.2.8-6 3.3 2.5 2.1 4.8-.8 6Z" fill="#ffc05b" stroke="#fff0bb" stroke-width=".8"/><ellipse cx="33.5" cy="59" rx="17" ry="2.5" fill="#fff" stroke="#e7a9c1" stroke-width="1"/><path d="M20 49c0-1.3 1-2 2.2-2h22.6c1.2 0 2.2.7 2.2 2v8c0 1.2-1 2-2.2 2H22.2c-1.2 0-2.2-.8-2.2-2z" fill="url(#birthday-logo-cake)" stroke="#fff" stroke-width="1.5"/><path d="M20.5 50c2-2.1 3 1.7 5 0s3 1.8 5 0 3 1.7 5 0 3 1.7 5 0 3 1.6 5 0 3 1.3 5 0" stroke="#fffafd" stroke-width="3" stroke-linecap="round"/><path d="M26 53v4m8-4v4m8-4v4" stroke="#fff7f9" stroke-width="1.5" stroke-linecap="round"/><circle cx="28" cy="52" r="1" fill="#e879a7"/><circle cx="39" cy="52" r="1" fill="#e879a7"/>`;
+        return artwork
+          .replace(/(<svg\b[^>]*>)/, `$1${backdrop}`)
+          .replace("</svg>", `${foreground}</svg>`);
+      };
       const headerBrandMark = document.querySelector(".topbar .brand-mark");
-      if (headerBrandMark) headerBrandMark.innerHTML = brandArt();
+      const refreshBrandMark = () => {
+        if (headerBrandMark) headerBrandMark.innerHTML = brandArt();
+      };
+      refreshBrandMark();
       function restoreBirthdayThemePreference() {
         try {
           const storedExpiry = Number(localStorage.getItem(birthdayThemeStorageKey));
@@ -4627,6 +4645,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           if (!birthdayThemeActive || Date.now() < birthdayThemeExpiresAt) return;
           birthdayThemeActive = false;
           document.body.classList.remove("birthday-mode");
+          refreshBrandMark();
           try {
             localStorage.removeItem(birthdayThemeStorageKey);
           } catch (error) {
@@ -4769,7 +4788,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         const screen = getBirthdayEventScreen();
         screen.className = "birthday-event-screen is-equip";
         screen.hidden = false;
-        screen.innerHTML = `<section class="birthday-dialog-card birthday-equip-card" role="dialog" aria-modal="true" aria-labelledby="birthday-equip-title" aria-describedby="birthday-equip-copy"><button class="theme-picker-close" type="button" aria-label="Close birthday theme details" data-birthday-equip-close>&times;</button><div class="birthday-dialog-content birthday-equip-content" id="birthday-equip-copy" tabindex="0"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">A LITTLE GALAXY-WIDE SURPRISE</div><h2 class="birthday-event-title" id="birthday-equip-title">Equip the Birthday Theme</h2><div class="birthday-equip-copy"><p>Honor Chief Jancsi’s birthday with a special celebration across your bakery. The familiar Galaxy you know will be dressed in a soft pink palette, sparkling birthday details, and original illustrated icons made for this event.</p><p>Your bakery, cookie jar, helpers, and achievements stay just as you left them. The birthday theme changes the look and adds a guided tour; it does not reset your progress or replace your everyday game controls.</p><ul class="birthday-equip-list"><li><strong>Explore the celebration:</strong> a guided page-by-page tour introduces Bake, Market, Boosts, Ledger, Profile, Achievements, and the tools available for your account role.</li><li><strong>Enjoy birthday prices:</strong> eligible Market helpers and regular timed boosts are 50% off while the event is active. Prices shown, planning, affordability checks, and purchases stay in sync.</li><li><strong>Keep your bakery yours:</strong> your theme preference is remembered in this browser. Demo remains temporary and cannot equip the event.</li></ul><p>When you choose to equip it, the Galaxy will prepare the colors, page decorations, and celebration details in a short animated transition. The Birthday Edition is a limited event and ends November 1, 2026.</p></div></div><footer class="birthday-equip-footer"><button class="birthday-next-button birthday-equip-button" type="button" data-birthday-equip>Equip the Birthday Theme</button></footer></section>`;
+        screen.innerHTML = `<section class="birthday-dialog-card birthday-equip-card" role="dialog" aria-modal="true" aria-labelledby="birthday-equip-title" aria-describedby="birthday-equip-copy"><button class="theme-picker-close" type="button" aria-label="Close birthday theme details" data-birthday-equip-close>&times;</button><div class="birthday-dialog-content birthday-equip-content" id="birthday-equip-copy" tabindex="0"><div class="birthday-equip-logo" aria-hidden="true">${brandArt(true)}</div><div class="birthday-event-kicker">A LITTLE GALAXY-WIDE SURPRISE</div><h2 class="birthday-event-title" id="birthday-equip-title">Equip the Birthday Theme</h2><div class="birthday-equip-copy"><p>Honor Chief Jancsi’s birthday with a special celebration across your bakery. The familiar Galaxy you know will be dressed in a soft pink palette, sparkling birthday details, and original illustrated icons made for this event.</p><p>Your bakery, cookie jar, helpers, and achievements stay just as you left them. The birthday theme changes the look and adds a guided tour; it does not reset your progress or replace your everyday game controls.</p><ul class="birthday-equip-list"><li><strong>Explore the celebration:</strong> a guided page-by-page tour introduces Bake, Market, Boosts, Ledger, Profile, Achievements, and the tools available for your account role.</li><li><strong>Enjoy birthday prices:</strong> eligible Market helpers and regular timed boosts are 50% off while the event is active. Prices shown, planning, affordability checks, and purchases stay in sync.</li><li><strong>Keep your bakery yours:</strong> your theme preference is remembered in this browser. Demo remains temporary and cannot equip the event.</li></ul><p>When you choose to equip it, the Galaxy will prepare the colors, page decorations, and celebration details in a short animated transition. The Birthday Edition is a limited event and ends November 1, 2026.</p></div></div><footer class="birthday-equip-footer"><button class="birthday-next-button birthday-equip-button" type="button" data-birthday-equip>Equip the Birthday Theme</button></footer></section>`;
         const close = () => {
           screen.hidden = true;
           screen.className = "birthday-event-screen";
@@ -4855,6 +4874,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
             window.clearTimeout(birthdayExpiryTimer);
             birthdayExpiryTimer = 0;
             document.body.classList.remove("birthday-mode");
+            refreshBrandMark();
             document.body.dataset.basicTheme = themeId;
             if (wasBirthdayActive) refreshBirthdayDockIcons();
             render();
@@ -4960,7 +4980,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           const screen = getBirthdayEventScreen();
           screen.className = "birthday-event-screen is-applying is-applying-gold";
           screen.hidden = false;
-          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">RETURNING TO YOUR CLASSIC GALAXY</div><h2 class="birthday-event-title"><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy">Restoring the familiar warm gold colors and classic Galaxy styling.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:2000ms" aria-hidden="true"></div><p class="birthday-event-copy">Bringing your original look back…</p></section>`;
+          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt(false)}</div><div class="birthday-event-kicker">RETURNING TO YOUR CLASSIC GALAXY</div><h2 class="birthday-event-title"><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy">Restoring the familiar warm gold colors and classic Galaxy styling.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:2000ms" aria-hidden="true"></div><p class="birthday-event-copy">Bringing your original look back…</p></section>`;
           await waitForBirthdayAnimation(2000);
           await completeBirthdayApplyProgress(screen);
         }
@@ -4969,6 +4989,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           window.clearTimeout(birthdayExpiryTimer);
           birthdayExpiryTimer = 0;
           document.body.classList.remove("birthday-mode");
+          refreshBrandMark();
           refreshBirthdayDockIcons();
         }
         activeBasicTheme = "";
@@ -4995,7 +5016,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           const screen = getBirthdayEventScreen();
           screen.className = "birthday-event-screen is-applying";
           screen.hidden = false;
-          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt()}</div><div class="birthday-event-kicker">PREPARING YOUR CELEBRATION</div><h2 class="birthday-event-title" data-birthday-transition-title><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy" data-birthday-transition-copy>Setting the birthday colors, page decorations, and special event details in place.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:${applicationDuration}ms" aria-hidden="true"></div><p class="birthday-event-copy" data-birthday-apply-status>Preparing the celebration…</p></section>`;
+          screen.innerHTML = `<section class="birthday-transition-card birthday-apply-card" role="status" aria-live="polite"><div class="birthday-equip-logo" aria-hidden="true">${brandArt(true)}</div><div class="birthday-event-kicker">PREPARING YOUR CELEBRATION</div><h2 class="birthday-event-title" data-birthday-transition-title><span class="birthday-apply-sparkle" aria-hidden="true">✦</span>Applying theme…</h2><p class="birthday-event-copy" data-birthday-transition-copy>Setting the birthday colors, page decorations, and special event details in place.</p><div class="birthday-apply-progress" style="--birthday-apply-duration:${applicationDuration}ms" aria-hidden="true"></div><p class="birthday-event-copy" data-birthday-apply-status>Preparing the celebration…</p></section>`;
           const status = screen.querySelector("[data-birthday-apply-status]");
           const preparationSteps = firstApplication
             ? [
@@ -5024,6 +5045,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
           }
           birthdayThemeActive = true;
           document.body.classList.add("birthday-mode");
+          refreshBrandMark();
           scheduleBirthdayThemeExpiry();
           let decoration = document.querySelector(".birthday-confetti-bg");
           if (!decoration) {
@@ -6536,6 +6558,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         document.body.classList.remove("admin-mode");
         birthdayThemeActive = false;
         document.body.classList.remove("birthday-mode");
+        refreshBrandMark();
         ownerDockButton.hidden = true;
         adminDockButton.hidden = true;
         spinWheelOpenButton.hidden = false;
@@ -6879,6 +6902,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         document.body.classList.toggle("owner-mode", currentUser.isOwner);
         document.body.classList.toggle("admin-mode", currentUser.isAdmin);
         document.body.classList.toggle("birthday-mode", birthdayThemeActive);
+        refreshBrandMark();
         if (birthdayThemeActive) {
           refreshBirthdayDockIcons();
           scheduleBirthdayThemeExpiry();
@@ -6978,6 +7002,7 @@ This is a local, single-player cookie game. No real cookies are delivered, no ac
         birthdayExpiryTimer = 0;
         birthdayThemeActive = false;
         document.body.classList.remove("birthday-mode", "birthday-tour-active", "birthday-tour-returning");
+        refreshBrandMark();
         vipOpenButton.hidden = true;
         hiddenSince = 0;
         state = freshState();
